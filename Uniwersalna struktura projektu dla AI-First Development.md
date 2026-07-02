@@ -1,6 +1,6 @@
 # Uniwersalna struktura projektu dla AI-First Development
 
-> **Cel:** stworzenie unierslanej struktury projektu, która działa niezależnie od języka programowania, frameworka, działającej zgodnie z najlepszymi praktykami rozwoju oprogramowania. Działająca dobrze klienta AI (Claude Code, Cursor, OpenCode, Cline, Roo Code, Codex CLI, Gemini CLI, Windsurf, Antigravity i innych), tak aby mona z nich było korzystać równocześnie lub zmieniać je w przyszłości bez konieczności przebudowy repozytorium.
+> **Cel:** stworzenie uniwersalnej struktury projektu, która działa niezależnie od języka programowania i frameworka, zgodnie z najlepszymi praktykami rozwoju oprogramowania. Działająca dobrze z klientami AI (Claude Code, Cursor, OpenCode, Cline, Roo Code, Codex CLI, Gemini CLI, Windsurf, Antigravity i innymi), tak aby można z nich było korzystać równocześnie lub zmieniać je w przyszłości bez konieczności przebudowy repozytorium.
 
 ---
 
@@ -30,7 +30,7 @@ Dlatego dobra struktura projektu powinna:
 
 ## Najważniejsze zasady
 
-## 1. Single Source of Truth (SSOT)
+### 1. Single Source of Truth (SSOT)
 
 Każda informacja występuje tylko w jednym miejscu.
 
@@ -57,7 +57,7 @@ a wszystkie pozostałe pliki jedynie odwołują się do tych źródeł.
 
 ---
 
-## 2. AI nie powinno zgadywać
+### 2. AI nie powinno zgadywać
 
 Jeżeli projekt posiada:
 - konwencje nazewnictwa,
@@ -69,7 +69,7 @@ to powinny być zapisane.
 
 ---
 
-## 3. Małe pliki
+### 3. Małe pliki
 
 AI dużo lepiej analizuje:
 - pliki 100–300 linii,
@@ -78,7 +78,7 @@ AI dużo lepiej analizuje:
 
 ---
 
-## 4. Dokumentacja blisko kodu
+### 4. Dokumentacja blisko kodu
 
 Kod opisuje implementację.
 
@@ -89,7 +89,7 @@ Dokumentacja opisuje:
 
 ---
 
-## 5. Repozytorium ma być niezależne od IDE
+### 5. Repozytorium ma być niezależne od IDE
 
 Nie chcemy przepisywać dokumentacji przy zmianie:
 - Cursor
@@ -98,6 +98,22 @@ Nie chcemy przepisywać dokumentacji przy zmianie:
 - Windsurf
 - Roo
 - Gemini CLI
+
+---
+
+## Wersja MINIMAL (podstawowa)
+
+```txt
+project/
+├── AGENTS.md
+├── README.md
+├── ai/
+│   ├── context/
+│   └── rules/
+├── docs/
+├── src/
+└── tests/
+```
 
 ---
 
@@ -242,9 +258,7 @@ Dzięki temu AI nie musi przeszukiwać całego repozytorium.
 
 ## ai/
 
-To dokumentacja przeznaczona wyłącznie dla AI.
-
-Nie dla ludzi.
+Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Chociaż głównym odbiorcą jest AI, programiści również powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
 
 ---
 
@@ -363,11 +377,11 @@ Nie implementację.
 Przykład:
 
 ```txt
-├── authentication/
-├── requirements.md
-├── acceptance.md
-├── tasks.md
-└── api.md
+└── authentication/
+    ├── requirements.md
+    ├── acceptance.md
+    ├── tasks.md
+    └── api.md
 ```
 
 AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
@@ -386,13 +400,17 @@ Wiedza domenowa.
 └── legal.md
 ```
 
-Nie jest to dokumentacja techniczna.
+Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
+
+**Zasada SSOT:** `knowledge/terminology.md` stanowi nadrzędne źródło pojęć domenowych (biznesowych). Plik `ai/context/glossary.md` powinien jedynie odwoływać się do niego lub definiować pojęcia czysto techniczne/programistyczne (np. specyficzne nazwy zmiennych czy modułów), unikając duplikowania wiedzy biznesowej.
 
 ---
 
 ## playbooks/
 
-Procedury.
+Procedury operacyjne przeznaczone do wykonywania przez ludzi oraz AI (np. kroki wdrożeniowe, reagowanie na awarie, onboarding dewelopera).
+
+**Różnica wobec `ai/workflows/`:** Playbooki to ogólne instrukcje procesowe dla zespołu (ludzi i AI). Z kolei pliki w `ai/workflows/` to techniczne instrukcje krok po kroku przeznaczone **wyłącznie** dla agentów AI, sterujące bezpośrednio ich zachowaniem.
 
 Przykład:
 
@@ -408,7 +426,7 @@ Przykład:
 
 ## checklists/
 
-Checklisty.
+Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
 
 ```txt
 ├── review.md
@@ -417,7 +435,7 @@ Checklisty.
 └── testing.md
 ```
 
-AI świetnie wykonuje checklisty.
+**Różnica wobec `playbooks/` (Zgodność z SSOT):** Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed wydaniem wersji — `release.md`), podczas gdy playbooki opisują pełną procedurę krok po kroku (jak to wydanie fizycznie przeprowadzić — `playbooks/release.md`). AI doskonale sprawdza się w automatycznej weryfikacji takich checklist.
 
 ---
 
@@ -463,9 +481,7 @@ AI nie zgaduje struktur danych.
 
 ## docs/
 
-Dokumentacja dla ludzi.
-
-Nie dla AI.
+Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania zarówno przez programistów, jak i przez AI w celu zrozumienia kontekstu technicznego systemu.
 
 Przykład:
 
