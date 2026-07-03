@@ -19,12 +19,19 @@ Jest projektowane dla:
 
 Największym ograniczeniem współczesnych modeli LLM nie jest generowanie kodu, ale **zarządzanie kontekstem (Context Management)**.
 
+**Nadrzędna zasada dostępu do kontekstu:**
+Repozytorium posiada jedną, całkowicie wspólną strukturę dla człowieka oraz agentów AI. Obie strony korzystają z tych samych katalogów i plików. Każdy plik jest równorzędnym źródłem informacji dla człowieka i AI — nie istnieją katalogi „dla ludzi" ani „dla AI".
+
 Dlatego dobra struktura projektu powinna:
 - minimalizować zgadywanie przez AI,
 - być przewidywalna,
 - mieć jedną lokalizację dla każdej informacji,
 - rozdzielać wiedzę od implementacji,
 - umożliwiać łatwą zmianę klienta AI bez przebudowy repozytorium.
+
+**Zasady nazewnictwa katalogów:**
+- Każdy katalog w repozytorium musi posiadać jedną, oficjalną nazwę. Zakaz tworzenia aliasów, skrótów lub alternatywnych nazw katalogów w dokumentacji lub przykładach.
+- Nazwy katalogów muszą być pełne i jednoznaczne (np. `config/` zamiast `cfg/`, `infrastructure/` zamiast `infra/`). Skróty są zabronione.
 
 ---
 
@@ -91,13 +98,7 @@ Dokumentacja opisuje:
 
 ### 5. Repozytorium ma być niezależne od IDE
 
-Nie chcemy przepisywać dokumentacji przy zmianie:
-- Cursor
-- Claude Code
-- OpenCode
-- Windsurf
-- Roo
-- Gemini CLI
+Nie chcemy przepisywać dokumentacji przy zmianie narzędzia AI. Pliki konfiguracyjne klientów AI powinny zawierać maksymalnie 2–3 linie odsyłające model bezpośrednio do `AGENTS.md`. Pliki konfiguracyjne nie mogą zawierać przykładów kodu ani opisów architektury.
 
 ---
 
@@ -174,7 +175,6 @@ project/
 │   └── memory/
 ├── specs/
 ├── knowledge/
-├── playbooks/
 ├── checklists/
 ├── decisions/
 ├── contracts/
@@ -205,9 +205,7 @@ project/
 
 Najważniejszy plik dla agentów AI.
 
-Nie przechowuje wiedzy.
-
-Jest **punktem wejścia (Entry Point)**.
+**Pełni wyłącznie rolę punktu wejścia (Entry Point).** Nie może zawierać żadnych opisów architektury, technologii, decyzji projektowych ani streszczeń. Umieszczanie wiedzy w pliku wejściowym łamie SSOT i prowadzi do nadpisywania kontekstu.
 
 Powinien zawierać jedynie:
 - gdzie znajduje się dokumentacja,
@@ -235,21 +233,20 @@ Nigdy nie duplikujemy wiedzy.
 
 ## MANIFEST.md ⭐⭐⭐⭐⭐
 
-Mapa całego repozytorium.
+Mapa całego repozytorium. To indeks projektu.
 
-To indeks projektu.
+`MANIFEST.md` zawiera wyłącznie listę katalogów i linki do właściwych plików — bez opisów. Zakaz używania nazw ogólnych pisanych wielką literą.
 
 Przykład:
 
 ```txt
-Projekt
-├── Architektura
-├── Specyfikacje
-├── API
-├── Workflow
-├── Testy
-├── ADR
-└── Deployment
+├── [ai/context/](ai/context/)
+├── [specs/](specs/)
+├── [contracts/](contracts/)
+├── [ai/workflows/](ai/workflows/)
+├── [tests/](tests/)
+├── [decisions/](decisions/)
+├── [docs/](docs/)
 ```
 
 Dzięki temu AI nie musi przeszukiwać całego repozytorium.
@@ -258,7 +255,7 @@ Dzięki temu AI nie musi przeszukiwać całego repozytorium.
 
 ## ai/
 
-Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Chociaż głównym odbiorcą jest AI, programiści również powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
+Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Struktura jest wspólna dla człowieka i AI — programiści powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
 
 ---
 
@@ -281,11 +278,19 @@ Zawiera:
 - technologie,
 - słownik pojęć.
 
+**Zasada SSOT:** Pliki w `ai/context/` pełnią funkcję *punktów wejścia* i mogą zawierać wyłącznie:
+- cele wysokiego poziomu,
+- linki Markdown do właściwych plików w `docs/`, `config/`, `decisions/`.
+
+Bezwzględny zakaz powielania lub streszczania opisów technicznych znajdujących się w `docs/`, `config/`, `decisions/`. Zero diagramów technicznych — te należą do `docs/`.
+
 ---
 
 ## ai/rules/
 
-Reguły obowiązujące AI.
+Reguły i konwencje obowiązujące AI.
+
+Pliki w tym katalogu mogą zawierać wyłącznie reguły i konwencje, a **nie** kroki proceduralne. Procedury krok po kroku należą wyłącznie do `ai/workflows/`.
 
 Przykłady:
 
@@ -297,7 +302,7 @@ Przykłady:
 └── review.md
 ```
 
-Przykład:
+Przykład zawartości:
 
 ```txt
 Maximum file 300 lines
@@ -313,7 +318,7 @@ No Business Logic in Controllers
 
 ## ai/workflows/
 
-Opis procesów.
+Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywane przez ludzi i AI**. Workflowy muszą być atomowe i deterministyczne.
 
 Przykład:
 
@@ -321,14 +326,22 @@ Przykład:
 ├── new-feature.md
 ├── bugfix.md
 ├── refactor.md
-└── release.md
+├── release.md
+├── rollback.md
+├── incident.md
+├── production-hotfix.md
+└── onboarding.md
 ```
 
 ---
 
 ## ai/prompts/
 
-Gotowe prompty.
+Gotowe, **generyczne prompty ręcznie wywoływane przez użytkownika**. Katalog służy wyłącznie do przechowywania takich promptów.
+
+**Zasady:**
+- Pliki w `ai/prompts/` nie mogą zawierać reguł typu „always", „never", „must".
+- Instrukcje systemowe należą do `ai/rules/` lub `ai/workflows/` — nie do `ai/prompts/`.
 
 ```txt
 ├── create-api.md
@@ -356,7 +369,7 @@ Szablony.
 
 ## ai/memory/
 
-Pamięć projektu.
+Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy historycznej.
 
 ```txt
 ├── known-problems.md
@@ -364,13 +377,13 @@ Pamięć projektu.
 └── lessons-learned.md
 ```
 
+**Zasada:** Katalog `ai/memory/` przechowuje wyłącznie wiedzę historyczną (np. znane problemy, dług techniczny, lessons learned). Zakaz umieszczania tam aktualnych zadań, planów lub bieżących problemów. Aktywna kolejka zadań należy wyłącznie do `TODO.md`.
+
 ---
 
 ## specs/
 
-Najważniejszy katalog biznesowy.
-
-Opisuje wymagania.
+Najważniejszy katalog biznesowy. Opisuje **wymagania biznesowe i kryteria akceptacji**.
 
 Nie implementację.
 
@@ -380,9 +393,13 @@ Przykład:
 └── authentication/
     ├── requirements.md
     ├── acceptance.md
-    ├── tasks.md
     └── api.md
 ```
+
+**Zasady:**
+- Katalog `specs/` nie może zawierać żadnych list zadań. Zadania muszą znajdować się wyłącznie w `TODO.md`.
+- Pliki w `specs/` nie mogą zawierać tabel danych ani definicji pól — te należą do `contracts/`.
+- `specs/` odwołuje się linkami do `contracts/`, bez powielania pól.
 
 AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
 
@@ -402,25 +419,7 @@ Wiedza domenowa.
 
 Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 
-**Zasada SSOT:** `knowledge/terminology.md` stanowi nadrzędne źródło pojęć domenowych (biznesowych). Plik `ai/context/glossary.md` powinien jedynie odwoływać się do niego lub definiować pojęcia czysto techniczne/programistyczne (np. specyficzne nazwy zmiennych czy modułów), unikając duplikowania wiedzy biznesowej.
-
----
-
-## playbooks/
-
-Procedury operacyjne przeznaczone do wykonywania przez ludzi oraz AI (np. kroki wdrożeniowe, reagowanie na awarie, onboarding dewelopera).
-
-**Różnica wobec `ai/workflows/`:** Playbooki to ogólne instrukcje procesowe dla zespołu (ludzi i AI). Z kolei pliki w `ai/workflows/` to techniczne instrukcje krok po kroku przeznaczone **wyłącznie** dla agentów AI, sterujące bezpośrednio ich zachowaniem.
-
-Przykład:
-
-```txt
-├── release.md
-├── rollback.md
-├── incident.md
-├── production-hotfix.md
-└── onboarding.md
-```
+**Zasada SSOT:** `knowledge/terminology.md` stanowi nadrzędne źródło pojęć domenowych (biznesowych). W wersji FULL cała wiedza biznesowa migruje do `knowledge/terminology.md`. Plik `ai/context/glossary.md` powinien jedynie odwoływać się do niego lub definiować pojęcia czysto techniczne/programistyczne (np. specyficzne nazwy zmiennych czy modułów), unikając duplikowania wiedzy biznesowej.
 
 ---
 
@@ -435,7 +434,7 @@ Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
 └── testing.md
 ```
 
-**Różnica wobec `playbooks/` (Zgodność z SSOT):** Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed wydaniem wersji — `release.md`), podczas gdy playbooki opisują pełną procedurę krok po kroku (jak to wydanie fizycznie przeprowadzić — `playbooks/release.md`). AI doskonale sprawdza się w automatycznej weryfikacji takich checklist.
+Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed wydaniem wersji), podczas gdy pełne procedury krok po kroku znajdują się w `ai/workflows/`. AI doskonale sprawdza się w automatycznej weryfikacji takich checklist.
 
 ---
 
@@ -464,7 +463,7 @@ AI nie zgaduje dlaczego coś zostało wybrane.
 
 ## contracts/
 
-Kontrakty.
+Formalne schematy API i struktur danych.
 
 ```txt
 ├── OpenAPI
@@ -475,13 +474,15 @@ Kontrakty.
 └── Proto
 ```
 
+**Zasada:** `contracts/` zawiera formalne schematy API i struktur danych. `specs/` opisuje wymagania biznesowe i kryteria akceptacji, odwołując się linkami do `contracts/` bez powielania pól.
+
 AI nie zgaduje struktur danych.
 
 ---
 
 ## docs/
 
-Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania zarówno przez programistów, jak i przez AI w celu zrozumienia kontekstu technicznego systemu.
+Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania przez programistów i AI w celu zrozumienia kontekstu technicznego systemu.
 
 Przykład:
 
@@ -494,11 +495,13 @@ Przykład:
 └── testing/
 ```
 
+**Zasada:** Dokumentacja nie może zawierać fragmentów kodu dłuższych niż 5 linii. Dłuższe przykłady powinny znajdować się wyłącznie w `examples/` lub w kodzie źródłowym.
+
 ---
 
 ## src/
 
-Kod aplikacji.
+Kod aplikacji. Katalog `src/` może zawierać wyłącznie kod źródłowy. Pliki dokumentacyjne (`.md`) są zabronione i muszą znajdować się w `docs/`, `knowledge/` lub `ai/context/`.
 
 ---
 
@@ -512,7 +515,7 @@ Najlepiej podzielone analogicznie do src.
 
 ## config/
 
-Cała konfiguracja.
+Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konfiguracji. Jeśli tooling wymaga pliku w root, należy umieścić tam minimalny plik (maks. 5 linii) rozszerzający konfigurację z `config/` lub użyć symlinka.
 
 ```txt
 ├── eslint
@@ -571,7 +574,7 @@ Narzędzia pomocnicze.
 
 ## examples/
 
-Przykłady.
+Przykłady użycia i dłuższe fragmenty kodu (powyżej 5 linii), do których odwołuje się dokumentacja.
 
 ```txt
 ├── request.json
@@ -586,7 +589,7 @@ LLM bardzo dobrze uczy się przez przykłady (Few-Shot Learning).
 
 ## plans/
 
-Plany większych zmian.
+Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 
 ```txt
 ├── migration.md
@@ -640,11 +643,9 @@ Pliki statyczne.
 
 ## tmp/
 
-Pliki tymczasowe.
+Pliki tymczasowe. AI często generuje tymczasowe pliki — nie powinny trafiać do `src/`.
 
-AI często generuje tymczasowe pliki.
-
-Nie powinny trafiać do src.
+**Zasada:** Katalog `tmp/` musi być ignorowany w `.gitignore` (wraz z ukrytymi logami narzędzi AI, np. `.cursor-tutor`) oraz przez CI/CD.
 
 ---
 
@@ -677,15 +678,29 @@ Plan rozwoju.
 
 ## TODO.md
 
-Aktualne zadania.
+Jedyne miejsce na aktywną kolejkę zadań.
+
+**Zasady:**
+- `TODO.md` — jedyne miejsce na aktywną kolejkę zadań.
+- `plans/` — wyłącznie epiki i duże zmiany, linkowane z `TODO.md`.
+- `ai/memory/` — wyłącznie wiedza historyczna, zakaz list zadań.
+- `TODO.md` nie może zawierać zadań technicznych typu „naprawić bug" — te należą do systemu ticketów lub `plans/`.
+
+---
+
+## Zarządzanie terminologią wg poziomu projektu
+
+- **MINIMAL i OPTIMAL:** `ai/context/glossary.md` może przechowywać kluczowe terminy biznesowe i techniczne.
+- **FULL:** Cała wiedza biznesowa migruje do `knowledge/terminology.md`. `ai/context/glossary.md` zawiera wyłącznie terminy techniczne.
+- We wszystkich poziomach: `ai/context/glossary.md` musi zawierać definicje jednozdaniowe.
 
 ---
 
 ## Integracja z klientami AI
 
-Każdy klient AI ma własny plik konfiguracyjny.
+Pliki konfiguracyjne klientów AI powinny zawierać **maksymalnie 2–3 linie** odsyłające model bezpośrednio do `AGENTS.md`. Pliki konfiguracyjne nie mogą zawierać przykładów kodu ani wiedzy biznesowej.
 
-Przykłady:
+Przykłady plików konfiguracyjnych:
 
 ```txt
 ├── AGENTS.md
@@ -699,27 +714,28 @@ Przykłady:
 
 **Zasada:**
 - Żaden z tych plików nie powinien zawierać wiedzy biznesowej ani architektonicznej.
-- Powinny jedynie wskazywać lokalizację dokumentacji.
+- Powinny jedynie wskazywać lokalizację dokumentacji (max. 2–3 linie).
 
-Przykład:
+Przepływ informacji:
 
 ```mermaid
 flowchart TD
     CLAUDE[CLAUDE.md]
     AGENTS[AGENTS.md]
     CONTEXT[ai/context/]
-    DOCS[docs/]
     SPECS[specs/]
+    DOCS[docs/]
 
     CLAUDE -->|Read AGENTS.md| AGENTS
     AGENTS --> CONTEXT
-    CONTEXT --> DOCS
-    DOCS --> SPECS
+    CONTEXT --> SPECS
+    SPECS --> DOCS
 ```
 
 Dzięki temu zmiana IDE nie wymaga przepisywania dokumentacji.
 
 ---
+`
 
 ## Dobre praktyki dla AI
 
@@ -734,9 +750,9 @@ Dzięki temu zmiana IDE nie wymaga przepisywania dokumentacji.
 | `contracts/` | Brak domysłów dotyczących struktur danych |
 | `examples/` | Few-Shot Learning poprawia jakość odpowiedzi |
 | `checklists/` | Powtarzalne procesy i mniej błędów |
-| `playbooks/` | Gotowe procedury operacyjne |
+| `ai/workflows/` | Gotowe procedury operacyjne dla ludzi i AI |
 | `ai/rules/` | Spójność kodu między sesjami |
-| `ai/memory/` | Zachowanie wiedzy o projekcie |
+| `ai/memory/` | Zachowanie wiedzy historycznej o projekcie |
 | `MANIFEST.md` | AI szybko odnajduje właściwe pliki |
 | `AGENTS.md` | Jeden punkt wejścia dla wszystkich agentów |
 
@@ -749,9 +765,9 @@ Nowoczesne repozytorium **AI-First** powinno rozdzielać odpowiedzialności na c
 | Obszar | Przeznaczenie |
 |----------|----------------|
 | **Kod (`src/`)** | Implementacja aplikacji |
-| **Dokumentacja (`docs/`, `knowledge/`, `specs/`)** | Wiedza dla ludzi oraz opis wymagań biznesowych |
-| **Kontekst AI (`ai/`)** | Reguły, workflow, pamięć projektu, szablony i prompty wykorzystywane przez agentów |
-| **Integracja z narzędziami AI (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.github/copilot-instructions.md` itd.)** | Cienka warstwa wskazująca, gdzie znajduje się właściwy kontekst, bez duplikowania wiedzy |
+| **Dokumentacja (`docs/`, `knowledge/`, `specs/`)** | Wiedza i opis wymagań biznesowych |
+| **Kontekst AI (`ai/`)** | Reguły, workflow, pamięć historyczna, szablony i prompty |
+| **Integracja z narzędziami AI (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.github/copilot-instructions.md` itd.)** | Cienka warstwa (max. 2–3 linie) wskazująca, gdzie znajduje się właściwy kontekst, bez duplikowania wiedzy |
 
 Tak zaprojektowana struktura:
 - jest niezależna od języka programowania i frameworka,
