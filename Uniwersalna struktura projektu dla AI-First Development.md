@@ -102,7 +102,29 @@ Nie chcemy przepisywać dokumentacji przy zmianie narzędzia AI. Pliki konfigura
 
 ---
 
+## Zasada przyrostowego wzrostu struktury
+
+Poziomy **MINIMAL / OPTIMAL / FULL** opisane w kolejnej sekcji mają charakter **wyłącznie poglądowy**. Pokazują typowe migawki struktury na różnych etapach życia projektu — nie są to sztywne warianty, spośród których wybiera się jeden na starcie.
+
+**Zasada bazowa:**
+- Każdy projekt zaczyna od struktury **MINIMAL**.
+- Kolejny katalog jest dodawany **wyłącznie wtedy, gdy pojawia się konkretna, realna potrzeba** jego istnienia — np. `decisions/` powstaje w momencie, gdy trzeba zapisać pierwszy ADR, a nie prewencyjnie „bo tak jest w OPTIMAL".
+- Struktura nigdy nie „przeskakuje" jako całość do OPTIMAL lub FULL — rośnie katalog po katalogu, wraz z realnymi potrzebami projektu.
+
+**Skąd AI (i człowiek) wie, jaki katalog utworzyć i jak go nazwać?**
+Służy do tego plik [`ai/context/structure-map.md`](#aicontextstructure-mapmd) — pełny katalog wszystkich możliwych, oficjalnie nazwanych katalogów opisanych w tym dokumencie, wraz z warunkiem, kiedy dany katalog powinien powstać. Przed utworzeniem nowego katalogu najwyższego poziomu AI **musi** sprawdzić `structure-map.md`, zamiast zgadywać nazwę lub tworzyć alias (patrz: Zasady nazewnictwa katalogów).
+
+**Postępowanie, gdy potrzebny katalog jeszcze nie istnieje w repozytorium:**
+1. Sprawdź `ai/context/structure-map.md` — czy istnieje oficjalna nazwa i definicja tego katalogu.
+2. Jeśli tak — utwórz katalog dokładnie pod tą nazwą, zgodnie z opisem w tym dokumencie, i dodaj wpis w `MANIFEST.md`.
+3. Jeśli katalogu nie ma w `structure-map.md` — **nie twórz go samodzielnie**. Nowy typ katalogu to decyzja architektoniczna, nie może powstać przez domysł AI — zgłoś potrzebę człowiekowi (np. jako wpis w `TODO.md` lub bezpośrednie pytanie).
+4. Katalog, który przestał być potrzebny (np. `experiments/` po zakończeniu eksperymentów), może zostać usunięty lub przeniesiony do `archive/` — struktura kurczy się tak samo świadomie, jak rośnie.
+
+---
+
 ## Wersja MINIMAL (podstawowa)
+
+*Migawka poglądowa — punkt startowy każdego projektu.*
 
 ```txt
 project/
@@ -119,6 +141,8 @@ project/
 ---
 
 ## Wersja OPTIMAL (zalecana)
+
+*Migawka poglądowa — typowy stan projektu średniej wielkości, osiągnięty przyrostowo z MINIMAL.*
 
 ```txt
 project/
@@ -156,6 +180,8 @@ project/
 ---
 
 ## Wersja FULL (AI Native)
+
+*Migawka poglądowa — stan dużego, dojrzałego projektu wielomodułowego.*
 
 ```txt
 project/
@@ -197,11 +223,15 @@ project/
 
 ---
 
-## Szczegółowy opis katalogów
+## Szczegółowy opis katalogów i plików
 
 ---
 
-## AGENTS.md ⭐⭐⭐⭐⭐
+## Pliki katalogu głównego (root)
+
+---
+
+## AGENTS.md
 
 Najważniejszy plik dla agentów AI.
 
@@ -213,11 +243,12 @@ Powinien zawierać jedynie:
 - jakie workflow stosować,
 - czego nie robić.
 
-Przykład:
+**Minimalny szablon:**
 
 ```txt
 Read first:
 ├── ai/context/project.md
+├── ai/context/structure-map.md
 ├── ai/context/architecture.md
 
 Follow:
@@ -231,13 +262,13 @@ Nigdy nie duplikujemy wiedzy.
 
 ---
 
-## MANIFEST.md ⭐⭐⭐⭐⭐
+## MANIFEST.md
 
-Mapa całego repozytorium. To indeks projektu.
+Mapa całego repozytorium. To indeks projektu — lista tego, co **aktualnie istnieje** w repozytorium (w odróżnieniu od `ai/context/structure-map.md`, który opisuje wszystko, co **może** powstać).
 
 `MANIFEST.md` zawiera wyłącznie listę katalogów i linki do właściwych plików — bez opisów. Zakaz używania nazw ogólnych pisanych wielką literą.
 
-Przykład:
+**Minimalny szablon:**
 
 ```txt
 ├── [ai/context/](ai/context/)
@@ -253,6 +284,144 @@ Dzięki temu AI nie musi przeszukiwać całego repozytorium.
 
 ---
 
+## README.md
+
+Krótki. Nie powinien zastępować dokumentacji.
+
+Powinien zawierać:
+- opis projektu,
+- instalację,
+- uruchomienie,
+- strukturę,
+- link do dokumentacji.
+
+**Minimalny szablon:**
+
+```md
+# Nazwa projektu
+
+Jednozdaniowy opis projektu.
+
+## Instalacja
+...
+
+## Uruchomienie
+...
+
+## Struktura
+Zobacz [MANIFEST.md](MANIFEST.md).
+
+## Dokumentacja
+Zobacz [docs/](docs/) i [AGENTS.md](AGENTS.md) (dla agentów AI).
+```
+
+---
+
+## CHANGELOG.md
+
+Historia zmian.
+
+**Minimalny szablon:**
+
+```md
+## [Unreleased]
+
+## [1.0.0] - 2026-01-01
+### Added
+- Pierwsza wersja projektu.
+```
+
+---
+
+## ROADMAP.md
+
+Plan rozwoju.
+
+**Minimalny szablon:**
+
+```md
+## Teraz
+- ...
+
+## Następne
+- ...
+
+## Później
+- ...
+```
+
+---
+
+## TODO.md
+
+Jedyne miejsce na aktywną kolejkę zadań.
+
+**Zasady:**
+- `TODO.md` — jedyne miejsce na aktywną kolejkę zadań.
+- `plans/` — wyłącznie epiki i duże zmiany, linkowane z `TODO.md`.
+- `ai/memory/` — wyłącznie wiedza historyczna, zakaz list zadań.
+- `TODO.md` nie może zawierać zadań technicznych typu „naprawić bug" — te należą do systemu ticketów lub `plans/`.
+
+**Minimalny szablon:**
+
+```md
+## W trakcie
+- [ ] Zadanie 1
+
+## Do zrobienia
+- [ ] Zadanie 2
+
+## Zablokowane
+- [ ] Zadanie 3 — czeka na decyzję: patrz [decisions/](decisions/)
+```
+
+---
+
+## LICENSE
+
+Licencja projektu (np. MIT, Apache 2.0), w standardowym, niezmodyfikowanym brzmieniu, kopiowana z oficjalnego źródła licencji.
+
+---
+
+## .gitignore
+
+Plik kontrolujący, co nie trafia do repozytorium.
+
+**Musi zawierać wykluczenie:**
+- `tmp/` — wraz z ukrytymi logami narzędzi AI (np. `.cursor-tutor`),
+- artefaktów builda i zależności specyficznych dla stosu technologicznego.
+
+Wykluczenie `tmp/` musi obowiązywać także w konfiguracji CI/CD, nie tylko w Git.
+
+**Minimalny szablon:**
+
+```txt
+tmp/
+.cursor-tutor
+node_modules/
+dist/
+build/
+*.log
+.env
+```
+
+---
+
+## .github/
+
+Konfiguracja specyficzna dla GitHub: automatyzacja CI/CD oraz szablony współpracy.
+
+```txt
+├── workflows/
+│   └── ci.yml
+├── ISSUE_TEMPLATE.md
+└── PULL_REQUEST_TEMPLATE.md
+```
+
+**Zasada:** pliki w `.github/` nie zawierają wiedzy biznesowej ani architektonicznej — kroki CI/CD wymagające opisu odsyłają do `ai/workflows/` lub `scripts/`.
+
+---
+
 ## ai/
 
 Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Struktura jest wspólna dla człowieka i AI — programiści powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
@@ -265,6 +434,7 @@ Opis projektu.
 
 ```txt
 ├── project.md
+├── structure-map.md
 ├── architecture.md
 ├── modules.md
 ├── stack.md
@@ -276,13 +446,47 @@ Zawiera:
 - moduły,
 - architekturę,
 - technologie,
-- słownik pojęć.
+- słownik pojęć,
+- mapę możliwej struktury katalogów.
 
 **Zasada SSOT:** Pliki w `ai/context/` pełnią funkcję *punktów wejścia* i mogą zawierać wyłącznie:
 - cele wysokiego poziomu,
 - linki Markdown do właściwych plików w `docs/`, `config/`, `decisions/`.
 
 Bezwzględny zakaz powielania lub streszczania opisów technicznych znajdujących się w `docs/`, `config/`, `decisions/`. Zero diagramów technicznych — te należą do `docs/`.
+
+**Minimalny szablon (`project.md`):**
+
+```md
+# Nazwa projektu
+
+## Cel
+Jedno zdanie / krótki akapit — po co istnieje projekt.
+
+## Powiązane
+- [architecture.md](architecture.md)
+- [modules.md](modules.md)
+- [structure-map.md](structure-map.md)
+```
+
+### ai/context/structure-map.md
+
+Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, płaski katalog wszystkich katalogów opisanych w niniejszym dokumencie (superzbiór MINIMAL + OPTIMAL + FULL), wraz z warunkiem, kiedy dany katalog powinien zostać utworzony w konkretnym projekcie. To jedyne miejsce, które AI sprawdza przed utworzeniem nowego katalogu najwyższego poziomu.
+
+**Minimalny szablon:**
+
+```md
+| Katalog | Kiedy utworzyć |
+|---|---|
+| `specs/` | gdy pojawia się pierwsza funkcjonalność wymagająca spisania wymagań biznesowych |
+| `decisions/` | gdy pojawia się pierwsza decyzja architektoniczna warta uzasadnienia |
+| `contracts/` | gdy projekt zaczyna eksponować API lub wymieniać dane między modułami |
+| `knowledge/` | gdy wiedza biznesowa przestaje mieścić się w jednym `glossary.md` |
+| `checklists/` | gdy powtarzalny proces (np. release) zaczyna być wykonywany ręcznie więcej niż raz |
+| `plans/` | gdy pojawia się pierwsza zmiana zbyt duża na jeden wpis w `TODO.md` |
+| `experiments/` | gdy zespół zaczyna testować rozwiązania nieprzeznaczone od razu na produkcję |
+| `archive/` | gdy pierwszy fragment kodu lub dokumentacji staje się nieaktywny, ale wart zachowania |
+```
 
 ---
 
@@ -292,8 +496,6 @@ Reguły i konwencje obowiązujące AI.
 
 Pliki w tym katalogu mogą zawierać wyłącznie reguły i konwencje, a **nie** kroki proceduralne. Procedury krok po kroku należą wyłącznie do `ai/workflows/`.
 
-Przykłady:
-
 ```txt
 ├── coding.md
 ├── testing.md
@@ -302,7 +504,7 @@ Przykłady:
 └── review.md
 ```
 
-Przykład zawartości:
+**Minimalny szablon (`coding.md`):**
 
 ```txt
 Maximum file 300 lines
@@ -320,8 +522,6 @@ No Business Logic in Controllers
 
 Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywane przez ludzi i AI**. Workflowy muszą być atomowe i deterministyczne.
 
-Przykład:
-
 ```txt
 ├── new-feature.md
 ├── bugfix.md
@@ -331,6 +531,18 @@ Przykład:
 ├── incident.md
 ├── production-hotfix.md
 └── onboarding.md
+```
+
+**Minimalny szablon (`new-feature.md`):**
+
+```md
+# Workflow: Nowa funkcjonalność
+
+1. Przeczytaj wymagania w `specs/<feature>/requirements.md`.
+2. Sprawdź powiązany kontrakt w `contracts/`, jeśli istnieje.
+3. Zaimplementuj zgodnie z `ai/rules/coding.md`.
+4. Dodaj testy w `tests/`.
+5. Zaktualizuj `CHANGELOG.md`.
 ```
 
 ---
@@ -350,6 +562,14 @@ Gotowe, **generyczne prompty ręcznie wywoływane przez użytkownika**. Katalog 
 └── migration.md
 ```
 
+**Minimalny szablon (`create-api.md`):**
+
+```md
+Kontekst: {krótki opis funkcjonalności}
+Wymagania: zgodnie z ai/rules/coding.md oraz contracts/{nazwa}.yaml
+Zadanie: wygeneruj kontroler, serwis i testy jednostkowe.
+```
+
 ---
 
 ## ai/templates/
@@ -365,6 +585,8 @@ Szablony.
 └── endpoint
 ```
 
+*(Uwaga: forma nazw plików/podkatalogów w tym katalogu wymaga jeszcze doprecyzowania — do ustalenia osobno.)*
+
 ---
 
 ## ai/memory/
@@ -379,6 +601,15 @@ Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy hist
 
 **Zasada:** Katalog `ai/memory/` przechowuje wyłącznie wiedzę historyczną (np. znane problemy, dług techniczny, lessons learned). Zakaz umieszczania tam aktualnych zadań, planów lub bieżących problemów. Aktywna kolejka zadań należy wyłącznie do `TODO.md`.
 
+**Minimalny szablon (`known-problems.md`):**
+
+```md
+## [2026-01-15] Race condition w warstwie cache
+**Status:** otwarty
+**Opis:** ...
+**Obejście:** ...
+```
+
 ---
 
 ## specs/
@@ -386,8 +617,6 @@ Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy hist
 Najważniejszy katalog biznesowy. Opisuje **wymagania biznesowe i kryteria akceptacji**.
 
 Nie implementację.
-
-Przykład:
 
 ```txt
 └── authentication/
@@ -403,11 +632,35 @@ Przykład:
 
 AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
 
+**Minimalny szablon (`requirements.md`):**
+
+```md
+# Wymagania: Uwierzytelnianie
+
+## Cel biznesowy
+...
+
+## Wymagania
+- WYM-1: ...
+- WYM-2: ...
+
+## Powiązany kontrakt
+[contracts/auth.yaml](../../contracts/auth.yaml)
+```
+
+**Minimalny szablon (`acceptance.md`):**
+
+```md
+## Kryteria akceptacji
+- [ ] Użytkownik loguje się emailem i hasłem
+- [ ] Błędne hasło zwraca komunikat X
+```
+
 ---
 
 ## knowledge/
 
-Wiedza domenowa.
+Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 
 ```txt
 ├── business.md
@@ -417,9 +670,17 @@ Wiedza domenowa.
 └── legal.md
 ```
 
-Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
+**Zasada SSOT:** relacja `knowledge/terminology.md` ↔ `ai/context/glossary.md` opisana jest w jednym miejscu — sekcja [Zarządzanie terminologią wg poziomu projektu](#zarzadzanie-terminologia-wg-poziomu-projektu) poniżej. Nie duplikować tej reguły tutaj.
 
-**Zasada SSOT:** `knowledge/terminology.md` stanowi nadrzędne źródło pojęć domenowych (biznesowych). W wersji FULL cała wiedza biznesowa migruje do `knowledge/terminology.md`. Plik `ai/context/glossary.md` powinien jedynie odwoływać się do niego lub definiować pojęcia czysto techniczne/programistyczne (np. specyficzne nazwy zmiennych czy modułów), unikając duplikowania wiedzy biznesowej.
+**Minimalny szablon (`terminology.md`):**
+
+```md
+## Zamówienie
+Transakcja zainicjowana przez klienta, obejmująca minimum jedną pozycję.
+
+## Underwriting
+Proces oceny ryzyka poprzedzający akceptację polisy.
+```
 
 ---
 
@@ -436,13 +697,20 @@ Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
 
 Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed wydaniem wersji), podczas gdy pełne procedury krok po kroku znajdują się w `ai/workflows/`. AI doskonale sprawdza się w automatycznej weryfikacji takich checklist.
 
+**Minimalny szablon (`release.md`):**
+
+```md
+## Checklist: Release
+- [ ] Wszystkie testy przechodzą
+- [ ] `CHANGELOG.md` zaktualizowany
+- [ ] Numer wersji podbity
+```
+
 ---
 
 ## decisions/
 
 Architecture Decision Records (ADR).
-
-Przykład:
 
 ```txt
 ├── 001-postgres.md
@@ -458,6 +726,27 @@ Opisujemy:
 - konsekwencje.
 
 AI nie zgaduje dlaczego coś zostało wybrane.
+
+**Minimalny szablon:**
+
+```md
+# ADR 001: Wybór PostgreSQL
+
+## Status
+Zaakceptowane
+
+## Decyzja
+...
+
+## Uzasadnienie
+...
+
+## Alternatywy
+...
+
+## Konsekwencje
+...
+```
 
 ---
 
@@ -478,13 +767,24 @@ Formalne schematy API i struktur danych.
 
 AI nie zgaduje struktur danych.
 
+**Minimalny szablon (fragment OpenAPI):**
+
+```yaml
+openapi: 3.0.0
+paths:
+  /users:
+    get:
+      summary: Lista użytkowników
+      responses:
+        '200':
+          description: OK
+```
+
 ---
 
 ## docs/
 
 Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania przez programistów i AI w celu zrozumienia kontekstu technicznego systemu.
-
-Przykład:
 
 ```txt
 ├── architecture/
@@ -496,6 +796,21 @@ Przykład:
 ```
 
 **Zasada:** Dokumentacja nie może zawierać fragmentów kodu dłuższych niż 5 linii. Dłuższe przykłady powinny znajdować się wyłącznie w `examples/` lub w kodzie źródłowym.
+
+**Minimalny szablon (`architecture/payments.md`):**
+
+```md
+# Architektura: Moduł płatności
+
+## Kontekst
+...
+
+## Decyzje
+Zobacz [decisions/](../../decisions/).
+
+## Diagram
+(diagram lub odnośnik — kod >5 linii przenieś do examples/)
+```
 
 ---
 
@@ -527,6 +842,12 @@ Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konf
 └── docker
 ```
 
+**Minimalny szablon (plik w root rozszerzający `config/`):**
+
+```json
+{ "extends": "./config/tsconfig/base.json" }
+```
+
 ---
 
 ## scripts/
@@ -541,6 +862,14 @@ Automatyzacja.
 ├── lint
 ├── generate
 └── migration
+```
+
+**Minimalny szablon (nagłówek skryptu):**
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+# Cel: krótki opis co robi skrypt
 ```
 
 ---
@@ -597,6 +926,22 @@ Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 └── caching.md
 ```
 
+**Minimalny szablon:**
+
+```md
+# Plan: Migracja do mikroserwisów
+
+## Cel
+...
+
+## Fazy
+1. ...
+2. ...
+
+## Ryzyka
+...
+```
+
 ---
 
 ## experiments/
@@ -611,6 +956,21 @@ Eksperymenty.
 ```
 
 Nie mieszamy ich z produkcją.
+
+**Minimalny szablon:**
+
+```md
+# Eksperyment: Reranking w RAG
+
+## Hipoteza
+...
+
+## Wynik
+...
+
+## Decyzja
+kontynuować / porzucić
+```
 
 ---
 
@@ -645,53 +1005,20 @@ Pliki statyczne.
 
 Pliki tymczasowe. AI często generuje tymczasowe pliki — nie powinny trafiać do `src/`.
 
-**Zasada:** Katalog `tmp/` musi być ignorowany w `.gitignore` (wraz z ukrytymi logami narzędzi AI, np. `.cursor-tutor`) oraz przez CI/CD.
-
----
-
-## README.md
-
-Krótki.
-
-Powinien zawierać:
-- opis projektu,
-- instalację,
-- uruchomienie,
-- strukturę,
-- link do dokumentacji.
-
-Nie powinien zastępować dokumentacji.
-
----
-
-## CHANGELOG.md
-
-Historia zmian.
-
----
-
-## ROADMAP.md
-
-Plan rozwoju.
-
----
-
-## TODO.md
-
-Jedyne miejsce na aktywną kolejkę zadań.
-
-**Zasady:**
-- `TODO.md` — jedyne miejsce na aktywną kolejkę zadań.
-- `plans/` — wyłącznie epiki i duże zmiany, linkowane z `TODO.md`.
-- `ai/memory/` — wyłącznie wiedza historyczna, zakaz list zadań.
-- `TODO.md` nie może zawierać zadań technicznych typu „naprawić bug" — te należą do systemu ticketów lub `plans/`.
+**Zasada:** Katalog `tmp/` musi być ignorowany zgodnie z regułami zdefiniowanymi w [`.gitignore`](#gitignore) — nie duplikować tej listy tutaj.
 
 ---
 
 ## Zarządzanie terminologią wg poziomu projektu
 
-- **MINIMAL i OPTIMAL:** `ai/context/glossary.md` może przechowywać kluczowe terminy biznesowe i techniczne.
+**Rozróżnienie kategorii terminów:**
+- **Termin techniczny** — pojęcie ze stosu technologicznego, wzorca projektowego lub struktury systemu, niezależne od domeny klienta (np. „Repository", „Feature flag", „Middleware").
+- **Termin biznesowy** — pojęcie domenowe, specyficzne dla branży lub klienta, zrozumiałe dla osób nietechnicznych (np. „Underwriting", „Zamówienie kompletne", „Klient VIP").
+
+**Zasady wg poziomu projektu:**
+- **MINIMAL i OPTIMAL:** `ai/context/glossary.md` może przechowywać kluczowe terminy biznesowe i techniczne — w tych wersjach nie istnieje `knowledge/terminology.md`, więc plik musi być samowystarczalny.
 - **FULL:** Cała wiedza biznesowa migruje do `knowledge/terminology.md`. `ai/context/glossary.md` zawiera wyłącznie terminy techniczne.
+- **FULL — linkowanie zamiast duplikacji:** jeśli termin techniczny w `glossary.md` jest ściśle powiązany z pojęciem biznesowym, wpis może linkować do właściwej definicji w `knowledge/terminology.md` zamiast ją powtarzać, np. `[Zamówienie](../../knowledge/terminology.md#zamowienie)`.
 - We wszystkich poziomach: `ai/context/glossary.md` musi zawierać definicje jednozdaniowe.
 
 ---
@@ -705,28 +1032,29 @@ Przykłady plików konfiguracyjnych:
 ```txt
 ├── AGENTS.md
 ├── CLAUDE.md
-├── .cursor/
+├── .cursor/rules/main.mdc
 ├── .clinerules
-├── .roo/
-├── .windsurf/
+├── .roo/rules.md
+├── .windsurf/rules.md
 └── .github/copilot-instructions.md
 ```
 
 **Zasada:**
 - Żaden z tych plików nie powinien zawierać wiedzy biznesowej ani architektonicznej.
 - Powinny jedynie wskazywać lokalizację dokumentacji (max. 2–3 linie).
+- Jeśli klient AI wymaga katalogu konfiguracyjnego (np. `.cursor/`, `.roo/`, `.windsurf/`), zasada 2–3 linii dotyczy głównego pliku reguł wewnątrz tego katalogu — sam katalog nie jest plikiem i nie podlega bezpośrednio limitowi linii.
 
 Przepływ informacji:
 
 ```mermaid
 flowchart TD
-    CLAUDE[CLAUDE.md]
+    CONFIG["Plik konfiguracyjny klienta AI<br/>(CLAUDE.md / .cursor / .roo / .windsurf / ...)"]
     AGENTS[AGENTS.md]
     CONTEXT[ai/context/]
     SPECS[specs/]
     DOCS[docs/]
 
-    CLAUDE -->|Read AGENTS.md| AGENTS
+    CONFIG -->|Read AGENTS.md| AGENTS
     AGENTS --> CONTEXT
     CONTEXT --> SPECS
     SPECS --> DOCS
@@ -735,7 +1063,6 @@ flowchart TD
 Dzięki temu zmiana IDE nie wymaga przepisywania dokumentacji.
 
 ---
-`
 
 ## Dobre praktyki dla AI
 
@@ -753,6 +1080,7 @@ Dzięki temu zmiana IDE nie wymaga przepisywania dokumentacji.
 | `ai/workflows/` | Gotowe procedury operacyjne dla ludzi i AI |
 | `ai/rules/` | Spójność kodu między sesjami |
 | `ai/memory/` | Zachowanie wiedzy historycznej o projekcie |
+| `ai/context/structure-map.md` | AI wie, kiedy i jaki katalog utworzyć, zamiast zgadywać |
 | `MANIFEST.md` | AI szybko odnajduje właściwe pliki |
 | `AGENTS.md` | Jeden punkt wejścia dla wszystkich agentów |
 
@@ -775,4 +1103,5 @@ Tak zaprojektowana struktura:
 - ułatwia zmianę narzędzia bez migracji dokumentacji,
 - minimalizuje błędy wynikające z utraty kontekstu,
 - zapewnia spójność pracy ludzi i agentów AI,
+- rośnie przyrostowo, katalog po katalogu, zamiast wymuszać jeden z trzech sztywnych wariantów,
 - skaluje się od małych aplikacji po duże systemy wielomodułowe.
