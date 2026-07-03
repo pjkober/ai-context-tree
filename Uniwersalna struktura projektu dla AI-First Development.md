@@ -29,9 +29,11 @@ Dlatego dobra struktura projektu powinna:
 - rozdzielać wiedzę od implementacji,
 - umożliwiać łatwą zmianę klienta AI bez przebudowy repozytorium.
 
-**Zasady nazewnictwa katalogów:**
+**Zasady nazewnictwa katalogów i organizacji wiedzy:**
 - Każdy katalog w repozytorium musi posiadać jedną, oficjalną nazwę. Zakaz tworzenia aliasów, skrótów lub alternatywnych nazw katalogów w dokumentacji lub przykładach.
 - Nazwy katalogów muszą być pełne i jednoznaczne (np. `config/` zamiast `cfg/`, `infrastructure/` zamiast `infra/`). Skróty są zabronione.
+- Reguły dotyczą fizycznych nazw katalogów i plików repozytorium. Nazwy własne technologii w opisach zachowują oficjalną pisownię.
+- Jedna kategoria wiedzy = jeden katalog, jedno zagadnienie = jeden plik.
 
 ---
 
@@ -199,32 +201,66 @@ project/
 ├── TODO.md
 ├── LICENSE
 ├── ai/
-│   ├── context/
-│   ├── rules/
-│   ├── workflows/
-│   ├── prompts/
-│   ├── templates/
-│   └── memory/
+│ ├── context/
+│ ├── rules/
+│ ├── workflows/
+│ ├── prompts/
+│ ├── templates/
+│ └── memory/
 ├── specs/
 ├── knowledge/
+│ ├── business/
+│ ├── faq/
+│ ├── terminology/
+│ ├── edge-cases/
+│ ├── legal/
+│ └── personas/
 ├── checklists/
 ├── decisions/
 ├── contracts/
+│ ├── openapi.yaml
+│ ├── json-schema.json
+│ ├── schema.graphql
+│ ├── events.yaml
+│ └── grpc/
+│ └── service.proto
 ├── docs/
+├── research/
+│ ├── market/
+│ ├── competitors/
+│ ├── users/
+│ ├── benchmarks/
+│ ├── spikes/
+│ └── experiments/
 ├── src/
 ├── tests/
 ├── infrastructure/
+│ ├── docker/
+│ ├── terraform/
+│ ├── helm/
+│ ├── kubernetes/
+│ └── ansible/
 ├── config/
 ├── scripts/
 ├── tools/
 ├── examples/
 ├── plans/
 ├── experiments/
+│ ├── rag/
+│ ├── llm/
+│ ├── prototypes/
+│ └── benchmarks/
 ├── archive/
 ├── assets/
+│ ├── images/
+│ ├── icons/
+│ ├── fonts/
+│ ├── documents/
+│ └── design/
 ├── .github/
 ├── .gitignore
 └── tmp/
+
 ```
 
 ---
@@ -680,14 +716,23 @@ AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
 Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 
 ```txt
-├── business.md
-├── faq.md
-├── terminology.md
-├── edge-cases.md
-└── legal.md
+├── business/
+├── faq/
+├── terminology/
+├── edge-cases/
+├── legal/
+└── personas/
 ```
 
-**Zasada SSOT:** relacja `knowledge/terminology.md` ↔ `ai/context/glossary.md` opisana jest w jednym miejscu — sekcja „Zarządzanie terminologią wg poziomu projektu" w dalszej części dokumentu. Nie duplikować tej reguły tutaj.
+**Opis podkatalogów:**
+- **`business/`** — wiedza o procesach biznesowych, modelach działania, zasadach biznesowych oraz logice domenowej. Każdy proces lub obszar biznesowy powinien być opisany w osobnym pliku.
+- **`faq/`** — najczęściej zadawane pytania wraz z odpowiedziami. Zaleca się grupowanie pytań tematycznie (np. uwierzytelnianie, płatności, integracje), zamiast tworzenia jednego dużego dokumentu.
+- **`terminology/`** — słownik pojęć biznesowych używanych w projekcie. Każdy termin powinien znajdować się w osobnym pliku zawierającym jednoznaczną definicję oraz ewentualne powiązania z innymi pojęciami. Nie należy umieszczać tutaj terminów technicznych stosu technologicznego — te należą do `ai/context/stack.md` oraz `ai/context/glossary.md`.
+- **`edge-cases/`** — opis nietypowych scenariuszy biznesowych, wyjątków i szczególnych przypadków, które nie wynikają bezpośrednio z głównego procesu, ale muszą zostać uwzględnione podczas implementacji.
+- **`legal/`** — wymagania prawne, regulacyjne i compliance mające wpływ na projekt (np. RODO/GDPR, retencja danych, polityki bezpieczeństwa, wymagania branżowe).
+- **`personas/`** — persony użytkowników systemu. Każda persona powinna być opisana w osobnym pliku (np. `anna.md`, `administrator.md`, `ksiegowa.md`) zawierającym jej cele, potrzeby, ograniczenia, uprawnienia oraz typowe scenariusze użycia.
+
+**Zasada SSOT:** `knowledge/` jest jedynym miejscem przechowywania wiedzy domenowej. Dokumentacja techniczna należy do `docs/`, wymagania do `specs/`, decyzje architektoniczne do `decisions/`, a informacje o stosie technologicznym do `ai/context/`.
 
 **Minimalny szablon (`terminology.md`):**
 
@@ -700,6 +745,27 @@ Transakcja zainicjowana przez klienta, obejmująca minimum jedną pozycję.
 ## Underwriting
 Proces oceny ryzyka poprzedzający akceptację polisy.
 ```
+
+````md
+#### knowledge/
+
+Wiedza domenowa i biznesowa projektu. Katalog zawiera informacje opisujące domenę, procesy biznesowe, użytkowników oraz uwarunkowania prawne. Nie przechowuje dokumentacji technicznej ani implementacyjnej — te należą odpowiednio do `docs/` i `src/`.
+
+Każda kategoria wiedzy jest reprezentowana przez osobny podkatalog. Poszczególne zagadnienia należy zapisywać jako małe, niezależne pliki Markdown zgodnie z zasadą: **jedna kategoria = jeden katalog, jedno zagadnienie = jeden plik**.
+
+```txt
+knowledge/
+├── business/
+├── faq/
+├── terminology/
+├── edge-cases/
+├── legal/
+└── personas/
+```
+
+
+
+
 
 ---
 
@@ -775,12 +841,12 @@ Zaakceptowane
 Formalne schematy API i struktur danych.
 
 ```txt
-├── OpenAPI
-├── JSON Schema
-├── GraphQL
-├── Events
-├── gRPC
-└── Proto
+├── openapi.yaml
+├── json-schema.json
+├── schema.graphql
+├── events.yaml
+└── grpc/
+    └── service.proto
 ```
 
 **Zasada:** `contracts/` zawiera formalne schematy API i struktur danych. `specs/` opisuje wymagania biznesowe i kryteria akceptacji, odwołując się linkami do `contracts/` bez powielania pól.
@@ -903,11 +969,11 @@ set -euo pipefail
 DevOps.
 
 ```txt
-├── Docker
-├── Terraform
-├── Helm
-├── Kubernetes
-└── Ansible
+├── docker/
+├── terraform/
+├── helm/
+├── kubernetes/
+└── ansible/
 ```
 
 ---
@@ -977,10 +1043,10 @@ Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 Eksperymenty.
 
 ```txt
-├── RAG
-├── LLM
-├── Prototype
-└── Benchmark
+├── rag/
+├── llm/
+├── prototypes/
+└── benchmarks/
 ```
 
 Nie mieszamy ich z produkcją.
@@ -998,6 +1064,23 @@ Nie mieszamy ich z produkcją.
 
 ## Decyzja
 kontynuować / porzucić
+```
+
+---
+
+#### research/
+
+Materiały analityczne, benchmarki, analizy rynku, wywiady z użytkownikami oraz eksperymenty prowadzące do decyzji projektowych.
+research/ nie jest źródłem obowiązujących wymagań ani decyzji. Wyniki badań trafiają następnie do specs/ lub decisions/.
+
+```txt
+research/
+├── market/
+├── competitors/
+├── users/
+├── benchmarks/
+├── spikes/
+└── experiments/
 ```
 
 ---
@@ -1021,10 +1104,11 @@ Pozwala AI odróżnić kod aktywny od starego.
 Pliki statyczne.
 
 ```txt
-├── images
-├── icons
-├── fonts
-└── pdf
+├── images/
+├── icons/
+├── fonts/
+├── documents/
+└── design/
 ```
 
 ---
