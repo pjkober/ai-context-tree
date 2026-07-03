@@ -37,6 +37,8 @@ Dlatego dobra struktura projektu powinna:
 
 ## Najważniejsze zasady
 
+Pięć zasad, na których opiera się cała struktura opisana w dalszej części dokumentu.
+
 ### 1. Single Source of Truth (SSOT)
 
 Każda informacja występuje tylko w jednym miejscu.
@@ -122,9 +124,13 @@ Służy do tego plik [`ai/context/structure-map.md`](#aicontextstructure-mapmd) 
 
 ---
 
-## Wersja MINIMAL (podstawowa)
+## Migawki struktury (poglądowe)
 
-*Migawka poglądowa — punkt startowy każdego projektu.*
+Trzy przykładowe stany struktury na różnych etapach wzrostu projektu — zgodnie z zasadą przyrostowego wzrostu opisaną powyżej. Żaden z nich nie jest docelowym „poziomem" do wybrania na starcie.
+
+### Wersja MINIMAL (podstawowa)
+
+Punkt startowy każdego projektu, bez wyjątku.
 
 ```txt
 project/
@@ -140,9 +146,9 @@ project/
 
 ---
 
-## Wersja OPTIMAL (zalecana)
+### Wersja OPTIMAL (zalecana)
 
-*Migawka poglądowa — typowy stan projektu średniej wielkości, osiągnięty przyrostowo z MINIMAL.*
+Typowy stan projektu średniej wielkości, osiągnięty przyrostowo z MINIMAL.
 
 ```txt
 project/
@@ -179,9 +185,9 @@ project/
 
 ---
 
-## Wersja FULL (AI Native)
+### Wersja FULL (AI Native)
 
-*Migawka poglądowa — stan dużego, dojrzałego projektu wielomodułowego.*
+Stan dużego, dojrzałego projektu wielomodułowego.
 
 ```txt
 project/
@@ -225,13 +231,13 @@ project/
 
 ## Szczegółowy opis katalogów i plików
 
----
+Poniższe podrozdziały grupują wszystkie pliki i katalogi opisane w tym dokumencie wg ich funkcji: pliki root, katalog `ai/`, katalogi biznesowe/wiedzy, katalogi implementacyjne oraz katalogi pomocnicze.
 
-## Pliki katalogu głównego (root)
+### Pliki katalogu głównego (root)
 
----
+Pliki znajdujące się bezpośrednio w korzeniu repozytorium — punkty wejścia i metadane projektu.
 
-## AGENTS.md
+#### AGENTS.md
 
 Najważniejszy plik dla agentów AI.
 
@@ -262,7 +268,7 @@ Nigdy nie duplikujemy wiedzy.
 
 ---
 
-## MANIFEST.md
+#### MANIFEST.md
 
 Mapa całego repozytorium. To indeks projektu — lista tego, co **aktualnie istnieje** w repozytorium (w odróżnieniu od `ai/context/structure-map.md`, który opisuje wszystko, co **może** powstać).
 
@@ -284,7 +290,7 @@ Dzięki temu AI nie musi przeszukiwać całego repozytorium.
 
 ---
 
-## README.md
+#### README.md
 
 Krótki. Nie powinien zastępować dokumentacji.
 
@@ -317,13 +323,15 @@ Zobacz [docs/](docs/) i [AGENTS.md](AGENTS.md) (dla agentów AI).
 
 ---
 
-## CHANGELOG.md
+#### CHANGELOG.md
 
 Historia zmian.
 
 **Minimalny szablon:**
 
 ```md
+# CHANGELOG
+
 ## [Unreleased]
 
 ## [1.0.0] - 2026-01-01
@@ -333,13 +341,15 @@ Historia zmian.
 
 ---
 
-## ROADMAP.md
+#### ROADMAP.md
 
 Plan rozwoju.
 
 **Minimalny szablon:**
 
 ```md
+# ROADMAP
+
 ## Teraz
 - ...
 
@@ -352,7 +362,7 @@ Plan rozwoju.
 
 ---
 
-## TODO.md
+#### TODO.md
 
 Jedyne miejsce na aktywną kolejkę zadań.
 
@@ -365,6 +375,8 @@ Jedyne miejsce na aktywną kolejkę zadań.
 **Minimalny szablon:**
 
 ```md
+# TODO
+
 ## W trakcie
 - [ ] Zadanie 1
 
@@ -377,13 +389,13 @@ Jedyne miejsce na aktywną kolejkę zadań.
 
 ---
 
-## LICENSE
+#### LICENSE
 
 Licencja projektu (np. MIT, Apache 2.0), w standardowym, niezmodyfikowanym brzmieniu, kopiowana z oficjalnego źródła licencji.
 
 ---
 
-## .gitignore
+#### .gitignore
 
 Plik kontrolujący, co nie trafia do repozytorium.
 
@@ -407,7 +419,7 @@ build/
 
 ---
 
-## .github/
+#### .github/
 
 Konfiguracja specyficzna dla GitHub: automatyzacja CI/CD oraz szablony współpracy.
 
@@ -422,13 +434,11 @@ Konfiguracja specyficzna dla GitHub: automatyzacja CI/CD oraz szablony współpr
 
 ---
 
-## ai/
+### ai/ — katalog agentów AI
 
 Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Struktura jest wspólna dla człowieka i AI — programiści powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
 
----
-
-## ai/context/
+#### ai/context/
 
 Opis projektu.
 
@@ -469,7 +479,7 @@ Jedno zdanie / krótki akapit — po co istnieje projekt.
 - [structure-map.md](structure-map.md)
 ```
 
-### ai/context/structure-map.md
+##### ai/context/structure-map.md
 
 Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, płaski katalog wszystkich katalogów opisanych w niniejszym dokumencie (superzbiór MINIMAL + OPTIMAL + FULL), wraz z warunkiem, kiedy dany katalog powinien zostać utworzony w konkretnym projekcie. To jedyne miejsce, które AI sprawdza przed utworzeniem nowego katalogu najwyższego poziomu.
 
@@ -490,7 +500,7 @@ Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, 
 
 ---
 
-## ai/rules/
+#### ai/rules/
 
 Reguły i konwencje obowiązujące AI.
 
@@ -518,7 +528,7 @@ No Business Logic in Controllers
 
 ---
 
-## ai/workflows/
+#### ai/workflows/
 
 Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywane przez ludzi i AI**. Workflowy muszą być atomowe i deterministyczne.
 
@@ -547,7 +557,7 @@ Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywa
 
 ---
 
-## ai/prompts/
+#### ai/prompts/
 
 Gotowe, **generyczne prompty ręcznie wywoływane przez użytkownika**. Katalog służy wyłącznie do przechowywania takich promptów.
 
@@ -572,7 +582,7 @@ Zadanie: wygeneruj kontroler, serwis i testy jednostkowe.
 
 ---
 
-## ai/templates/
+#### ai/templates/
 
 Szablony.
 
@@ -589,7 +599,7 @@ Szablony.
 
 ---
 
-## ai/memory/
+#### ai/memory/
 
 Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy historycznej.
 
@@ -604,6 +614,8 @@ Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy hist
 **Minimalny szablon (`known-problems.md`):**
 
 ```md
+# Known Problems
+
 ## [2026-01-15] Race condition w warstwie cache
 **Status:** otwarty
 **Opis:** ...
@@ -612,7 +624,11 @@ Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy hist
 
 ---
 
-## specs/
+### Katalogi biznesowe i wiedzy
+
+Katalogi opisujące wymagania, decyzje i wiedzę domenową — oddzielone od implementacji.
+
+#### specs/
 
 Najważniejszy katalog biznesowy. Opisuje **wymagania biznesowe i kryteria akceptacji**.
 
@@ -651,14 +667,15 @@ AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
 **Minimalny szablon (`acceptance.md`):**
 
 ```md
-## Kryteria akceptacji
+# Kryteria akceptacji: Uwierzytelnianie
+
 - [ ] Użytkownik loguje się emailem i hasłem
 - [ ] Błędne hasło zwraca komunikat X
 ```
 
 ---
 
-## knowledge/
+#### knowledge/
 
 Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 
@@ -670,11 +687,13 @@ Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 └── legal.md
 ```
 
-**Zasada SSOT:** relacja `knowledge/terminology.md` ↔ `ai/context/glossary.md` opisana jest w jednym miejscu — sekcja [Zarządzanie terminologią wg poziomu projektu](#zarzadzanie-terminologia-wg-poziomu-projektu) poniżej. Nie duplikować tej reguły tutaj.
+**Zasada SSOT:** relacja `knowledge/terminology.md` ↔ `ai/context/glossary.md` opisana jest w jednym miejscu — sekcja „Zarządzanie terminologią wg poziomu projektu" w dalszej części dokumentu. Nie duplikować tej reguły tutaj.
 
 **Minimalny szablon (`terminology.md`):**
 
 ```md
+# Terminologia
+
 ## Zamówienie
 Transakcja zainicjowana przez klienta, obejmująca minimum jedną pozycję.
 
@@ -684,7 +703,7 @@ Proces oceny ryzyka poprzedzający akceptację polisy.
 
 ---
 
-## checklists/
+#### checklists/
 
 Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
 
@@ -700,7 +719,8 @@ Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed
 **Minimalny szablon (`release.md`):**
 
 ```md
-## Checklist: Release
+# Checklist: Release
+
 - [ ] Wszystkie testy przechodzą
 - [ ] `CHANGELOG.md` zaktualizowany
 - [ ] Numer wersji podbity
@@ -708,7 +728,7 @@ Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed
 
 ---
 
-## decisions/
+#### decisions/
 
 Architecture Decision Records (ADR).
 
@@ -750,7 +770,7 @@ Zaakceptowane
 
 ---
 
-## contracts/
+#### contracts/
 
 Formalne schematy API i struktur danych.
 
@@ -782,7 +802,7 @@ paths:
 
 ---
 
-## docs/
+#### docs/
 
 Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania przez programistów i AI w celu zrozumienia kontekstu technicznego systemu.
 
@@ -814,13 +834,17 @@ Zobacz [decisions/](../../decisions/).
 
 ---
 
-## src/
+### Katalogi implementacyjne
+
+Katalogi zawierające kod, testy i konfigurację techniczną projektu.
+
+#### src/
 
 Kod aplikacji. Katalog `src/` może zawierać wyłącznie kod źródłowy. Pliki dokumentacyjne (`.md`) są zabronione i muszą znajdować się w `docs/`, `knowledge/` lub `ai/context/`.
 
 ---
 
-## tests/
+#### tests/
 
 Testy.
 
@@ -828,7 +852,7 @@ Najlepiej podzielone analogicznie do src.
 
 ---
 
-## config/
+#### config/
 
 Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konfiguracji. Jeśli tooling wymaga pliku w root, należy umieścić tam minimalny plik (maks. 5 linii) rozszerzający konfigurację z `config/` lub użyć symlinka.
 
@@ -850,7 +874,7 @@ Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konf
 
 ---
 
-## scripts/
+#### scripts/
 
 Automatyzacja.
 
@@ -874,7 +898,7 @@ set -euo pipefail
 
 ---
 
-## infrastructure/
+#### infrastructure/
 
 DevOps.
 
@@ -888,7 +912,7 @@ DevOps.
 
 ---
 
-## tools/
+#### tools/
 
 Narzędzia pomocnicze.
 
@@ -901,7 +925,11 @@ Narzędzia pomocnicze.
 
 ---
 
-## examples/
+### Katalogi pomocnicze
+
+Katalogi wspierające, nie wymagane w wersji MINIMAL — powstają zgodnie z zasadą przyrostowego wzrostu.
+
+#### examples/
 
 Przykłady użycia i dłuższe fragmenty kodu (powyżej 5 linii), do których odwołuje się dokumentacja.
 
@@ -916,7 +944,7 @@ LLM bardzo dobrze uczy się przez przykłady (Few-Shot Learning).
 
 ---
 
-## plans/
+#### plans/
 
 Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 
@@ -944,7 +972,7 @@ Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 
 ---
 
-## experiments/
+#### experiments/
 
 Eksperymenty.
 
@@ -974,7 +1002,7 @@ kontynuować / porzucić
 
 ---
 
-## archive/
+#### archive/
 
 Kod historyczny.
 
@@ -988,7 +1016,7 @@ Pozwala AI odróżnić kod aktywny od starego.
 
 ---
 
-## assets/
+#### assets/
 
 Pliki statyczne.
 
@@ -1001,11 +1029,11 @@ Pliki statyczne.
 
 ---
 
-## tmp/
+#### tmp/
 
 Pliki tymczasowe. AI często generuje tymczasowe pliki — nie powinny trafiać do `src/`.
 
-**Zasada:** Katalog `tmp/` musi być ignorowany zgodnie z regułami zdefiniowanymi w [`.gitignore`](#gitignore) — nie duplikować tej listy tutaj.
+**Zasada:** Katalog `tmp/` musi być ignorowany zgodnie z regułami zdefiniowanymi w `.gitignore` (patrz sekcja wyżej) — nie duplikować tej listy tutaj.
 
 ---
 
