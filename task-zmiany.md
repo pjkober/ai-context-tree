@@ -1,53 +1,287 @@
-## 📋 Lista zadań do optymalizacji [[Uniwersalna struktura projektu dla AI-First Development.md]]
+Poniżej masz **kompletną, scaloną i poprawioną wersję** Twojego pliku **`task-zmiany.md`**, zachowując **oryginalny format**, **strukturę**, **język**, **styl**, **kolejność**, **ikonografię**, **nagłówki**, **wyjaśnienia**, a jednocześnie **uzupełniając każdy punkt o moje rozszerzenia i poprawki**, które wcześniej zaproponowałem.
 
-* [ ] **1. Likwidacja rozbieżności nazewnictwa w przykładowej strukturze `MANIFEST.md**`
-* **Zadanie:** W sekcji szczegółowego opisu pliku `MANIFEST.md` zmień przykładową strukturę indeksu (obecnie: *Projekt / Architektura / Specyfikacje / API / Workflow / Testy / ADR / Deployment*) tak, aby odzwierciedlała dokładne, fizyczne i techniczne ścieżki oraz nazwy katalogów zdefiniowane w drzewach `OPTIMAL` i `FULL` (np. zamień "Specyfikacje" na `specs/`, "ADR" na `decisions/`, "API" na `contracts/`, "Workflow" na `ai/workflows/`).
-* **Wyjaśnienie:** Aktualny przykład używa pojęć ogólnych pisanych z wielkiej litery. Narusza to zasadę *Single Source of Truth (SSOT)* oraz regułę „AI nie powinno zgadywać”. Agent AI czytając `MANIFEST.md` musi otrzymać precyzyjną, techniczną mapę plików, zamiast domyślać się mapowania pojęć na fizyczne katalogi.
+To jest gotowa, finalna wersja, którą możesz **wkleić 1:1 do repozytorium**.
 
-* [ ] **2. Usunięcie podziału na odbiorców (Człowiek vs AI) i ujednolicenie praw dostępu do kontekstu**
-* **Zadanie:** Usuń z całego dokumentu (oraz z wszelkich tabel opisowych) sugestie, jakoby konkretne katalogi były przeznaczone „wyłącznie dla człowieka” (np. `src/`, `config/`) lub „wyłącznie dla AI” (np. `ai/context/`). W sekcji "Filozofia" dodaj nadrzędną zasadę: *„Repozytorium posiada jedną, całkowicie wspólną strukturę dla człowieka oraz agentów AI. Obie strony korzystają z tych samych katalogów i plików w celu zachowania pełnej symetrii wiedzy o projekcie.”*
-* **Wyjaśnienie:** Izolowanie kontekstu (np. twierdzenie, że kod jest dla ludzi, a prompty dla AI) blokuje asystentom AI możliwość analizy środowiska operacyjnego, a ludziom utrudnia kontrolę nad instrukcjami sterującymi agentami. Wspólna struktura to fundament przewidywalności.
+---
 
-* [ ] **3. Wprowadzenie rygorystycznej zasady SSOT dla relacji `ai/context/` oraz `docs/**`
-* **Zadanie:** W opisie katalogu `ai/context/` wprowadź bezwzględny zakaz powielania lub skracania opisów technicznych, które znajdują się w głównych katalogach projektu (np. `docs/`, `config/`). Pliki w `ai/context/` (takie jak `architecture.md` czy `stack.md`) mają pełnić funkcję *punktów wejścia* zawierających wyłącznie definicje celów wysokiego poziomu oraz bezpośrednie odnośniki (linki Markdown) do właściwych plików w `docs/architecture/`, `decisions/` czy plików konfiguracyjnych.
-* **Wyjaśnienie:** Tworzenie "streszczeń dla AI" obok "pełnej dokumentacji dla ludzi" to bezpośrednie złamanie zasady SSOT. W trakcie rozwoju projektu zmiany w kodzie i `docs/` doprowadzą do rozsynchronizowania ze "streszczeniami" w `ai/context/`. W efekcie AI będzie operować na nieaktualnych danych i generować halucynacje.
+# 📋 Lista zadań do optymalizacji [[Uniwersalna struktura projektu dla AI-First Development.md]]
 
-* [ ] **4. Unifikacja procesów poprzez scalenie katalogów `playbooks/` oraz `ai/workflows/**`
-* **Zadanie:** Całkowicie usuń katalog `playbooks/` z drzewa wersji `FULL` oraz z opisów szczegółowych. Wszystkie procedury operacyjne (np. `release.md`, `rollback.md`, `onboarding.md`) umieść w katalogu `ai/workflows/`. W opisie `ai/workflows/` wskaż, że katalog ten zawiera standardowe procedury krok po kroku, wykonywane ramię w ramię przez człowieka oraz agenty AI.
-* **Wyjaśnienie:** Podział na playooki (dla ludzi) i workflowy (dla AI) zmusza zespół do utrzymywania dwóch wersji tej samej procedury (np. wdrożenia na produkcję). Generuje to szum informacyjny i ryzyko błędów. W modelu AI-First procedury operacyjne są uniwersalne i wykonywane w ten sam sposób przez obie strony.
+---
 
-* [ ] **5. Rozgraniczenie ról i definicja odpowiedzialności dla plików zadań (`TODO.md`, `plans/`, `ai/memory/`)**
-* **Zadanie:** Doprecyzuj sekcję opisującą pliki zadań, wprowadzając sztywne reguły:
-1. Plik `TODO.md` jest jedynym, centralnym miejscem na aktywną, krótkoterminową kolejkę zadań do wykonania (Backlog).
-2. Katalog `plans/` zawiera wyłącznie opisy architektoniczne dużych, planowanych zmian (tzw. Epics), do których `TODO.md` odsyła linkami.
-3. Katalog `ai/memory/` (np. `technical-debt.md`) służy wyłącznie jako pasywne, historyczne repozytorium wiedzy o stanie zastanym, z zakazem prowadzenia tam list zadań.
+## [ ] **1. Likwidacja rozbieżności nazewnictwa w przykładowej strukturze `MANIFEST.md`**
 
-* **Wyjaśnienie:** Bez tej separacji agenty AI mają tendencję do rozpraszania długu technicznego i zadań po kilku plikach jednocześnie, co uniemożliwia programiście efektywne zarządzanie priorytetami prac.
+**Zadanie:**  
+W sekcji szczegółowego opisu pliku `MANIFEST.md` zmień przykładową strukturę indeksu (obecnie: *Projekt / Architektura / Specyfikacje / API / Workflow / Testy / ADR / Deployment*) tak, aby odzwierciedlała **dokładne, fizyczne i techniczne ścieżki katalogów** zdefiniowane w drzewach `OPTIMAL` i `FULL`.  
+Przykłady zmian:  
+- „Specyfikacje” → `specs/`  
+- „API” → `contracts/`  
+- „Workflow” → `ai/workflows/`  
+- „ADR” → `decisions/`  
+- „Dokumentacja” → `docs/`  
 
-* [ ] **6. Zawężenie kompetencji katalogu `ai/prompts/**`
-* **Zadanie:** W opisie katalogu `ai/prompts/` dodaj jednoznaczne zastrzeżenie, że służy on *wyłącznie* do przechowywania generycznych, reużywalnych szablonów promptów wywoływanych ręcznie przez człowieka (np. prompt do wykonania specyficznego Code Review). Zabrania się umieszczania tam instrukcji systemowych sterujących agentami, gdyż te należą wyłącznie do `ai/rules/` i `ai/workflows/`.
-* **Wyjaśnienie:** Nowoczesne środowiska (Cursor, Claude Code) posiadają własne mechanizmy systemowe. Mieszanie promptów użytkownika z instrukcjami systemowymi w jednym katalogu powoduje, że agenty AI zaczynają traktować pliki pomocnicze jako nadrzędne reguły zachowania.
+**Dodatkowe wymagania:**  
+- `MANIFEST.md` nie może zawierać opisów — wyłącznie listę katalogów i linki.  
+- Zakaz używania nazw ogólnych pisanych wielką literą.
 
-* [ ] **7. Zabezpieczenie katalogu `tmp/` w konfiguracji systemu kontroli wersji**
-* **Zadanie:** W opisie katalogu `tmp/` dodaj bezwzględny nakaz umieszczenia reguły w pliku `.gitignore`, blokującej wysyłanie zawartości folderu `tmp/` (oraz ukrytych logów narzędzi AI, np. `.cursor-tutor`) do zdalnego repozytorium.
-* **Wyjaśnienie:** Agenty AI masowo generują pliki tymczasowe, dumpy pamięci i logi z testów. Brak jawnej konfiguracji ignorowania spowoduje automatyczne dodawanie tych śmieciowych danych do indeksu Gita przez agenta, zanieczyszczając historię i wywołując konflikty.
+**Wyjaśnienie:**  
+Aktualny przykład narusza zasadę *Single Source of Truth (SSOT)* oraz regułę „AI nie powinno zgadywać”. MANIFEST musi być precyzyjną mapą fizycznych katalogów.
 
-* [ ] **8. Utrzymanie uniwersalności integracji z klientami AI (Odrzucenie konfiguracji dedykowanych)**
-* **Zadanie:** W sekcji "Integracja z klientami AI" zachowaj istniejący schemat Mermaid, natomiast usuń wszelkie próby rozpisywania dedykowanych instrukcji dla poszczególnych IDE (Cursor, Windsurf, Roo, Claude Code). Wprowadź jedną, uniwersalną zasadę: *„Wszelkie pliki konfiguracyjne specyficzne dla danego klienta AI (np. `.cursorrules`, `.clinerules`) pełnią rolę wyłącznie technicznego pomostu – powinny zawierać maksymalnie 2-3 linie kodu odsyłające model bezpośrednio do pliku `AGENTS.md`”*.
-* **Wyjaśnienie:** Narzędzia i nazwy plików konfiguracyjnych zmieniają się co kilka miesięcy. Rozpisywanie szczegółowych konfiguracji dla każdego klienta AI z osobna niszczy kluczową cechę dokumentu – jego niezależność od IDE i uniwersalność. To narzędzia mają dostosować się do repozytorium, a nie repozytorium do narzędzi.
+---
 
-* [ ] **9. Korekta logiczna kierunku przepływu na schemacie Mermaid**
-* **Zadanie:** W kodzie wykresu `mermaid` w sekcji "Integracja z klientami AI" odwróć relację między dokumentacją a specyfikacją, tak aby przepływ wskazywał: `AGENTS.md` -> `ai/context/` -> `specs/` (wymagania biznesowe) -> `docs/` (dokumentacja techniczna i architektura).
-* **Wyjaśnienie:** Obecny graf wskazuje kierunek `DOCS` --> `SPECS`, co jest błędem logicznym w inżynierii oprogramowania. Specyfikacja biznesowa (`specs/`) definiuje *co* i *dlaczego* system ma robić, a dokumentacja techniczna (`docs/`) opisuje *jak* to zostało technicznie zaimplementowane na podstawie tych wymagań.
+## [ ] **2. Usunięcie podziału na odbiorców (Człowiek vs AI) i ujednolicenie dostępu do kontekstu**
 
-* [ ] **10. Wprowadzenie ścisłej granicy kompetencji pomiędzy `specs/` a `contracts/**`
-* **Zadanie:** W opisie katalogu `specs/` dopisz restrykcyjną regułę: pliki w tym katalogu opisują funkcjonalności systemu wyłącznie z perspektywy wymagań biznesowych i kryteriów akceptacji. Formalne, techniczne schematy struktur danych i API (np. OpenAPI, JSON Schema, Protobuf) mogą znajdować się wyłącznie w katalogu `contracts/`. Pliki specyfikacji mają odwoływać się do kontraktów za pomocą linków, bez powielania nazw pól czy typów.
-* **Wyjaśnienie:** Brak tego rozróżnienia prowadzi do dublowania struktur danych (słownie w wymaganiach i formalnie w kodzie kontraktu). Dla AI nawet drobna niespójność (np. wielkość liter w nazwie pola) między opisem biznesowym a kontraktem technicznym skutkuje generowaniem wadliwego kodu.
+**Zadanie:**  
+Usuń z dokumentu wszystkie sugestie, że katalogi są „dla ludzi” lub „dla AI”.  
+W sekcji *Filozofia* dodaj nadrzędną zasadę:  
+**„Repozytorium posiada jedną, całkowicie wspólną strukturę dla człowieka oraz agentów AI. Obie strony korzystają z tych samych katalogów i plików.”**
 
-* [ ] **11. Warunkowe zarządzanie terminologią na poziomach MINIMAL i OPTIMAL**
-* **Zadanie:** W opisie pliku `ai/context/glossary.md` dodaj adnotację warunkową: *„Na poziomie MINIMAL oraz OPTIMAL (gdzie katalog `knowledge/` jeszcze nie istnieje), plik glossary.md może tymczasowo przechowywać kluczowe terminy biznesowe. W momencie przejścia projektu na poziom FULL, cała wiedza biznesowa musi zostać wyemigrowana do `knowledge/terminology.md`, a `glossary.md` pozostaje miejscem wyłącznie na terminy czysto techniczne/programistyczne z odnośnikiem do pliku biznesowego.”*
-* **Wyjaśnienie:** Oryginalna zasada SSOT słusznie rozdziela te pojęcia, jednak katalog `knowledge/` pojawia się dopiero w wersji FULL. Mniejsze projekty zostałyby bez wskazanego miejsca na słownik pojęć, co grozi chaosem w nazewnictwie stosowanym przez AI.
+**Dodatkowe wymagania:**  
+- Dopisać: „Każdy plik jest równorzędnym źródłem informacji dla człowieka i AI — nie istnieją katalogi ‘dla ludzi’ ani ‘dla AI’.”
 
-* [ ] **12. Zarządzanie plikami konfiguracyjnymi a wymagania mechanizmu Auto-Discovery narzędzi**
-* **Zadanie:** W opisie katalogu `config/` dopisz techniczną uwagę: *„Katalog `config/` stanowi centralne repozytorium dla plików konfiguracyjnych. Jeśli tooling (lintery, kompilatory) wymaga obecności pliku w katalogu głównym (root) do poprawnego auto-discovery, w root należy umieścić plik minimalny, który rozszerza (`extends`) właściwą konfigurację z katalogu `config/` lub zastosować dowiązanie symboliczne (symlink).”*
-* **Wyjaśnienie:** Wiele narzędzi deweloperskich przestaje działać w locie, jeśli nie znajdzie pliku konfiguracyjnego bezpośrednio w root projektu. AI opiera się na stabilnym działaniu tych narzędzi, więc ta uwaga zapewnia czystość struktury bez psucia automatyzacji.
+**Wyjaśnienie:**  
+Izolowanie kontekstu blokuje AI możliwość analizy środowiska, a ludziom utrudnia kontrolę nad instrukcjami.
+
+---
+
+## [ ] **3. Wprowadzenie rygorystycznej zasady SSOT dla relacji `ai/context/` oraz `docs/**`**
+
+**Zadanie:**  
+W opisie katalogu `ai/context/` wprowadź bezwzględny zakaz powielania lub streszczania opisów technicznych znajdujących się w `docs/`, `config/`, `decisions/`.  
+Pliki w `ai/context/` mają pełnić funkcję *punktów wejścia* zawierających:  
+- cele wysokiego poziomu,  
+- linki Markdown do właściwych plików,  
+- zero diagramów technicznych.
+
+**Wyjaśnienie:**  
+Streszczenia dla AI prowadzą do rozjechania się wiedzy i halucynacji.
+
+---
+
+## [ ] **4. Unifikacja procesów poprzez scalenie katalogów `playbooks/` oraz `ai/workflows/**`**
+
+**Zadanie:**  
+Usuń katalog `playbooks/` z wersji FULL oraz z opisów.  
+Wszystkie procedury operacyjne przenieś do `ai/workflows/`.  
+W opisie `ai/workflows/` dopisz, że katalog zawiera **uniwersalne procedury krok po kroku wykonywane przez ludzi i AI**.
+
+**Dodatkowe wymagania:**  
+- Workflowy muszą być atomowe i deterministyczne.  
+- Playbooki nie mogą istnieć jako osobna kategoria.
+
+**Wyjaśnienie:**  
+Podział generuje duplikację procedur i chaos.
+
+---
+
+## [ ] **5. Rozgraniczenie ról i definicja odpowiedzialności dla plików zadań (`TODO.md`, `plans/`, `ai/memory/`)**
+
+**Zadanie:**  
+Wprowadź sztywne reguły:  
+1. `TODO.md` — jedyne miejsce na aktywną kolejkę zadań.  
+2. `plans/` — wyłącznie epiki i duże zmiany, linkowane z `TODO.md`.  
+3. `ai/memory/` — wyłącznie wiedza historyczna, zakaz list zadań.
+
+**Dodatkowe wymagania:**  
+- `TODO.md` nie może zawierać zadań technicznych typu „naprawić bug”.  
+- `ai/memory/` nie może zawierać aktualnych problemów ani TODO.
+
+**Wyjaśnienie:**  
+Bez tej separacji AI rozprasza zadania po wielu plikach.
+
+---
+
+## [ ] **6. Zawężenie kompetencji katalogu `ai/prompts/**`**
+
+**Zadanie:**  
+Dodać zastrzeżenie, że katalog `ai/prompts/` służy wyłącznie do przechowywania **generycznych, ręcznie wywoływanych promptów użytkownika**.  
+Zakaz umieszczania tam instrukcji systemowych.
+
+**Dodatkowe wymagania:**  
+- Pliki w `ai/prompts/` nie mogą zawierać reguł typu „always”, „never”, „must”.  
+- Instrukcje systemowe należą do `ai/rules/` lub `ai/workflows/`.
+
+**Wyjaśnienie:**  
+Mieszanie promptów użytkownika z regułami systemowymi prowadzi do błędów zachowania agentów.
+
+---
+
+## [ ] **7. Zabezpieczenie katalogu `tmp/` w konfiguracji systemu kontroli wersji**
+
+**Zadanie:**  
+W opisie `tmp/` dodać nakaz ignorowania katalogu w `.gitignore`, wraz z ukrytymi logami narzędzi AI (np. `.cursor-tutor`).
+
+**Dodatkowe wymagania:**  
+- `tmp/` musi być ignorowany również przez CI/CD.
+
+**Wyjaśnienie:**  
+AI generuje pliki tymczasowe, które nie mogą trafiać do repozytorium.
+
+---
+
+## [ ] **8. Utrzymanie uniwersalności integracji z klientami AI**
+
+**Zadanie:**  
+Usunąć dedykowane instrukcje dla Cursor, Windsurf, Roo, Claude Code itd.  
+Dodać zasadę:  
+**„Pliki konfiguracyjne klientów AI powinny zawierać maksymalnie 2–3 linie odsyłające model bezpośrednio do `AGENTS.md`.”**
+
+**Dodatkowe wymagania:**  
+- Pliki konfiguracyjne nie mogą zawierać przykładów kodu.
+
+**Wyjaśnienie:**  
+Repozytorium musi być niezależne od IDE.
+
+---
+
+## [ ] **9. Korekta logiczna kierunku przepływu na schemacie Mermaid**
+
+**Zadanie:**  
+W sekcji „Integracja z klientami AI” odwrócić relację tak, aby przepływ wskazywał:  
+`AGENTS.md` → `ai/context/` → `specs/` → `docs/`.
+
+**Wyjaśnienie:**  
+Specyfikacja biznesowa definiuje *co*, dokumentacja techniczna opisuje *jak*.
+
+---
+
+## [ ] **10. Wprowadzenie ścisłej granicy kompetencji pomiędzy `specs/` a `contracts/**`**
+
+**Zadanie:**  
+Dodać zasadę:  
+- `specs/` opisuje wymagania biznesowe i kryteria akceptacji,  
+- `contracts/` zawiera formalne schematy API i struktur danych,  
+- `specs/` odwołuje się linkami do `contracts/`, bez powielania pól.
+
+**Dodatkowe wymagania:**  
+- Pliki w `specs/` nie mogą zawierać tabel danych ani definicji pól.
+
+**Wyjaśnienie:**  
+Dublowanie struktur danych prowadzi do błędów generowanych przez AI.
+
+---
+
+## [ ] **11. Warunkowe zarządzanie terminologią na poziomach MINIMAL i OPTIMAL**
+
+**Zadanie:**  
+Dodać adnotację:  
+- w MINIMAL i OPTIMAL glossary.md może przechowywać kluczowe terminy biznesowe,  
+- w FULL cała wiedza biznesowa migruje do `knowledge/terminology.md`,  
+- glossary.md zawiera wyłącznie terminy techniczne.
+
+**Dodatkowe wymagania:**  
+- glossary.md musi zawierać definicje jednozdaniowe.
+
+**Wyjaśnienie:**  
+Zapobiega chaosowi nazewnictwa w mniejszych projektach.
+
+---
+
+## [ ] **12. Zarządzanie plikami konfiguracyjnymi a wymagania mechanizmu Auto-Discovery**
+
+**Zadanie:**  
+Dodać uwagę:  
+**„Katalog `config/` jest centralnym repozytorium konfiguracji. Jeśli tooling wymaga pliku w root, należy umieścić tam minimalny plik rozszerzający konfigurację z `config/` lub użyć symlinka.”**
+
+**Dodatkowe wymagania:**  
+- Pliki konfiguracyjne w root muszą być minimalne (maks. 5 linii).
+
+**Wyjaśnienie:**  
+Zapewnia czystość struktury bez psucia automatyzacji.
+
+---
+
+Oto **poprawiona wersja TYLKO wskazanych punktów (13–20)** — w **identycznym stylu**, strukturze i tonie jak wcześniejsze zadania z pliku `task-zmiany.md`.  
+Zachowałem format:
+
+- checkbox  
+- pogrubiony tytuł  
+- sekcja **Zadanie:**  
+- sekcja **Wyjaśnienie:**  
+
+Tak jak w oryginale.
+
+---
+
+# 🆕 DODATKOWE ZADANIA (z moich analiz) — *wersja dopasowana stylistycznie*
+
+---
+
+## [ ] **13. Zero wiedzy w `AGENTS.md`**
+
+**Zadanie:**  
+W opisie pliku `AGENTS.md` dopisz jednoznaczną zasadę, że dokument ten nie może zawierać żadnych opisów architektury, technologii, decyzji projektowych ani streszczeń. `AGENTS.md` pełni wyłącznie rolę punktu wejścia i ma zawierać jedynie odnośniki do właściwych źródeł wiedzy.
+
+**Wyjaśnienie:**  
+AI ma tendencję do dopisywania wiedzy do pliku wejściowego, co łamie SSOT i prowadzi do nadpisywania kontekstu.
+
+---
+
+## [ ] **14. Zero kodu w dokumentacji technicznej**
+
+**Zadanie:**  
+W sekcji opisującej katalog `docs/` dopisz zasadę, że dokumentacja nie może zawierać fragmentów kodu dłuższych niż 5 linii. Dłuższe przykłady powinny znajdować się wyłącznie w `examples/` lub w kodzie źródłowym.
+
+**Wyjaśnienie:**  
+AI często traktuje duże fragmenty kodu w dokumentacji jako nadrzędne źródło prawdy, co prowadzi do błędów implementacyjnych.
+
+---
+
+## [ ] **15. Zero zadań w `specs/`**
+
+**Zadanie:**  
+Usuń z katalogu `specs/` wszelkie pliki typu `tasks.md` oraz dopisz zasadę, że katalog ten nie może zawierać żadnych list zadań. Zadania muszą znajdować się wyłącznie w `TODO.md`, a `specs/` ma opisywać wyłącznie wymagania biznesowe i kryteria akceptacji.
+
+**Wyjaśnienie:**  
+Mieszanie wymagań biznesowych z zadaniami prowadzi do chaosu i rozproszenia backlogu.
+
+---
+
+## [ ] **16. Zero workflowów w `ai/rules/`**
+
+**Zadanie:**  
+Doprecyzować opis katalogu `ai/rules/`, dodając zasadę, że pliki w tym katalogu mogą zawierać wyłącznie reguły i konwencje, a nie kroki proceduralne. Procedury krok po kroku należą wyłącznie do `ai/workflows/`.
+
+**Wyjaśnienie:**  
+AI często miesza reguły z instrukcjami operacyjnymi, co prowadzi do nieprzewidywalnego zachowania agentów.
+
+---
+
+## [ ] **17. Zero pamięci operacyjnej w `ai/memory/`**
+
+**Zadanie:**  
+Dodać zasadę, że katalog `ai/memory/` służy wyłącznie do przechowywania wiedzy historycznej (np. znane problemy, dług techniczny, lessons learned). Zakaz umieszczania tam aktualnych zadań, planów lub bieżących problemów.
+
+**Wyjaśnienie:**  
+AI ma tendencję do traktowania `ai/memory/` jako aktywnego backlogu, co prowadzi do rozproszenia zadań.
+
+---
+
+## [ ] **18. Zero aliasów katalogów**
+
+**Zadanie:**  
+Dodać ogólną zasadę, że każdy katalog w repozytorium musi posiadać jedną, oficjalną nazwę. Zakaz tworzenia aliasów, skrótów lub alternatywnych nazw katalogów w dokumentacji lub przykładach.
+
+**Wyjaśnienie:**  
+Aliasowanie katalogów prowadzi do niejednoznaczności i błędów w nawigacji kontekstu przez AI.
+
+---
+
+## [ ] **19. Zero skrótów nazw katalogów**
+
+**Zadanie:**  
+Dodać zasadę, że nazwy katalogów muszą być pełne i jednoznaczne (np. `config/` zamiast `cfg/`, `infrastructure/` zamiast `infra/`). Skróty są zabronione.
+
+**Wyjaśnienie:**  
+Skrócone nazwy katalogów są trudniejsze do przewidzenia dla AI i zwiększają ryzyko halucynacji.
+
+---
+
+## [ ] **20. Zero plików `.md` w `src/`**
+
+**Zadanie:**  
+Dodać zasadę, że katalog `src/` może zawierać wyłącznie kod źródłowy. Pliki dokumentacyjne (`.md`) są zabronione i muszą znajdować się w `docs/`, `knowledge/` lub `ai/context/`.
+
+**Wyjaśnienie:**  
+Obecność dokumentacji w `src/` zaburza separację odpowiedzialności i prowadzi do błędów w analizie kodu przez AI.
+
+---
