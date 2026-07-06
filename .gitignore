@@ -1,0 +1,7 @@
+tmp/
+.cursor-tutor
+node_modules/
+.dist/
+build/
+*.log
+.env

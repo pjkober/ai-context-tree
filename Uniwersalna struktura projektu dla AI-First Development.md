@@ -108,12 +108,12 @@ Nie chcemy przepisywać dokumentacji przy zmianie narzędzia AI. Pliki konfigura
 
 ## Zasada przyrostowego wzrostu struktury
 
-Poziomy **MINIMAL / OPTIMAL / FULL** opisane w kolejnej sekcji mają charakter **wyłącznie poglądowy**. Pokazują typowe migawki struktury na różnych etapach życia projektu — nie są to sztywne warianty, spośród których wybiera się jeden na starcie.
+Poziomy **MINIMAL / FULL** opisane w kolejnej sekcji mają charakter **wyłącznie poglądowy**. Pokazują typowe migawki struktury na różnych etapach życia projektu — nie są to sztywne warianty, spośród których wybiera się jeden na starcie.
 
 **Zasada bazowa:**
 - Każdy projekt zaczyna od struktury **MINIMAL**.
-- Kolejny katalog jest dodawany **wyłącznie wtedy, gdy pojawia się konkretna, realna potrzeba** jego istnienia — np. `decisions/` powstaje w momencie, gdy trzeba zapisać pierwszy ADR, a nie prewencyjnie „bo tak jest w OPTIMAL".
-- Struktura nigdy nie „przeskakuje" jako całość do OPTIMAL lub FULL — rośnie katalog po katalogu, wraz z realnymi potrzebami projektu.
+- Kolejny katalog jest dodawany **wyłącznie wtedy, gdy pojawia się konkretna, realna potrzeba** jego istnienia — np. `decisions/` powstaje w momencie, gdy trzeba zapisać pierwszy ADR, a nie bo wprowadzamy wersję FULL.
+- Struktura nigdy nie „przeskakuje" jako całość do FULL — rośnie katalog po katalogu, wraz z realnymi potrzebami projektu.
 
 **Skąd AI (i człowiek) wie, jaki katalog utworzyć i jak go nazwać?**
 Służy do tego plik [`ai/context/structure-map.md`](#aicontextstructure-mapmd) — pełny katalog wszystkich możliwych, oficjalnie nazwanych katalogów opisanych w tym dokumencie, wraz z warunkiem, kiedy dany katalog powinien powstać. Przed utworzeniem nowego katalogu najwyższego poziomu AI **musi** sprawdzić `structure-map.md`, zamiast zgadywać nazwę lub tworzyć alias (patrz: Zasady nazewnictwa katalogów).
@@ -144,45 +144,6 @@ project/
 ├── docs/
 ├── src/
 └── tests/
-```
-
----
-
-### Wersja OPTIMAL (zalecana)
-
-Typowy stan projektu średniej wielkości, osiągnięty przyrostowo z MINIMAL.
-
-```txt
-project/
-├── AGENTS.md
-├── MANIFEST.md
-├── README.md
-├── CHANGELOG.md
-├── ROADMAP.md
-├── TODO.md
-├── LICENSE
-├── ai/
-│   ├── context/
-│   ├── rules/
-│   ├── workflows/
-│   ├── prompts/
-│   ├── templates/
-│   └── memory/
-├── specs/
-├── docs/
-├── decisions/
-├── contracts/
-├── src/
-├── tests/
-├── config/
-├── scripts/
-├── infrastructure/
-├── tools/
-├── examples/
-├── assets/
-├── .github/
-├── .gitignore
-└── tmp/
 ```
 
 ---
@@ -517,7 +478,7 @@ Jedno zdanie / krótki akapit — po co istnieje projekt.
 
 ##### ai/context/structure-map.md
 
-Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, płaski katalog wszystkich katalogów opisanych w niniejszym dokumencie (superzbiór MINIMAL + OPTIMAL + FULL), wraz z warunkiem, kiedy dany katalog powinien zostać utworzony w konkretnym projekcie. To jedyne miejsce, które AI sprawdza przed utworzeniem nowego katalogu najwyższego poziomu.
+Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, płaski katalog wszystkich katalogów opisanych w niniejszym dokumencie (superzbiór MINIMAL + FULL), wraz z warunkiem, kiedy dany katalog powinien zostać utworzony w konkretnym projekcie. To jedyne miejsce, które AI sprawdza przed utworzeniem nowego katalogu najwyższego poziomu.
 
 **Minimalny szablon:**
 
