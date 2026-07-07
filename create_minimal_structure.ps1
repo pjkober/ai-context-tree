@@ -56,6 +56,9 @@ if (-not (Test-Path $TemplatesDir -PathType Container)) {
 $AutonomyModeVal = "- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
 $DependencyPolicyVal = "- **Strict Dependency Policy:** Never add new libraries or dependencies without explicit user permission. Prefer standard/existing project tools."
 $RefactoringPolicyVal = "- **Strict Scope:** Modify only lines and files directly related to the requested task. Do not clean up unrelated code or formatting."
+$TestingCoverageVal = "- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
+$TestingApproachVal = "- **Testing Approach:** Write tests post-implementation (after coding features)."
+$TestExecutionScopeVal = "- **Test Execution Scope:** Run only relevant unit tests related to modified or new code files during local iterations."
 $TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
 
 # Check if interactive
@@ -65,8 +68,9 @@ if (-not $NonInteractive) {
     Write-Host "=============================================" -ForegroundColor Cyan
     Write-Host ""
     
-    # 1. Autonomy Mode
-    Write-Host "1) Choose AI Autonomy Mode:"
+    # --- SECTION 1: Autonomy & Decisions ---
+    Write-Host "--- SECTION 1: Autonomy & Decisions ---" -ForegroundColor Yellow
+    Write-Host "1.1) Choose AI Autonomy Mode:"
     Write-Host "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
     Write-Host "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
     Write-Host "  [3] Plan-First (AI writes a plan for approval first)"
@@ -78,18 +82,7 @@ if (-not $NonInteractive) {
     }
     Write-Host ""
 
-    # 2. Refactoring Policy
-    Write-Host "2) Choose Refactoring Policy:"
-    Write-Host "  [1] Strict Scope (AI only touches what's requested) [Default]"
-    Write-Host "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
-    $opt = Read-Host "Select option [1-2]"
-    if ($opt -eq "2") {
-        $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
-    }
-    Write-Host ""
-
-    # 3. Dependency Policy
-    Write-Host "3) Choose Dependency Policy:"
+    Write-Host "1.2) Choose Dependency Policy:"
     Write-Host "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
     Write-Host "  [2] Proactive (AI can install standard packages if needed)"
     $opt = Read-Host "Select option [1-2]"
@@ -98,8 +91,55 @@ if (-not $NonInteractive) {
     }
     Write-Host ""
 
-    # 4. Tech Stack
-    Write-Host "4) Select Tech Stack / Framework:"
+    # --- SECTION 2: Coding & Refactoring ---
+    Write-Host "--- SECTION 2: Coding & Refactoring ---" -ForegroundColor Yellow
+    Write-Host "2.1) Choose Refactoring Policy:"
+    Write-Host "  [1] Strict Scope (AI only touches what's requested) [Default]"
+    Write-Host "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
+    $opt = Read-Host "Select option [1-2]"
+    if ($opt -eq "2") {
+        $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
+    }
+    Write-Host ""
+
+    # --- SECTION 3: Testing Strategy ---
+    Write-Host "--- SECTION 3: Testing Strategy ---" -ForegroundColor Yellow
+    Write-Host "3.1) Choose Testing Coverage Policy:"
+    Write-Host "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
+    Write-Host "  [2] None (Skip tests for maximum speed)"
+    Write-Host "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $TestingCoverageVal = "- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
+    } elseif ($opt -eq "3") {
+        $TestingCoverageVal = "- **Testing Coverage:** Full test coverage is required. A task or feature is only complete when it has thorough unit/integration tests covering all new paths, and all tests pass."
+    }
+    Write-Host ""
+
+    Write-Host "3.2) Choose Testing Approach:"
+    Write-Host "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
+    Write-Host "  [2] TDD / Test-First (Write tests before implementation)"
+    $opt = Read-Host "Select option [1-2]"
+    if ($opt -eq "2") {
+        $TestingApproachVal = "- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
+    }
+    Write-Host ""
+
+    Write-Host "3.3) Choose Test Execution Scope:"
+    Write-Host "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
+    Write-Host "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
+    Write-Host "  [3] Full Suite (Run the entire test suite on every change)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $TestExecutionScopeVal = "- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
+    } elseif ($opt -eq "3") {
+        $TestExecutionScopeVal = "- **Test Execution Scope:** Run the entire test suite of the repository to ensure no regressions on every meaningful code change."
+    }
+    Write-Host ""
+
+    # --- SECTION 4: Tech Stack ---
+    Write-Host "--- SECTION 4: Tech Stack ---" -ForegroundColor Yellow
+    Write-Host "4.1) Select Tech Stack / Framework:"
     Write-Host "  [1] Node.js / TypeScript"
     Write-Host "  [2] Python"
     Write-Host "  [3] Go"
@@ -133,6 +173,9 @@ function Generate-FromTemplate {
     $Content = $Content -replace "__AUTONOMY_MODE__", $AutonomyModeVal
     $Content = $Content -replace "__DEPENDENCY_POLICY__", $DependencyPolicyVal
     $Content = $Content -replace "__REFACTORING_POLICY__", $RefactoringPolicyVal
+    $Content = $Content -replace "__TESTING_COVERAGE__", $TestingCoverageVal
+    $Content = $Content -replace "__TESTING_APPROACH__", $TestingApproachVal
+    $Content = $Content -replace "__TEST_EXECUTION_SCOPE__", $TestExecutionScopeVal
     $Content = $Content -replace "__TECH_STACK__", $TechStackVal
     $Content | Set-Content $DestPath -NoNewline
 }
@@ -177,5 +220,6 @@ Copy-TemplateFile "ai/runs/run-001-example-automation.sh"
 # Generate dynamically configured rules
 Generate-RulesFile "ai/rules/coding.md"
 Generate-RulesFile "ai/rules/security.md"
+Generate-RulesFile "ai/rules/testing.md"
 
 Write-Host "Minimal project structure created successfully."

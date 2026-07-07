@@ -2,7 +2,7 @@
 id: task-029
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: feature
 owner: Antigravity
@@ -41,3 +41,15 @@ Generate `ai/rules/testing.md` from a new template `file-templates/ai/rules/test
 
 **Justification:**
 Ensures that the AI has clear boundaries regarding when to write tests, how to write them (TDD or not), and how/when to run them, preventing testing-related disagreements or unnecessary execution loops.
+
+## Verification Walkthrough
+
+1. **Knowledge files added:** Created three new term files in the `knowledge/` directory:
+   - `knowledge/Autonomy Mode.md`
+   - `knowledge/Boy Scout Rule.md`
+   - `knowledge/Test-Driven Development.md`
+2. **Testing template created:** Created `file-templates/ai/rules/testing.md` with placeholders.
+3. **Scripts updated:** Grouped questions in `create_minimal_structure.sh` and `create_minimal_structure.ps1` into 4 logical sections, adding the new interactive testing choices (Coverage, TDD, Execution Scope) and generating the dynamic `ai/rules/testing.md` rule file.
+4. **Docs updated:** Added `testing.md` reference to the `ai/rules/` directory list in `docs/structure/ai-agents.md`.
+5. **Replacements verified:** Confirmed template parameter replacement for testing strategy parameters successfully outputs clean, valid markdown via python inline check.
+

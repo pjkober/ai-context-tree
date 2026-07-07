@@ -28,6 +28,8 @@ Rules and conventions governing the AI's behavior.
 - **Rule:** Files in `rules/` must contain *only* rules, not step-by-step procedures. Procedures belong in `workflows/`.
 - **Template (coding.md):** [file-templates/ai/rules/coding.md](../../file-templates/ai/rules/coding.md)
 - **Template (security.md):** [file-templates/ai/rules/security.md](../../file-templates/ai/rules/security.md)
+- **Template (testing.md):** [file-templates/ai/rules/testing.md](../../file-templates/ai/rules/testing.md)
+
 
 
 ---

@@ -8,7 +8,6 @@ set -e
 BASE_DIR="."
 TEMPLATES_DIR="$BASE_DIR/file-templates"
 
-
 # Helper to create a directory if it does not exist
 mkdir_if_not_exists() {
   local dir="$1"
@@ -52,6 +51,9 @@ fi
 AUTONOMY_MODE_VAL="- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
 DEPENDENCY_POLICY_VAL="- **Strict Dependency Policy:** Never add new libraries or dependencies without explicit user permission. Prefer standard/existing project tools."
 REFACTORING_POLICY_VAL="- **Strict Scope:** Modify only lines and files directly related to the requested task. Do not clean up unrelated code or formatting."
+TESTING_COVERAGE_VAL="- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
+TESTING_APPROACH_VAL="- **Testing Approach:** Write tests post-implementation (after coding features)."
+TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run only relevant unit tests related to modified or new code files during local iterations."
 TECH_STACK_VAL="- Stack: General / To be defined later.
 - Adhere to the existing coding style of any file you edit."
 
@@ -74,8 +76,9 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "============================================="
   echo ""
   
-  # 1. Autonomy Mode
-  echo "1) Choose AI Autonomy Mode:"
+  # --- SECTION 1: Autonomy & Decisions ---
+  echo "--- SECTION 1: Autonomy & Decisions ---"
+  echo "1.1) Choose AI Autonomy Mode:"
   echo "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
   echo "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
   echo "  [3] Plan-First (AI writes a plan for approval first)"
@@ -90,20 +93,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   esac
   echo ""
 
-  # 2. Refactoring Policy
-  echo "2) Choose Refactoring Policy:"
-  echo "  [1] Strict Scope (AI only touches what's requested) [Default]"
-  echo "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
-  read -p "Select option [1-2]: " opt
-  case "$opt" in
-    2)
-      REFACTORING_POLICY_VAL="- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
-      ;;
-  esac
-  echo ""
-
-  # 3. Dependency Policy
-  echo "3) Choose Dependency Policy:"
+  echo "1.2) Choose Dependency Policy:"
   echo "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
   echo "  [2] Proactive (AI can install standard packages if needed)"
   read -p "Select option [1-2]: " opt
@@ -114,8 +104,65 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   esac
   echo ""
 
-  # 4. Tech Stack
-  echo "4) Select Tech Stack / Framework:"
+  # --- SECTION 2: Coding & Refactoring ---
+  echo "--- SECTION 2: Coding & Refactoring ---"
+  echo "2.1) Choose Refactoring Policy:"
+  echo "  [1] Strict Scope (AI only touches what's requested) [Default]"
+  echo "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
+  read -p "Select option [1-2]: " opt
+  case "$opt" in
+    2)
+      REFACTORING_POLICY_VAL="- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
+      ;;
+  esac
+  echo ""
+
+  # --- SECTION 3: Testing Strategy ---
+  echo "--- SECTION 3: Testing Strategy ---"
+  echo "3.1) Choose Testing Coverage Policy:"
+  echo "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
+  echo "  [2] None (Skip tests for maximum speed)"
+  echo "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      TESTING_COVERAGE_VAL="- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
+      ;;
+    3)
+      TESTING_COVERAGE_VAL="- **Testing Coverage:** Full test coverage is required. A task or feature is only complete when it has thorough unit/integration tests covering all new paths, and all tests pass."
+      ;;
+  esac
+  echo ""
+
+  echo "3.2) Choose Testing Approach:"
+  echo "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
+  echo "  [2] TDD / Test-First (Write tests before implementation)"
+  read -p "Select option [1-2]: " opt
+  case "$opt" in
+    2)
+      TESTING_APPROACH_VAL="- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
+      ;;
+  esac
+  echo ""
+
+  echo "3.3) Choose Test Execution Scope:"
+  echo "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
+  echo "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
+  echo "  [3] Full Suite (Run the entire test suite on every change)"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
+      ;;
+    3)
+      TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run the entire test suite of the repository to ensure no regressions on every meaningful code change."
+      ;;
+  esac
+  echo ""
+
+  # --- SECTION 4: Tech Stack ---
+  echo "--- SECTION 4: Tech Stack ---"
+  echo "4.1) Select Tech Stack / Framework:"
   echo "  [1] Node.js / TypeScript"
   echo "  [2] Python"
   echo "  [3] Go"
@@ -165,6 +212,12 @@ generate_from_template() {
       echo "$AUTONOMY_MODE_VAL"
     elif [[ "$line" == *"__DEPENDENCY_POLICY__"* ]]; then
       echo "$DEPENDENCY_POLICY_VAL"
+    elif [[ "$line" == *"__TESTING_COVERAGE__"* ]]; then
+      echo "$TESTING_COVERAGE_VAL"
+    elif [[ "$line" == *"__TESTING_APPROACH__"* ]]; then
+      echo "$TESTING_APPROACH_VAL"
+    elif [[ "$line" == *"__TEST_EXECUTION_SCOPE__"* ]]; then
+      echo "$TEST_EXECUTION_SCOPE_VAL"
     else
       echo "$line"
     fi
@@ -210,5 +263,6 @@ copy_template_file "ai/runs/run-001-example-automation.sh"
 # Generate dynamically configured rules
 generate_rules_file "ai/rules/coding.md"
 generate_rules_file "ai/rules/security.md"
+generate_rules_file "ai/rules/testing.md"
 
 echo "Minimal project structure created successfully."
