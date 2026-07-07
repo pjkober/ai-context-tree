@@ -17,7 +17,9 @@ project/
 │   ├── context/
 │   │   ├── project.md
 │   │   └── structure-map.md
-│   └── rules/
+│   ├── rules/
+│   └── skills/
+│       └── example-skill.md
 ├── docs/
 ├── src/
 └── tests/

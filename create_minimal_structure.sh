@@ -61,5 +61,7 @@ copy_template_file "ai/context/project.md"
 copy_template_file "ai/context/structure-map.md"
 copy_template_file "ai/rules/coding.md"
 copy_template_file "ai/workflows/new-feature.md"
+copy_template_file "ai/skills/example-skill.md"
 
 echo "Minimal project structure created successfully."
+

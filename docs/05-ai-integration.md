@@ -35,6 +35,31 @@ Read AGENTS.md to understand the repository structure and context.
 Adhere strictly to the active guidelines in ai/rules/.
 ```
 
+## Linking Tool-Specific Rules to Universal Skills
+
+To preserve the **Single Source of Truth (SSOT)**, when an AI client allows defining workspace-scoped rules or skills (such as Cursor's `.cursor/rules/` or Antigravity's `.agents/skills/`), they should not contain duplicate descriptions. Instead, they should act as pointers directing the AI to the universal skill in `ai/skills/`.
+
+### Example: Cursor Rule (.cursor/rules/deploy-skill.mdc)
+```markdown
+---
+globs: scripts/deploy.sh
+description: Guidance on executing the production release script
+---
+Always refer to the custom deployment skill defined in:
+- [ai/skills/deployment/SKILL.md](../../ai/skills/deployment/SKILL.md)
+Do not duplicate the deployment steps or guidelines here.
+```
+
+### Example: Antigravity Workspace Skill (.agents/skills/deploy-skill/SKILL.md)
+```markdown
+---
+name: Deploy Skill
+description: Production release instructions pointer
+---
+Refer to the universal deployment procedure defined in:
+- [ai/skills/deployment/SKILL.md](../../../ai/skills/deployment/SKILL.md)
+```
+
 ---
 
 ## Context Flow

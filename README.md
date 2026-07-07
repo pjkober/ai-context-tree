@@ -63,7 +63,8 @@ project/
 ├── .gitignore          # Ignores build artifacts and tmp/ (refer to file-templates/.gitignore)
 ├── ai/
 │   ├── context/        # Project goals, stack, and structure map
-│   └── rules/          # Coding conventions and syntax standards
+│   ├── rules/          # Coding conventions and syntax standards
+│   └── skills/         # Local agent skills (refer to file-templates/ai/skills/example-skill.md)
 ├── docs/               # System and technical documentation
 ├── src/                # Application source code
 └── tests/              # Test suites
@@ -87,6 +88,7 @@ project/
 │   ├── workflows/      # Step-by-step procedures (e.g. release, bugfix)
 │   ├── prompts/        # Generic user-triggered prompts
 │   ├── templates/      # Code scaffolding templates
+│   ├── skills/         # Project-specific agent skills
 │   └── memory/         # Lessons learned & technical debt records
 ├── specs/              # Business specs & acceptance criteria
 ├── contracts/          # API contracts (OpenAPI, Protobuf, GraphQL)

@@ -65,3 +65,15 @@ Project historical memory.
 
 - **Role:** Tracks historical lessons, post-mortems, known issues, and technical debt (e.g. `known-problems.md`).
 - **Rule:** Must only be used for historical knowledge. Active items and backlogs belong in `task.md`.
+
+---
+
+## ai/skills/
+
+Project-specific local agent skills.
+
+- **Role:** Houses custom modular capabilities and tools built to extend the power of AI agents for this specific repository (e.g. specialized data scrapers, custom code analysis hooks, or interactive testing workflows).
+- **Format:** Each skill should reside in its own folder or file (e.g. `ai/skills/my-skill/SKILL.md` or `ai/skills/my-skill.md`).
+- **Rule:** Universal skills belong here so they are version-controlled and shared across the team. IDE-specific rules (like `.cursor/` or `.agents/`) must simply link back to files in `ai/skills/` to prevent duplication (SSOT).
+- **Template:** [file-templates/ai/skills/example-skill.md](../../file-templates/ai/skills/example-skill.md)
+

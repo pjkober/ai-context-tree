@@ -17,5 +17,7 @@
 | `infrastructure/` | when DevOps/IAC resources (docker-compose, terraform, helm, kubernetes) are introduced |
 | `assets/` | when static assets (images, icons, fonts, design documents) are added to the project |
 | `examples/` | when documentation references usage examples or code snippets (e.g., API requests/responses) |
+| `ai/skills/` | created at project start to store project-specific local agent skills |
 | `tasks/` | when tasks start being managed via individual markdown files with YAML frontmatter |
 | `tmp/` | created automatically by local tools or build processes for temporary files |
+
