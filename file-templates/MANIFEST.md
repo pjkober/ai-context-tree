@@ -1,0 +1,7 @@
+├── [ai/context/](ai/context/)
+├── [specs/](specs/)
+├── [contracts/](contracts/)
+├── [ai/workflows/](ai/workflows/)
+├── [tests/](tests/)
+├── [decisions/](decisions/)
+├── [docs/](docs/)

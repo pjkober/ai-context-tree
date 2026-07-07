@@ -1,25 +1,12 @@
 #!/usr/bin/env bash
 
-# Script to create minimal project structure as defined in Uniwersalna struktura projektu dla AI-First Development.md
+# Script to create minimal project structure as defined in ai-context-tree
 # ------------------------------------------------------------
-# Creates the following directory tree (relative to the script location):
-# project/
-# ├── AGENTS.md
-# ├── README.md
-# ├── .gitignore
-# ├── MANIFEST.md
-# ├── ai/
-# │   ├── context/
-# │   └── rules/
-# ├── docs/
-# ├── src/
-# └── tests/
-# ------------------------------------------------------------
-
 set -e
 
 # Determine the directory where this script lives – treat it as the project root
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATES_DIR="$BASE_DIR/file-templates"
 
 # Helper to create a directory if it does not exist
 mkdir_if_not_exists() {
@@ -32,33 +19,47 @@ mkdir_if_not_exists() {
   fi
 }
 
-# Helper to create a file with given content if it does not exist
-create_file_if_not_exists() {
-  local file="$1"
-  local content="$2"
-  if [ ! -f "$file" ]; then
-    echo -e "$content" > "$file"
-    echo "Created file: $file"
+# Helper to copy template file if it does not exist in target location
+copy_template_file() {
+  local rel_path="$1"
+  local src_file="$TEMPLATES_DIR/$rel_path"
+  local dest_file="$BASE_DIR/$rel_path"
+
+  # Ensure destination directory exists
+  mkdir_if_not_exists "$(dirname "$dest_file")"
+
+  if [ ! -f "$dest_file" ]; then
+    if [ -f "$src_file" ]; then
+      cp "$src_file" "$dest_file"
+      echo "Copied template to: $dest_file"
+    else
+      echo "Warning: Template source file missing: $src_file"
+    fi
   else
-    echo "File already exists: $file"
+    echo "File already exists, skipping: $dest_file"
   fi
 }
 
+# Check if templates directory is present
+if [ ! -d "$TEMPLATES_DIR" ]; then
+  echo "Error: 'file-templates/' directory not found at $TEMPLATES_DIR."
+  echo "This script must be run inside the cloned repository context containing file-templates."
+  exit 1
+fi
+
 # Create minimal directories
-mkdir_if_not_exists "$BASE_DIR/ai/context"
-mkdir_if_not_exists "$BASE_DIR/ai/rules"
 mkdir_if_not_exists "$BASE_DIR/docs"
 mkdir_if_not_exists "$BASE_DIR/src"
 mkdir_if_not_exists "$BASE_DIR/tests"
 
-# Minimal placeholder files
-create_file_if_not_exists "$BASE_DIR/AGENTS.md" "# AGENTS.md\n\nRead first:\n├── ai/context/project.md\n├── ai/context/structure-map.md\n├── ai/context/architecture.md\n\nFollow:\n├── ai/rules/coding.md\n\nUse workflows:\n├── ai/workflows/new-feature.md"
-
-create_file_if_not_exists "$BASE_DIR/README.md" "# Project Name\n\nOne‑sentence description of the project.\n\n## Installation\n...\n\n## Usage\n...\n\n## Structure\nSee [MANIFEST.md](MANIFEST.md).\n\n## Documentation\nSee [docs/](docs/) and [AGENTS.md](AGENTS.md) (for AI agents)."
-
-create_file_if_not_exists "$BASE_DIR/.gitignore" "tmp/\n.cursor-tutor\nnode_modules/\n.dist/\nbuild/\n*.log\n.env"
-
-# Optional MANIFEST listing the created items
-create_file_if_not_exists "$BASE_DIR/MANIFEST.md" "├── [ai/context/](ai/context/)\n├── [ai/rules/](ai/rules/)\n├── [docs/](docs/)\n├── [src/](src/)\n├── [tests/](tests/)\n├── AGENTS.md\n├── README.md\n├── .gitignore"
+# Copy minimal files from templates
+copy_template_file "AGENTS.md"
+copy_template_file "README.md"
+copy_template_file ".gitignore"
+copy_template_file "MANIFEST.md"
+copy_template_file "ai/context/project.md"
+copy_template_file "ai/context/structure-map.md"
+copy_template_file "ai/rules/coding.md"
+copy_template_file "ai/workflows/new-feature.md"
 
 echo "Minimal project structure created successfully."
