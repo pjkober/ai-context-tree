@@ -18,8 +18,12 @@ project/
 │   │   ├── project.md
 │   │   └── structure-map.md
 │   ├── rules/
-│   └── skills/
-│       └── example-skill.md
+│   ├── skills/
+│   │   └── example-skill.md
+│   ├── history/
+│   │   └── conver-001-example-transcript.md
+│   └── runs/
+│       └── run-001-example-automation.sh
 ├── docs/
 ├── src/
 └── tests/

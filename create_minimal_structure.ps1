@@ -62,6 +62,9 @@ Copy-TemplateFile "ai/context/structure-map.md"
 Copy-TemplateFile "ai/rules/coding.md"
 Copy-TemplateFile "ai/workflows/new-feature.md"
 Copy-TemplateFile "ai/skills/example-skill.md"
+Copy-TemplateFile "ai/history/conver-001-example-transcript.md"
+Copy-TemplateFile "ai/runs/run-001-example-automation.sh"
 
 Write-Host "Minimal project structure created successfully."
+
 

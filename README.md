@@ -65,7 +65,9 @@ project/
 ├── ai/
 │   ├── context/        # Project goals, stack, and structure map
 │   ├── rules/          # Coding conventions and syntax standards
-│   └── skills/         # Local agent skills (refer to file-templates/ai/skills/example-skill.md)
+│   ├── skills/         # Local agent skills (refer to file-templates/ai/skills/example-skill.md)
+│   ├── history/        # Conversation memory logs
+│   └── runs/           # Reusable execution scripts
 ├── docs/               # System and technical documentation
 ├── src/                # Application source code
 └── tests/              # Test suites
@@ -90,6 +92,8 @@ project/
 │   ├── prompts/        # Generic user-triggered prompts
 │   ├── templates/      # Code scaffolding templates
 │   ├── skills/         # Project-specific agent skills
+│   ├── history/        # Conversation memory logs
+│   ├── runs/           # Reusable execution scripts
 │   └── memory/         # Lessons learned & technical debt records
 ├── specs/              # Business specs & acceptance criteria
 ├── contracts/          # API contracts (OpenAPI, Protobuf, GraphQL)
