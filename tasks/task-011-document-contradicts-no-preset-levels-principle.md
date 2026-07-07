@@ -1,5 +1,7 @@
 ---
 id: task-011
+tags:
+  - tasks
 status: todo
 priority: critical
 type: docs

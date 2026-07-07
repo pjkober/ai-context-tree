@@ -1,9 +1,11 @@
 ---
 id: task-006
+tags:
+  - tasks
 status: todo
 priority: high
 type: docs
-owner: pjk
+owner: jan
 created: 2026-07-07
 updated: 2026-07-07
 depends_on:

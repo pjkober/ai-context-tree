@@ -37,6 +37,8 @@ Every task file must begin with a YAML frontmatter block:
 ```yaml
 ---
 id: task-NNN
+tags:
+  - tasks
 status: todo          # todo | in_progress | blocked | review | done | cancelled
 priority: medium      # low | medium | high | critical
 type: docs            # docs | bug | feature | refactor | chore

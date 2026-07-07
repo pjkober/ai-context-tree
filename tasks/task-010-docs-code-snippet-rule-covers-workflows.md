@@ -1,5 +1,7 @@
 ---
 id: task-010
+tags:
+  - tasks
 status: todo
 priority: low
 type: docs
