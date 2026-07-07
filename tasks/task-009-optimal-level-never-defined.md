@@ -2,7 +2,7 @@
 id: task-009
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: docs
 owner: pjk

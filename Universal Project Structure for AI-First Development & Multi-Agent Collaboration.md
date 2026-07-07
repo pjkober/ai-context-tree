@@ -102,18 +102,38 @@ Documentation describes:
 
 ### 5. Repository Must Be IDE-Independent
 
-We do not want to rewrite documentation when changing AI tools. AI client configuration files should contain at most 2–3 lines redirecting the model directly to `AGENTS.md`. Configuration files must not contain code examples or architecture descriptions.
+We do not want to rewrite documentation when changing AI tools. AI client configuration files (or the main rules files inside configuration directories, e.g., `.cursor/rules/main.mdc`) should contain at most 2–3 lines redirecting the model directly to `AGENTS.md`. Configuration files must not contain code examples or architecture descriptions.
 
 ---
 
 ## The Principle of Incremental Structure Growth
 
-The **MINIMAL / FULL** levels described in the following section are **for illustrative purposes only**. They show typical snapshots of the structure at different stages of a project's lifecycle — they are not rigid presets that you must choose from at the start.
+**Basic rule:** Every project starts with a minimal set of files and directories. New directories are added **only when a concrete, real need** arises — not according to a preset plan or target level. The structure grows directory by directory, alongside the actual needs of the project, and shrinks the same way when something is no longer needed.
 
-**Basic rule:**
-- Every project starts with the **MINIMAL** structure.
-- A new directory is added **only when a concrete, real need** for it arises — e.g., `decisions/` is created when you need to record the first ADR, not because you are upgrading to the FULL version.
-- The structure never "jumps" as a whole to the FULL state — it grows directory by directory, alongside the real needs of the project.
+**Starting structure — every project begins here:**
+
+```txt
+project/
+├── .gitignore
+├── AGENTS.md
+├── MANIFEST.md
+├── README.md
+├── ai/
+│   ├── context/
+│   │   ├── project.md
+│   │   └── structure-map.md
+│   └── rules/
+├── docs/
+├── src/
+└── tests/
+```
+
+Directories are added one at a time as the need arises. For example:
+- `decisions/` — created when the first architectural decision worth recording appears
+- `specs/` — created when the first feature requires documented business requirements
+- `contracts/` — created when the project starts exposing APIs or exchanging data between modules
+
+There is no "upgrade" from one level to another. There are no levels.
 
 **How does the AI (and the human) know which directory to create and what to name it?**
 This is governed by the [`ai/context/structure-map.md`](#aicontextstructure-mapmd) file — a full catalog of all possible, officially named directories described in this document, along with the conditions under which each directory should be created. Before creating a new top-level directory, the AI **must** consult `structure-map.md` instead of guessing the name or creating an alias (see: Rules for directory naming).
@@ -121,107 +141,8 @@ This is governed by the [`ai/context/structure-map.md`](#aicontextstructure-mapm
 **What to do when a needed directory does not yet exist in the repository:**
 1. Check `ai/context/structure-map.md` to see if there is an official name and definition for this directory.
 2. If so, create the directory under that exact name, as described in this document, and add an entry in `MANIFEST.md`.
-3. If the directory is not listed in `structure-map.md`, **do not create it on your own**. A new directory type is an architectural decision and must not be introduced based on AI guesswork — report the need to a human (e.g., as a task in `TODO.md` or as a direct question).
-4. Any directory that is no longer needed (e.g., `experiments/` after tests are completed) can be deleted or moved to `archive/` — the structure shrinks just as consciously as it grows.
-
----
-
-## Structure Snapshots (Illustrative)
-
-Three sample states of the structure at various stages of project growth — in line with the incremental growth principle described above. None of them is a target "level" to be selected at the beginning.
-
-### MINIMAL Version (Basic)
-
-The starting point for every project, without exception.
-
-```txt
-project/
-├── AGENTS.md
-├── README.md
-├── ai/
-│   ├── context/
-│   └── rules/
-├── docs/
-├── src/
-└── tests/
-```
-
----
-
-### FULL Version (AI Native)
-
-The state of a large, mature multi-module project.
-
-```txt
-project/
-├── AGENTS.md
-├── MANIFEST.md
-├── README.md
-├── CHANGELOG.md
-├── ROADMAP.md
-├── TODO.md
-├── LICENSE
-├── ai/
-│ ├── context/
-│ ├── rules/
-│ ├── workflows/
-│ ├── prompts/
-│ ├── templates/
-│ └── memory/
-├── specs/
-├── knowledge/
-│ ├── business/
-│ ├── faq/
-│ ├── terminology/
-│ ├── edge-cases/
-│ ├── legal/
-│ └── personas/
-├── checklists/
-├── decisions/
-├── contracts/
-│ ├── openapi.yaml
-│ ├── json-schema.json
-│ ├── schema.graphql
-│ ├── events.yaml
-│ └── grpc/
-│ └── service.proto
-├── docs/
-├── research/
-│ ├── market/
-│ ├── competitors/
-│ ├── users/
-│ ├── benchmarks/
-│ ├── spikes/
-│ └── experiments/
-├── src/
-├── tests/
-├── infrastructure/
-│ ├── docker/
-│ ├── terraform/
-│ ├── helm/
-│ ├── kubernetes/
-│ └── ansible/
-├── config/
-├── scripts/
-├── tools/
-├── examples/
-├── plans/
-├── experiments/
-│ ├── rag/
-│ ├── llm/
-│ ├── prototypes/
-│ └── benchmarks/
-├── archive/
-├── assets/
-│ ├── images/
-│ ├── icons/
-│ ├── fonts/
-│ ├── documents/
-│ └── design/
-├── .github/
-├── .gitignore
-└── tmp/
-```
+3. If the directory is not listed in `structure-map.md`, **do not create it on your own**. A new directory type is an architectural decision and must not be introduced based on AI guesswork — report the need to a human (e.g., as a task in `task.md` or as a direct question).
+4. Any directory that is no longer needed (e.g., `prototypes/` after tests are completed) can be deleted or moved to `archive/` — the structure shrinks just as consciously as it grows.
 
 ---
 
@@ -259,6 +180,11 @@ Follow:
 Use workflows:
 ├── ai/workflows/new-feature.md
 ```
+
+**Prohibitions ("What not to do"):**
+- Do not write business logic, code snippets, or system requirements directly in this file.
+- Do not duplicate architecture descriptions or directory structures here (refer to `ai/context/` instead).
+- Do not place tool-specific configurations (like `.cursorrules` content) inside this file; redirect them here instead.
 
 We never duplicate knowledge.
 
@@ -358,29 +284,38 @@ Development plan.
 
 ---
 
-#### TODO.md
+#### task.md & tasks/
 
 The single source of truth for the active task queue.
 
 **Rules:**
-- `TODO.md` — the only place for the active task queue.
-- `plans/` — only for epics and large changes, linked from `TODO.md`.
+- `task.md` — acts as the index and convention reference for the `tasks/` directory.
+- `tasks/` — contains individual task files named `task-NNN-short-description.md`.
+- `plans/` — only for epics and large changes, linked from `task.md` or individual task files.
 - `ai/memory/` — strictly historical knowledge; no task lists allowed.
-- `TODO.md` must not contain technical tasks like "fix a bug" — those belong to the ticketing system or `plans/`.
+- Tasks can range from documentation changes, bugs, to new features, and are classified by status, priority, and type in their YAML frontmatter.
 
-**Minimal Template:**
+**Minimal Template (`tasks/task-001-example.md`):**
 
 ```md
-# TODO
+---
+id: task-001
+status: todo          # todo | in_progress | blocked | review | done | cancelled
+priority: medium      # low | medium | high | critical
+type: docs            # docs | bug | feature | refactor | chore
+owner: jan
+created: 2026-07-07
+updated: 2026-07-07
+depends_on: []
+---
 
-## In Progress
-- [ ] Task 1
+# Task-001: Example Task Title
 
-## To Do
-- [ ] Task 2
+**Location:** ...
 
-## Blocked
-- [ ] Task 3 — waiting for decision: see [decisions/](decisions/)
+**Description:** ...
+
+**Justification:** ...
 ```
 
 ---
@@ -488,9 +423,18 @@ Key file supporting the **incremental structure growth principle**. A full, flat
 | `contracts/` | when the project starts exposing APIs or exchanging data between modules |
 | `knowledge/` | when business knowledge grows too large to fit in a single `glossary.md` |
 | `checklists/` | when a repeatable process (e.g., release) begins to be executed manually more than once |
-| `plans/` | when the first change too large for a single entry in `TODO.md` is introduced |
-| `experiments/` | when the team starts testing solutions not intended for immediate production release |
+| `plans/` | when the first change too large for a single entry in `task.md` is introduced |
+| `prototypes/` | when the team starts testing solutions not intended for immediate production release |
 | `archive/` | when the first piece of code or documentation becomes inactive but is worth preserving |
+| `research/` | when the team begins analytical research, spikes, or market/competitor analysis |
+| `tools/` | when custom utilities, generators, converters, or CLIs are created for the project |
+| `scripts/` | when automation or helper scripts (build, seed, deploy, backup) are introduced |
+| `config/` | when tool configs (eslint, tsconfig, vite, etc.) are consolidated to reduce root directory clutter |
+| `infrastructure/` | when DevOps/IAC resources (docker-compose, terraform, helm, kubernetes) are introduced |
+| `assets/` | when static assets (images, icons, fonts, design documents) are added to the project |
+| `examples/` | when documentation references usage examples or code snippets (e.g., API requests/responses) |
+| `tasks/` | when tasks start being managed via individual markdown files with YAML frontmatter |
+| `tmp/` | created automatically by local tools or build processes for temporary files |
 
 ---
 
@@ -578,18 +522,22 @@ Task: generate controller, service, and unit tests.
 
 #### ai/templates/
 
-Templates.
+Code templates, organized by pattern name as subdirectories and tech-stack as individual files.
 
 ```txt
-├── service
-├── controller
-├── repository
-├── migration
-├── component
-└── endpoint
+├── service/
+│   ├── python.md
+│   └── typescript.md
+├── controller/
+│   └── typescript.md
+├── repository/
+│   └── python.md
+├── migration/
+├── component/
+└── endpoint/
 ```
 
-*(Note: the naming format of files/subdirectories in this directory requires further clarification — to be decided separately.)*
+**Rule:** Template directories represent the pattern or architectural role (e.g., `service/`, `controller/`), and the files inside represent the specific technology or language stack (e.g., `python.md`, `typescript.md`, `go.md`).
 
 ---
 
@@ -603,7 +551,7 @@ Project historical memory. Used exclusively to store historical knowledge.
 └── lessons-learned.md
 ```
 
-**Rule:** The `ai/memory/` directory stores only historical knowledge (e.g., known issues, technical debt, lessons learned). Placing current tasks, plans, or active issues there is prohibited. The active task queue belongs solely to `TODO.md`.
+**Rule:** The `ai/memory/` directory stores only historical knowledge (e.g., known issues, technical debt, lessons learned). Placing current tasks, plans, or active issues there is prohibited. The active task queue belongs solely to `task.md`.
 
 **Minimal Template (`known-problems.md`):**
 
@@ -636,7 +584,7 @@ Not implementation.
 ```
 
 **Rules:**
-- The `specs/` directory must not contain any task lists. Tasks must be located exclusively in `TODO.md`.
+- The `specs/` directory must not contain any task lists. Tasks must be located exclusively in `task.md` or the `tasks/` directory.
 - Files in `specs/` must not contain data tables or field definitions — those belong in `contracts/`.
 - `specs/` links to `contracts/` without duplicating fields.
 
@@ -671,9 +619,12 @@ AI implements features much better when specifications are provided.
 
 #### knowledge/
 
-Domain and business knowledge, not technical (which is located in `docs/`).
+The domain and business knowledge of the project. The directory contains information describing the domain, business processes, users, and legal requirements. It does not store technical or implementation documentation — those belong in `docs/` and `src/` respectively.
+
+Each knowledge category is represented by a separate subdirectory. Individual issues should be recorded as small, independent Markdown files according to the principle: **one category = one directory, one topic = one file**.
 
 ```txt
+knowledge/
 ├── business/
 ├── faq/
 ├── terminology/
@@ -702,22 +653,6 @@ A transaction initiated by a customer, consisting of at least one line item.
 
 ## Underwriting
 The process of assessing risk preceding the acceptance of a policy.
-```
-
-#### knowledge/
-
-The domain and business knowledge of the project. The directory contains information describing the domain, business processes, users, and legal requirements. It does not store technical or implementation documentation — those belong in `docs/` and `src/` respectively.
-
-Each knowledge category is represented by a separate subdirectory. Individual issues should be recorded as small, independent Markdown files according to the principle: **one category = one directory, one topic = one file**.
-
-```txt
-knowledge/
-├── business/
-├── faq/
-├── terminology/
-├── edge-cases/
-├── legal/
-└── personas/
 ```
 
 ---
@@ -833,7 +768,7 @@ Technical, system, and architectural documentation of the project. It is intende
 └── testing/
 ```
 
-**Rule:** Documentation must not contain code snippets longer than 5 lines. Longer examples should reside exclusively in `examples/` or in the source code.
+**Rule:** Documentation should focus on explaining *why*, *when*, and *how*, rather than duplicating source code. Code examples, templates, and configurations belong in `examples/`, `ai/templates/`, or `config/`.
 
 **Minimal Template (`architecture/payments.md`):**
 
@@ -847,7 +782,7 @@ Technical, system, and architectural documentation of the project. It is intende
 See [decisions/](../../decisions/).
 
 ## Diagram
-(diagram or link — move code >5 lines to examples/)
+(diagram or link)
 ```
 
 ---
@@ -949,7 +884,7 @@ Supporting directories, not required in the MINIMAL version — created in accor
 
 #### examples/
 
-Usage examples and longer code snippets (over 5 lines) referenced by the documentation.
+Usage examples and code snippets referenced by the documentation.
 
 ```txt
 ├── request.json
@@ -964,7 +899,7 @@ LLMs learn very well from examples (Few-Shot Learning).
 
 #### plans/
 
-Plans for major changes (epics and large migrations), linked from `TODO.md`.
+Plans for major changes (epics and large migrations), linked from `task.md`.
 
 ```txt
 ├── migration.md
@@ -990,14 +925,14 @@ Plans for major changes (epics and large migrations), linked from `TODO.md`.
 
 ---
 
-#### experiments/
+#### prototypes/
 
-Experiments.
+Prototypes.
 
 ```txt
 ├── rag/
 ├── llm/
-├── prototypes/
+├── sandbox/
 └── benchmarks/
 ```
 
@@ -1006,7 +941,7 @@ We do not mix them with production.
 **Minimal Template:**
 
 ```md
-# Experiment: Reranking in RAG
+# Prototype: Reranking in RAG
 
 ## Hypothesis
 ...
@@ -1073,17 +1008,17 @@ Temporary files. AI often generates temporary files — they should not end up i
 
 ---
 
-## Terminology Management by Project Level
+## Terminology Management
 
 **Distinction between categories of terms:**
 - **Technical term** — a concept from the technology stack, design pattern, or system structure, independent of the customer's domain (e.g., "Repository", "Feature flag", "Middleware").
 - **Business term** — a domain concept specific to the industry or customer, understandable by non-technical people (e.g., "Underwriting", "Completed order", "VIP client").
 
-**Rules by project level:**
-- **MINIMAL and OPTIMAL:** `ai/context/glossary.md` can store key business and technical terms — in these versions, `knowledge/terminology.md` does not exist, so the glossary file must be self-sufficient.
-- **FULL:** All business knowledge migrates to `knowledge/terminology.md`. `ai/context/glossary.md` contains only technical terms.
-- **FULL — linking instead of duplication:** if a technical term in `glossary.md` is closely tied to a business concept, the entry can link to the relevant definition in `knowledge/terminology.md` instead of repeating it, e.g., `[Order](../../knowledge/terminology.md#order)`.
-- In all levels: `ai/context/glossary.md` must contain single-sentence definitions.
+**Rules (applied incrementally as the project grows):**
+- As long as `knowledge/terminology/` does not yet exist in the project, `ai/context/glossary.md` stores both business and technical terms and must be self-sufficient.
+- Once business knowledge grows large enough to warrant a dedicated `knowledge/terminology/` directory, business terms migrate there. `ai/context/glossary.md` then contains only technical terms.
+- If a technical term in `glossary.md` is closely tied to a business concept, the entry can link to the relevant definition in `knowledge/terminology/` instead of repeating it, e.g., `[Order](../../knowledge/terminology/order.md)`.
+- At all times: `ai/context/glossary.md` must contain single-sentence definitions.
 
 ---
 
