@@ -18,6 +18,7 @@
   - [🌱 Incremental Growth Principle](docs/03-incremental-growth.md) — How the repository tree grows organically on demand.
   - [🏷️ Terminology Management](docs/04-terminology-management.md) — Handling technical vs business terms.
   - [🤖 AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
+  - [📘 Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
 - **File Templates:**
   - [📂 Replicated Structure Templates](file-templates/) — Got standard code/doc templates for every directory.
 - **Directory Guidelines:**
