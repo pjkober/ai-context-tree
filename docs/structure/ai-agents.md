@@ -24,9 +24,11 @@ A crucial file that supports the incremental growth principle.
 
 Rules and conventions governing the AI's behavior.
 
-- **Role:** Houses coding standards, style guidelines, security rules, and testing requirements (e.g. `coding.md`, `testing.md`).
+- **Role:** Houses coding standards, style guidelines, security rules, and testing requirements (e.g. `coding.md`, `security.md`, `testing.md`).
 - **Rule:** Files in `rules/` must contain *only* rules, not step-by-step procedures. Procedures belong in `workflows/`.
 - **Template (coding.md):** [file-templates/ai/rules/coding.md](../../file-templates/ai/rules/coding.md)
+- **Template (security.md):** [file-templates/ai/rules/security.md](../../file-templates/ai/rules/security.md)
+
 
 ---
 

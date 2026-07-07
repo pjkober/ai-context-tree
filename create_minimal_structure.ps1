@@ -1,3 +1,8 @@
+[CmdletBinding()]
+param(
+    [switch]$NonInteractive
+)
+
 # Script to create minimal project structure as defined in ai-context-tree
 # ------------------------------------------------------------
 $ErrorActionPreference = "Stop"
@@ -47,6 +52,111 @@ if (-not (Test-Path $TemplatesDir -PathType Container)) {
     exit 1
 }
 
+# Default values for AI-First rules configuration
+$AutonomyModeVal = "- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
+$DependencyPolicyVal = "- **Strict Dependency Policy:** Never add new libraries or dependencies without explicit user permission. Prefer standard/existing project tools."
+$RefactoringPolicyVal = "- **Strict Scope:** Modify only lines and files directly related to the requested task. Do not clean up unrelated code or formatting."
+$TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
+
+# Check if interactive
+if (-not $NonInteractive) {
+    Write-Host "=============================================" -ForegroundColor Cyan
+    Write-Host "   AI-First Project Rule Configuration Wizard" -ForegroundColor Cyan
+    Write-Host "=============================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    # 1. Autonomy Mode
+    Write-Host "1) Choose AI Autonomy Mode:"
+    Write-Host "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
+    Write-Host "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
+    Write-Host "  [3] Plan-First (AI writes a plan for approval first)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $AutonomyModeVal = "- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
+    } elseif ($opt -eq "3") {
+        $AutonomyModeVal = "- **Plan-First Mode:** For any non-trivial changes, write an implementation plan first, present it to the user for approval, and wait for confirmation before writing code."
+    }
+    Write-Host ""
+
+    # 2. Refactoring Policy
+    Write-Host "2) Choose Refactoring Policy:"
+    Write-Host "  [1] Strict Scope (AI only touches what's requested) [Default]"
+    Write-Host "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
+    $opt = Read-Host "Select option [1-2]"
+    if ($opt -eq "2") {
+        $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
+    }
+    Write-Host ""
+
+    # 3. Dependency Policy
+    Write-Host "3) Choose Dependency Policy:"
+    Write-Host "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
+    Write-Host "  [2] Proactive (AI can install standard packages if needed)"
+    $opt = Read-Host "Select option [1-2]"
+    if ($opt -eq "2") {
+        $DependencyPolicyVal = "- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
+    }
+    Write-Host ""
+
+    # 4. Tech Stack
+    Write-Host "4) Select Tech Stack / Framework:"
+    Write-Host "  [1] Node.js / TypeScript"
+    Write-Host "  [2] Python"
+    Write-Host "  [3] Go"
+    Write-Host "  [4] React / Next.js"
+    Write-Host "  [5] Decide later / I'll customize it later [Default]"
+    $opt = Read-Host "Select option [1-5]"
+    switch ($opt) {
+        "1" {
+            $TechStackVal = "- Stack: Node.js / TypeScript.`n- Use strict TypeScript configurations.`n- Prefer async/await over raw Promises.`n- Avoid using ``any`` type annotations; define interfaces or types."
+        }
+        "2" {
+            $TechStackVal = "- Stack: Python.`n- Adhere to PEP 8 standards.`n- Use type hints for all public function signatures.`n- Prefer list comprehensions and generator expressions where readable."
+        }
+        "3" {
+            $TechStackVal = "- Stack: Go.`n- Use standard Go conventions (``gofmt``, ``go lint``).`n- Explicitly handle all errors; do not ignore them.`n- Keep packages cohesive and API surfaces clean."
+        }
+        "4" {
+            $TechStackVal = "- Stack: React / Next.js.`n- Use functional components with hooks.`n- Keep components small, reusable, and state localized.`n- Follow Next.js directory and routing conventions."
+        }
+    }
+    Write-Host ""
+}
+
+# Helper to generate file with user preferences replaced
+function Generate-FromTemplate {
+    param(
+        [string]$TemplatePath,
+        [string]$DestPath
+    )
+    $Content = Get-Content $TemplatePath -Raw
+    $Content = $Content -replace "__AUTONOMY_MODE__", $AutonomyModeVal
+    $Content = $Content -replace "__DEPENDENCY_POLICY__", $DependencyPolicyVal
+    $Content = $Content -replace "__REFACTORING_POLICY__", $RefactoringPolicyVal
+    $Content = $Content -replace "__TECH_STACK__", $TechStackVal
+    $Content | Set-Content $DestPath -NoNewline
+}
+
+function Generate-RulesFile {
+    param([string]$RelPath)
+    $SrcFile = Join-Path $TemplatesDir $RelPath
+    $DestFile = Join-Path $BaseDir $RelPath
+
+    $DestParent = Split-Path -Parent $DestFile
+    New-DirectoryIfNotExists $DestParent
+
+    if (-not (Test-Path $DestFile -PathType Leaf)) {
+        if (Test-Path $SrcFile -PathType Leaf) {
+            Generate-FromTemplate -TemplatePath $SrcFile -DestPath $DestFile
+            Write-Host "Generated rules file: $DestFile"
+        } else {
+            Write-Warning "Template source file missing: $SrcFile"
+        }
+    } else {
+        Write-Host "File already exists, skipping: $DestFile"
+    }
+}
+
 # Create minimal directories
 New-DirectoryIfNotExists (Join-Path $BaseDir "docs")
 New-DirectoryIfNotExists (Join-Path $BaseDir "src")
@@ -59,12 +169,13 @@ Copy-TemplateFile ".gitignore"
 Copy-TemplateFile "MANIFEST.md"
 Copy-TemplateFile "ai/context/project.md"
 Copy-TemplateFile "ai/context/structure-map.md"
-Copy-TemplateFile "ai/rules/coding.md"
 Copy-TemplateFile "ai/workflows/new-feature.md"
 Copy-TemplateFile "ai/skills/example-skill.md"
 Copy-TemplateFile "ai/history/conver-001-example-transcript.md"
 Copy-TemplateFile "ai/runs/run-001-example-automation.sh"
 
+# Generate dynamically configured rules
+Generate-RulesFile "ai/rules/coding.md"
+Generate-RulesFile "ai/rules/security.md"
+
 Write-Host "Minimal project structure created successfully."
-
-

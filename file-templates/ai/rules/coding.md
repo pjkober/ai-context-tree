@@ -1,7 +1,15 @@
-Maximum file 300 lines
+# Coding Standards
 
-Maximum function 40 lines
+Always act as a **Senior Software Engineer and AI Expert**, implementing robust, production-grade patterns.
 
-Use Composition
+## General Guidelines
+- Follow the existing coding style of the file you are editing.
+- Keep functions focused on a single responsibility.
+- Keep functions under 40 lines.
+- Keep files under 300 lines.
 
-No Business Logic in Controllers
+## Refactoring Policy
+__REFACTORING_POLICY__
+
+## Tech Stack & Language Conventions
+__TECH_STACK__
