@@ -1,51 +1,51 @@
-# Uniwersalna struktura projektu dla AI-First Development
+# Universal Project Structure for AI-First Development
 
-> **Cel:** stworzenie uniwersalnej struktury projektu, która działa niezależnie od języka programowania i frameworka, zgodnie z najlepszymi praktykami rozwoju oprogramowania. Działająca dobrze z klientami AI (Claude Code, Cursor, OpenCode, Cline, Roo Code, Codex CLI, Gemini CLI, Windsurf, Antigravity i innymi), tak aby można z nich było korzystać równocześnie lub zmieniać je w przyszłości bez konieczności przebudowy repozytorium.
-
----
-
-## Filozofia
-
-Nowoczesne repozytorium nie jest już projektowane wyłącznie dla programisty.
-
-Jest projektowane dla:
-- Programisty
-- AI Assistant
-- AI Agent
-- Code Review Agent
-- DevOps Agent
-- Test Agent
-- Dokumentacji
-
-Największym ograniczeniem współczesnych modeli LLM nie jest generowanie kodu, ale **zarządzanie kontekstem (Context Management)**.
-
-**Nadrzędna zasada dostępu do kontekstu:**
-Repozytorium posiada jedną, całkowicie wspólną strukturę dla człowieka oraz agentów AI. Obie strony korzystają z tych samych katalogów i plików. Każdy plik jest równorzędnym źródłem informacji dla człowieka i AI — nie istnieją katalogi „dla ludzi" ani „dla AI".
-
-Dlatego dobra struktura projektu powinna:
-- minimalizować zgadywanie przez AI,
-- być przewidywalna,
-- mieć jedną lokalizację dla każdej informacji,
-- rozdzielać wiedzę od implementacji,
-- umożliwiać łatwą zmianę klienta AI bez przebudowy repozytorium.
-
-**Zasady nazewnictwa katalogów i organizacji wiedzy:**
-- Każdy katalog w repozytorium musi posiadać jedną, oficjalną nazwę. Zakaz tworzenia aliasów, skrótów lub alternatywnych nazw katalogów w dokumentacji lub przykładach.
-- Nazwy katalogów muszą być pełne i jednoznaczne (np. `config/` zamiast `cfg/`, `infrastructure/` zamiast `infra/`). Skróty są zabronione.
-- Reguły dotyczą fizycznych nazw katalogów i plików repozytorium. Nazwy własne technologii w opisach zachowują oficjalną pisownię.
-- Jedna kategoria wiedzy = jeden katalog, jedno zagadnienie = jeden plik.
+> **Goal:** Create a universal project structure that works independently of the programming language and framework, in line with software development best practices. It should play well with various AI clients (Claude Code, Cursor, OpenCode, Cline, Roo Code, Codex CLI, Gemini CLI, Windsurf, Antigravity, and others) so that they can be used simultaneously or swapped in the future without the need to restructure the repository.
 
 ---
 
-## Najważniejsze zasady
+## Philosophy
 
-Pięć zasad, na których opiera się cała struktura opisana w dalszej części dokumentu.
+A modern repository is no longer designed solely for human developers.
+
+It is designed for:
+- Developers
+- AI Assistants
+- AI Agents
+- Code Review Agents
+- DevOps Agents
+- Test Agents
+- Documentation
+
+The biggest limitation of modern LLMs is not code generation, but **Context Management**.
+
+**Overriding principle of context access:**
+The repository has a single, completely shared structure for both humans and AI agents. Both parties use the same directories and files. Every file is an equal source of information for humans and AI alike — there are no "for humans" or "for AI" directories.
+
+Therefore, a good project structure should:
+- Minimize guessing by the AI,
+- Be predictable,
+- Have a single source of truth for each piece of information,
+- Separate knowledge from implementation,
+- Enable easily switching AI clients without reorganizing the repository.
+
+**Rules for directory naming and knowledge organization:**
+- Every directory in the repository must have a single, official name. Creating aliases, abbreviations, or alternative directory names in documentation or examples is prohibited.
+- Directory names must be full and unambiguous (e.g., `config/` instead of `cfg/`, `infrastructure/` instead of `infra/`). Abbreviations are forbidden.
+- These rules apply to the physical names of directories and files in the repository. Proper names of technologies in descriptions retain their official spelling.
+- One knowledge category = one directory; one topic = one file.
+
+---
+
+## Core Principles
+
+The five principles upon which the entire structure described in the rest of this document is built.
 
 ### 1. Single Source of Truth (SSOT)
 
-Każda informacja występuje tylko w jednym miejscu.
+Each piece of information exists in only one place.
 
-Źle:
+Bad:
 
 ```txt
 ├── README
@@ -55,84 +55,84 @@ Każda informacja występuje tylko w jednym miejscu.
 └── docs/
 ```
 
-wszędzie opis architektury.
+with the architecture described everywhere.
 
-Dobrze:
+Good:
 
 ```txt
 ├── docs/
 └── ai/
 ```
 
-a wszystkie pozostałe pliki jedynie odwołują się do tych źródeł.
+and all other files simply refer back to these sources.
 
 ---
 
-### 2. AI nie powinno zgadywać
+### 2. AI Should Not Guess
 
-Jeżeli projekt posiada:
-- konwencje nazewnictwa,
-- architekturę,
-- decyzje projektowe,
-- workflow,
+If a project has:
+- Naming conventions,
+- Architecture,
+- Design decisions,
+- Workflows,
 
-to powinny być zapisane.
-
----
-
-### 3. Małe pliki
-
-AI dużo lepiej analizuje:
-- pliki 100–300 linii,
-- jedną odpowiedzialność na plik,
-- małe katalogi.
+they must be documented.
 
 ---
 
-### 4. Dokumentacja blisko kodu
+### 3. Small Files
 
-Kod opisuje implementację.
-
-Dokumentacja opisuje:
-- dlaczego,
-- kiedy,
-- jak.
+AI analyzes much better when dealing with:
+- Files of 100–300 lines,
+- One responsibility per file,
+- Small directories.
 
 ---
 
-### 5. Repozytorium ma być niezależne od IDE
+### 4. Documentation Close to Code
 
-Nie chcemy przepisywać dokumentacji przy zmianie narzędzia AI. Pliki konfiguracyjne klientów AI powinny zawierać maksymalnie 2–3 linie odsyłające model bezpośrednio do `AGENTS.md`. Pliki konfiguracyjne nie mogą zawierać przykładów kodu ani opisów architektury.
+Code describes the implementation.
 
----
-
-## Zasada przyrostowego wzrostu struktury
-
-Poziomy **MINIMAL / FULL** opisane w kolejnej sekcji mają charakter **wyłącznie poglądowy**. Pokazują typowe migawki struktury na różnych etapach życia projektu — nie są to sztywne warianty, spośród których wybiera się jeden na starcie.
-
-**Zasada bazowa:**
-- Każdy projekt zaczyna od struktury **MINIMAL**.
-- Kolejny katalog jest dodawany **wyłącznie wtedy, gdy pojawia się konkretna, realna potrzeba** jego istnienia — np. `decisions/` powstaje w momencie, gdy trzeba zapisać pierwszy ADR, a nie bo wprowadzamy wersję FULL.
-- Struktura nigdy nie „przeskakuje" jako całość do FULL — rośnie katalog po katalogu, wraz z realnymi potrzebami projektu.
-
-**Skąd AI (i człowiek) wie, jaki katalog utworzyć i jak go nazwać?**
-Służy do tego plik [`ai/context/structure-map.md`](#aicontextstructure-mapmd) — pełny katalog wszystkich możliwych, oficjalnie nazwanych katalogów opisanych w tym dokumencie, wraz z warunkiem, kiedy dany katalog powinien powstać. Przed utworzeniem nowego katalogu najwyższego poziomu AI **musi** sprawdzić `structure-map.md`, zamiast zgadywać nazwę lub tworzyć alias (patrz: Zasady nazewnictwa katalogów).
-
-**Postępowanie, gdy potrzebny katalog jeszcze nie istnieje w repozytorium:**
-1. Sprawdź `ai/context/structure-map.md` — czy istnieje oficjalna nazwa i definicja tego katalogu.
-2. Jeśli tak — utwórz katalog dokładnie pod tą nazwą, zgodnie z opisem w tym dokumencie, i dodaj wpis w `MANIFEST.md`.
-3. Jeśli katalogu nie ma w `structure-map.md` — **nie twórz go samodzielnie**. Nowy typ katalogu to decyzja architektoniczna, nie może powstać przez domysł AI — zgłoś potrzebę człowiekowi (np. jako wpis w `TODO.md` lub bezpośrednie pytanie).
-4. Katalog, który przestał być potrzebny (np. `experiments/` po zakończeniu eksperymentów), może zostać usunięty lub przeniesiony do `archive/` — struktura kurczy się tak samo świadomie, jak rośnie.
+Documentation describes:
+- Why,
+- When,
+- How.
 
 ---
 
-## Migawki struktury (poglądowe)
+### 5. Repository Must Be IDE-Independent
 
-Trzy przykładowe stany struktury na różnych etapach wzrostu projektu — zgodnie z zasadą przyrostowego wzrostu opisaną powyżej. Żaden z nich nie jest docelowym „poziomem" do wybrania na starcie.
+We do not want to rewrite documentation when changing AI tools. AI client configuration files should contain at most 2–3 lines redirecting the model directly to `AGENTS.md`. Configuration files must not contain code examples or architecture descriptions.
 
-### Wersja MINIMAL (podstawowa)
+---
 
-Punkt startowy każdego projektu, bez wyjątku.
+## The Principle of Incremental Structure Growth
+
+The **MINIMAL / FULL** levels described in the following section are **for illustrative purposes only**. They show typical snapshots of the structure at different stages of a project's lifecycle — they are not rigid presets that you must choose from at the start.
+
+**Basic rule:**
+- Every project starts with the **MINIMAL** structure.
+- A new directory is added **only when a concrete, real need** for it arises — e.g., `decisions/` is created when you need to record the first ADR, not because you are upgrading to the FULL version.
+- The structure never "jumps" as a whole to the FULL state — it grows directory by directory, alongside the real needs of the project.
+
+**How does the AI (and the human) know which directory to create and what to name it?**
+This is governed by the [`ai/context/structure-map.md`](#aicontextstructure-mapmd) file — a full catalog of all possible, officially named directories described in this document, along with the conditions under which each directory should be created. Before creating a new top-level directory, the AI **must** consult `structure-map.md` instead of guessing the name or creating an alias (see: Rules for directory naming).
+
+**What to do when a needed directory does not yet exist in the repository:**
+1. Check `ai/context/structure-map.md` to see if there is an official name and definition for this directory.
+2. If so, create the directory under that exact name, as described in this document, and add an entry in `MANIFEST.md`.
+3. If the directory is not listed in `structure-map.md`, **do not create it on your own**. A new directory type is an architectural decision and must not be introduced based on AI guesswork — report the need to a human (e.g., as a task in `TODO.md` or as a direct question).
+4. Any directory that is no longer needed (e.g., `experiments/` after tests are completed) can be deleted or moved to `archive/` — the structure shrinks just as consciously as it grows.
+
+---
+
+## Structure Snapshots (Illustrative)
+
+Three sample states of the structure at various stages of project growth — in line with the incremental growth principle described above. None of them is a target "level" to be selected at the beginning.
+
+### MINIMAL Version (Basic)
+
+The starting point for every project, without exception.
 
 ```txt
 project/
@@ -148,9 +148,9 @@ project/
 
 ---
 
-### Wersja FULL (AI Native)
+### FULL Version (AI Native)
 
-Stan dużego, dojrzałego projektu wielomodułowego.
+The state of a large, mature multi-module project.
 
 ```txt
 project/
@@ -221,32 +221,31 @@ project/
 ├── .github/
 ├── .gitignore
 └── tmp/
-
 ```
 
 ---
 
-## Szczegółowy opis katalogów i plików
+## Detailed Description of Directories and Files
 
-Poniższe podrozdziały grupują wszystkie pliki i katalogi opisane w tym dokumencie wg ich funkcji: pliki root, katalog `ai/`, katalogi biznesowe/wiedzy, katalogi implementacyjne oraz katalogi pomocnicze.
+The following sections group all files and directories described in this document by their function: root files, the `ai/` directory, business/knowledge directories, implementation directories, and helper directories.
 
-### Pliki katalogu głównego (root)
+### Root Directory Files
 
-Pliki znajdujące się bezpośrednio w korzeniu repozytorium — punkty wejścia i metadane projektu.
+Files located directly in the root of the repository — entry points and project metadata.
 
 #### AGENTS.md
 
-Najważniejszy plik dla agentów AI.
+The most important file for AI agents.
 
-**Pełni wyłącznie rolę punktu wejścia (Entry Point).** Nie może zawierać żadnych opisów architektury, technologii, decyzji projektowych ani streszczeń. Umieszczanie wiedzy w pliku wejściowym łamie SSOT i prowadzi do nadpisywania kontekstu.
+**Acts purely as an Entry Point.** It must not contain any descriptions of architecture, technologies, design decisions, or summaries. Putting knowledge into the entry file violates the SSOT and leads to context pollution.
 
-Powinien zawierać jedynie:
-- gdzie znajduje się dokumentacja,
-- jakie reguły obowiązują,
-- jakie workflow stosować,
-- czego nie robić.
+It should only contain:
+- where the documentation is located,
+- which rules apply,
+- which workflows to use,
+- what not to do.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```txt
 Read first:
@@ -261,17 +260,17 @@ Use workflows:
 ├── ai/workflows/new-feature.md
 ```
 
-Nigdy nie duplikujemy wiedzy.
+We never duplicate knowledge.
 
 ---
 
 #### MANIFEST.md
 
-Mapa całego repozytorium. To indeks projektu — lista tego, co **aktualnie istnieje** w repozytorium (w odróżnieniu od `ai/context/structure-map.md`, który opisuje wszystko, co **może** powstać).
+The map of the entire repository. This is the project's index — a list of what **currently exists** in the repository (in contrast to `ai/context/structure-map.md`, which describes everything that **could** exist).
 
-`MANIFEST.md` zawiera wyłącznie listę katalogów i linki do właściwych plików — bez opisów. Zakaz używania nazw ogólnych pisanych wielką literą.
+`MANIFEST.md` contains only a list of directories and links to the relevant files — no descriptions. Using capitalized general names is prohibited.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```txt
 ├── [ai/context/](ai/context/)
@@ -283,48 +282,48 @@ Mapa całego repozytorium. To indeks projektu — lista tego, co **aktualnie ist
 ├── [docs/](docs/)
 ```
 
-Dzięki temu AI nie musi przeszukiwać całego repozytorium.
+This way, the AI does not have to search the entire repository.
 
 ---
 
 #### README.md
 
-Krótki. Nie powinien zastępować dokumentacji.
+Short. It should not replace documentation.
 
-Powinien zawierać:
-- opis projektu,
-- instalację,
-- uruchomienie,
-- strukturę,
-- link do dokumentacji.
+It should contain:
+- project description,
+- installation instructions,
+- how to run the project,
+- structure overview,
+- link to documentation.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
-# Nazwa projektu
+# Project Name
 
-Jednozdaniowy opis projektu.
+A one-sentence description of the project.
 
-## Instalacja
+## Installation
 ...
 
-## Uruchomienie
+## How to Run
 ...
 
-## Struktura
-Zobacz [MANIFEST.md](MANIFEST.md).
+## Structure
+See [MANIFEST.md](MANIFEST.md).
 
-## Dokumentacja
-Zobacz [docs/](docs/) i [AGENTS.md](AGENTS.md) (dla agentów AI).
+## Documentation
+See [docs/](docs/) and [AGENTS.md](AGENTS.md) (for AI agents).
 ```
 
 ---
 
 #### CHANGELOG.md
 
-Historia zmian.
+Change history.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
 # CHANGELOG
@@ -333,27 +332,27 @@ Historia zmian.
 
 ## [1.0.0] - 2026-01-01
 ### Added
-- Pierwsza wersja projektu.
+- First version of the project.
 ```
 
 ---
 
 #### ROADMAP.md
 
-Plan rozwoju.
+Development plan.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
 # ROADMAP
 
-## Teraz
+## Now
 - ...
 
-## Następne
+## Next
 - ...
 
-## Później
+## Later
 - ...
 ```
 
@@ -361,48 +360,48 @@ Plan rozwoju.
 
 #### TODO.md
 
-Jedyne miejsce na aktywną kolejkę zadań.
+The single source of truth for the active task queue.
 
-**Zasady:**
-- `TODO.md` — jedyne miejsce na aktywną kolejkę zadań.
-- `plans/` — wyłącznie epiki i duże zmiany, linkowane z `TODO.md`.
-- `ai/memory/` — wyłącznie wiedza historyczna, zakaz list zadań.
-- `TODO.md` nie może zawierać zadań technicznych typu „naprawić bug" — te należą do systemu ticketów lub `plans/`.
+**Rules:**
+- `TODO.md` — the only place for the active task queue.
+- `plans/` — only for epics and large changes, linked from `TODO.md`.
+- `ai/memory/` — strictly historical knowledge; no task lists allowed.
+- `TODO.md` must not contain technical tasks like "fix a bug" — those belong to the ticketing system or `plans/`.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
 # TODO
 
-## W trakcie
-- [ ] Zadanie 1
+## In Progress
+- [ ] Task 1
 
-## Do zrobienia
-- [ ] Zadanie 2
+## To Do
+- [ ] Task 2
 
-## Zablokowane
-- [ ] Zadanie 3 — czeka na decyzję: patrz [decisions/](decisions/)
+## Blocked
+- [ ] Task 3 — waiting for decision: see [decisions/](decisions/)
 ```
 
 ---
 
 #### LICENSE
 
-Licencja projektu (np. MIT, Apache 2.0), w standardowym, niezmodyfikowanym brzmieniu, kopiowana z oficjalnego źródła licencji.
+The project license (e.g., MIT, Apache 2.0) in its standard, unmodified text, copied from the official license source.
 
 ---
 
 #### .gitignore
 
-Plik kontrolujący, co nie trafia do repozytorium.
+The file controlling what is excluded from the repository.
 
-**Musi zawierać wykluczenie:**
-- `tmp/` — wraz z ukrytymi logami narzędzi AI (np. `.cursor-tutor`),
-- artefaktów builda i zależności specyficznych dla stosu technologicznego.
+**Must include:**
+- `tmp/` — along with hidden AI tool logs (e.g., `.cursor-tutor`),
+- build artifacts and dependencies specific to the tech stack.
 
-Wykluczenie `tmp/` musi obowiązywać także w konfiguracji CI/CD, nie tylko w Git.
+The `tmp/` exclusion must also apply to CI/CD configuration, not just Git.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```txt
 tmp/
@@ -418,7 +417,7 @@ build/
 
 #### .github/
 
-Konfiguracja specyficzna dla GitHub: automatyzacja CI/CD oraz szablony współpracy.
+GitHub-specific configuration: CI/CD automation and collaboration templates.
 
 ```txt
 ├── workflows/
@@ -427,17 +426,17 @@ Konfiguracja specyficzna dla GitHub: automatyzacja CI/CD oraz szablony współpr
 └── PULL_REQUEST_TEMPLATE.md
 ```
 
-**Zasada:** pliki w `.github/` nie zawierają wiedzy biznesowej ani architektonicznej — kroki CI/CD wymagające opisu odsyłają do `ai/workflows/` lub `scripts/`.
+**Rule:** files in `.github/` do not contain business or architectural knowledge — CI/CD steps that require description refer back to `ai/workflows/` or `scripts/`.
 
 ---
 
-### ai/ — katalog agentów AI
+### ai/ — AI Agents Directory
 
-Katalog zawierający instrukcje sterujące zachowaniem agentów AI (reguły, przepływy pracy, prompty, szablony). Struktura jest wspólna dla człowieka i AI — programiści powinni tu zaglądać, aby konfigurować zachowanie asystentów lub zapoznać się z regułami.
+A directory containing instructions that govern the behavior of AI agents (rules, workflows, prompts, templates). The structure is shared between humans and AI — developers should look here to configure assistant behavior or learn about the project rules.
 
 #### ai/context/
 
-Opis projektu.
+Project description.
 
 ```txt
 ├── project.md
@@ -448,29 +447,29 @@ Opis projektu.
 └── glossary.md
 ```
 
-Zawiera:
-- cel projektu,
-- moduły,
-- architekturę,
-- technologie,
-- słownik pojęć,
-- mapę możliwej struktury katalogów.
+Contains:
+- project goal,
+- modules,
+- architecture,
+- technologies,
+- glossary,
+- map of possible directory structure.
 
-**Zasada SSOT:** Pliki w `ai/context/` pełnią funkcję *punktów wejścia* i mogą zawierać wyłącznie:
-- cele wysokiego poziomu,
-- linki Markdown do właściwych plików w `docs/`, `config/`, `decisions/`.
+**SSOT Rule:** Files in `ai/context/` act as *entry points* and can only contain:
+- high-level goals,
+- Markdown links to the actual files in `docs/`, `config/`, `decisions/`.
 
-Bezwzględny zakaz powielania lub streszczania opisów technicznych znajdujących się w `docs/`, `config/`, `decisions/`. Zero diagramów technicznych — te należą do `docs/`.
+Strict prohibition against duplicating or summarizing technical descriptions found in `docs/`, `config/`, or `decisions/`. No technical diagrams — those belong in `docs/`.
 
-**Minimalny szablon (`project.md`):**
+**Minimal Template (`project.md`):**
 
 ```md
-# Nazwa projektu
+# Project Name
 
-## Cel
-Jedno zdanie / krótki akapit — po co istnieje projekt.
+## Goal
+One sentence / short paragraph — why the project exists.
 
-## Powiązane
+## Related
 - [architecture.md](architecture.md)
 - [modules.md](modules.md)
 - [structure-map.md](structure-map.md)
@@ -478,30 +477,28 @@ Jedno zdanie / krótki akapit — po co istnieje projekt.
 
 ##### ai/context/structure-map.md
 
-Kluczowy plik wspierający **zasadę przyrostowego wzrostu struktury**. Pełny, płaski katalog wszystkich katalogów opisanych w niniejszym dokumencie (superzbiór MINIMAL + FULL), wraz z warunkiem, kiedy dany katalog powinien zostać utworzony w konkretnym projekcie. To jedyne miejsce, które AI sprawdza przed utworzeniem nowego katalogu najwyższego poziomu.
+Key file supporting the **incremental structure growth principle**. A full, flat catalog of all directories described in this document (superset of MINIMAL + FULL), along with the conditions under which each directory should be created in a specific project. This is the only place the AI checks before creating a new top-level directory.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
-```md
-| Katalog | Kiedy utworzyć |
+| Directory | When to create |
 |---|---|
-| `specs/` | gdy pojawia się pierwsza funkcjonalność wymagająca spisania wymagań biznesowych |
-| `decisions/` | gdy pojawia się pierwsza decyzja architektoniczna warta uzasadnienia |
-| `contracts/` | gdy projekt zaczyna eksponować API lub wymieniać dane między modułami |
-| `knowledge/` | gdy wiedza biznesowa przestaje mieścić się w jednym `glossary.md` |
-| `checklists/` | gdy powtarzalny proces (np. release) zaczyna być wykonywany ręcznie więcej niż raz |
-| `plans/` | gdy pojawia się pierwsza zmiana zbyt duża na jeden wpis w `TODO.md` |
-| `experiments/` | gdy zespół zaczyna testować rozwiązania nieprzeznaczone od razu na produkcję |
-| `archive/` | gdy pierwszy fragment kodu lub dokumentacji staje się nieaktywny, ale wart zachowania |
-```
+| `specs/` | when the first feature requiring documented business requirements is introduced |
+| `decisions/` | when the first architectural decision worth justifying arises |
+| `contracts/` | when the project starts exposing APIs or exchanging data between modules |
+| `knowledge/` | when business knowledge grows too large to fit in a single `glossary.md` |
+| `checklists/` | when a repeatable process (e.g., release) begins to be executed manually more than once |
+| `plans/` | when the first change too large for a single entry in `TODO.md` is introduced |
+| `experiments/` | when the team starts testing solutions not intended for immediate production release |
+| `archive/` | when the first piece of code or documentation becomes inactive but is worth preserving |
 
 ---
 
 #### ai/rules/
 
-Reguły i konwencje obowiązujące AI.
+Rules and conventions governing the AI.
 
-Pliki w tym katalogu mogą zawierać wyłącznie reguły i konwencje, a **nie** kroki proceduralne. Procedury krok po kroku należą wyłącznie do `ai/workflows/`.
+Files in this directory must contain only rules and conventions, **not** procedural steps. Step-by-step procedures belong exclusively in `ai/workflows/`.
 
 ```txt
 ├── coding.md
@@ -511,7 +508,7 @@ Pliki w tym katalogu mogą zawierać wyłącznie reguły i konwencje, a **nie** 
 └── review.md
 ```
 
-**Minimalny szablon (`coding.md`):**
+**Minimal Template (`coding.md`):**
 
 ```txt
 Maximum file 300 lines
@@ -527,7 +524,7 @@ No Business Logic in Controllers
 
 #### ai/workflows/
 
-Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywane przez ludzi i AI**. Workflowy muszą być atomowe i deterministyczne.
+Operational procedures containing **universal step-by-step procedures executed by both humans and AI**. Workflows must be atomic and deterministic.
 
 ```txt
 ├── new-feature.md
@@ -540,27 +537,27 @@ Procedury operacyjne zawierające **uniwersalne procedury krok po kroku wykonywa
 └── onboarding.md
 ```
 
-**Minimalny szablon (`new-feature.md`):**
+**Minimal Template (`new-feature.md`):**
 
 ```md
-# Workflow: Nowa funkcjonalność
+# Workflow: New Feature
 
-1. Przeczytaj wymagania w `specs/<feature>/requirements.md`.
-2. Sprawdź powiązany kontrakt w `contracts/`, jeśli istnieje.
-3. Zaimplementuj zgodnie z `ai/rules/coding.md`.
-4. Dodaj testy w `tests/`.
-5. Zaktualizuj `CHANGELOG.md`.
+1. Read the requirements in `specs/<feature>/requirements.md`.
+2. Check the associated contract in `contracts/`, if it exists.
+3. Implement according to `ai/rules/coding.md`.
+4. Add tests in `tests/`.
+5. Update `CHANGELOG.md`.
 ```
 
 ---
 
 #### ai/prompts/
 
-Gotowe, **generyczne prompty ręcznie wywoływane przez użytkownika**. Katalog służy wyłącznie do przechowywania takich promptów.
+Ready-to-use, **generic prompts manually triggered by the user**. This directory is used exclusively to store such prompts.
 
-**Zasady:**
-- Pliki w `ai/prompts/` nie mogą zawierać reguł typu „always", „never", „must".
-- Instrukcje systemowe należą do `ai/rules/` lub `ai/workflows/` — nie do `ai/prompts/`.
+**Rules:**
+- Files in `ai/prompts/` must not contain rules like "always", "never", "must".
+- System instructions belong in `ai/rules/` or `ai/workflows/` — not in `ai/prompts/`.
 
 ```txt
 ├── create-api.md
@@ -569,19 +566,19 @@ Gotowe, **generyczne prompty ręcznie wywoływane przez użytkownika**. Katalog 
 └── migration.md
 ```
 
-**Minimalny szablon (`create-api.md`):**
+**Minimal Template (`create-api.md`):**
 
 ```md
-Kontekst: {krótki opis funkcjonalności}
-Wymagania: zgodnie z ai/rules/coding.md oraz contracts/{nazwa}.yaml
-Zadanie: wygeneruj kontroler, serwis i testy jednostkowe.
+Context: {short description of the feature}
+Requirements: in accordance with ai/rules/coding.md and contracts/{name}.yaml
+Task: generate controller, service, and unit tests.
 ```
 
 ---
 
 #### ai/templates/
 
-Szablony.
+Templates.
 
 ```txt
 ├── service
@@ -592,13 +589,13 @@ Szablony.
 └── endpoint
 ```
 
-*(Uwaga: forma nazw plików/podkatalogów w tym katalogu wymaga jeszcze doprecyzowania — do ustalenia osobno.)*
+*(Note: the naming format of files/subdirectories in this directory requires further clarification — to be decided separately.)*
 
 ---
 
 #### ai/memory/
 
-Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy historycznej.
+Project historical memory. Used exclusively to store historical knowledge.
 
 ```txt
 ├── known-problems.md
@@ -606,30 +603,30 @@ Pamięć historyczna projektu. Służy wyłącznie do przechowywania wiedzy hist
 └── lessons-learned.md
 ```
 
-**Zasada:** Katalog `ai/memory/` przechowuje wyłącznie wiedzę historyczną (np. znane problemy, dług techniczny, lessons learned). Zakaz umieszczania tam aktualnych zadań, planów lub bieżących problemów. Aktywna kolejka zadań należy wyłącznie do `TODO.md`.
+**Rule:** The `ai/memory/` directory stores only historical knowledge (e.g., known issues, technical debt, lessons learned). Placing current tasks, plans, or active issues there is prohibited. The active task queue belongs solely to `TODO.md`.
 
-**Minimalny szablon (`known-problems.md`):**
+**Minimal Template (`known-problems.md`):**
 
 ```md
 # Known Problems
 
-## [2026-01-15] Race condition w warstwie cache
-**Status:** otwarty
-**Opis:** ...
-**Obejście:** ...
+## [2026-01-15] Race condition in the cache layer
+**Status:** open
+**Description:** ...
+**Workaround:** ...
 ```
 
 ---
 
-### Katalogi biznesowe i wiedzy
+### Business and Knowledge Directories
 
-Katalogi opisujące wymagania, decyzje i wiedzę domenową — oddzielone od implementacji.
+Directories describing requirements, decisions, and domain knowledge — separated from implementation.
 
 #### specs/
 
-Najważniejszy katalog biznesowy. Opisuje **wymagania biznesowe i kryteria akceptacji**.
+The most important business directory. Describes **business requirements and acceptance criteria**.
 
-Nie implementację.
+Not implementation.
 
 ```txt
 └── authentication/
@@ -638,43 +635,43 @@ Nie implementację.
     └── api.md
 ```
 
-**Zasady:**
-- Katalog `specs/` nie może zawierać żadnych list zadań. Zadania muszą znajdować się wyłącznie w `TODO.md`.
-- Pliki w `specs/` nie mogą zawierać tabel danych ani definicji pól — te należą do `contracts/`.
-- `specs/` odwołuje się linkami do `contracts/`, bez powielania pól.
+**Rules:**
+- The `specs/` directory must not contain any task lists. Tasks must be located exclusively in `TODO.md`.
+- Files in `specs/` must not contain data tables or field definitions — those belong in `contracts/`.
+- `specs/` links to `contracts/` without duplicating fields.
 
-AI znacznie lepiej implementuje funkcjonalność posiadając specyfikację.
+AI implements features much better when specifications are provided.
 
-**Minimalny szablon (`requirements.md`):**
+**Minimal Template (`requirements.md`):**
 
 ```md
-# Wymagania: Uwierzytelnianie
+# Requirements: Authentication
 
-## Cel biznesowy
+## Business Goal
 ...
 
-## Wymagania
-- WYM-1: ...
-- WYM-2: ...
+## Requirements
+- REQ-1: ...
+- REQ-2: ...
 
-## Powiązany kontrakt
+## Associated Contract
 [contracts/auth.yaml](../../contracts/auth.yaml)
 ```
 
-**Minimalny szablon (`acceptance.md`):**
+**Minimal Template (`acceptance.md`):**
 
 ```md
-# Kryteria akceptacji: Uwierzytelnianie
+# Acceptance Criteria: Authentication
 
-- [ ] Użytkownik loguje się emailem i hasłem
-- [ ] Błędne hasło zwraca komunikat X
+- [ ] User logs in with email and password
+- [ ] Incorrect password returns message X
 ```
 
 ---
 
 #### knowledge/
 
-Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
+Domain and business knowledge, not technical (which is located in `docs/`).
 
 ```txt
 ├── business/
@@ -685,34 +682,33 @@ Wiedza domenowa i biznesowa, nie techniczna (ta znajduje się w `docs/`).
 └── personas/
 ```
 
-**Opis podkatalogów:**
-- **`business/`** — wiedza o procesach biznesowych, modelach działania, zasadach biznesowych oraz logice domenowej. Każdy proces lub obszar biznesowy powinien być opisany w osobnym pliku.
-- **`faq/`** — najczęściej zadawane pytania wraz z odpowiedziami. Zaleca się grupowanie pytań tematycznie (np. uwierzytelnianie, płatności, integracje), zamiast tworzenia jednego dużego dokumentu.
-- **`terminology/`** — słownik pojęć biznesowych używanych w projekcie. Każdy termin powinien znajdować się w osobnym pliku zawierającym jednoznaczną definicję oraz ewentualne powiązania z innymi pojęciami. Nie należy umieszczać tutaj terminów technicznych stosu technologicznego — te należą do `ai/context/stack.md` oraz `ai/context/glossary.md`.
-- **`edge-cases/`** — opis nietypowych scenariuszy biznesowych, wyjątków i szczególnych przypadków, które nie wynikają bezpośrednio z głównego procesu, ale muszą zostać uwzględnione podczas implementacji.
-- **`legal/`** — wymagania prawne, regulacyjne i compliance mające wpływ na projekt (np. RODO/GDPR, retencja danych, polityki bezpieczeństwa, wymagania branżowe).
-- **`personas/`** — persony użytkowników systemu. Każda persona powinna być opisana w osobnym pliku (np. `anna.md`, `administrator.md`, `ksiegowa.md`) zawierającym jej cele, potrzeby, ograniczenia, uprawnienia oraz typowe scenariusze użycia.
+**Description of subdirectories:**
+- **`business/`** — knowledge about business processes, operational models, business rules, and domain logic. Each process or business area should be described in a separate file.
+- **`faq/`** — frequently asked questions and answers. It is recommended to group questions by topic (e.g., authentication, payments, integrations) rather than creating one large document.
+- **`terminology/`** — a glossary of business terms used in the project. Each term should reside in a separate file containing an unambiguous definition and links to related concepts. Do not place technical terms from the technology stack here — those belong in `ai/context/stack.md` and `ai/context/glossary.md`.
+- **`edge-cases/`** — descriptions of unusual business scenarios, exceptions, and special cases that do not directly stem from the main process flow but must be handled during implementation.
+- **`legal/`** — legal, regulatory, and compliance requirements affecting the project (e.g., GDPR, data retention, security policies, industry-specific regulations).
+- **`personas/`** — user personas of the system. Each persona should be described in a separate file (e.g., `anna.md`, `administrator.md`, `accountant.md`) detailing goals, needs, limitations, permissions, and typical usage scenarios.
 
-**Zasada SSOT:** `knowledge/` jest jedynym miejscem przechowywania wiedzy domenowej. Dokumentacja techniczna należy do `docs/`, wymagania do `specs/`, decyzje architektoniczne do `decisions/`, a informacje o stosie technologicznym do `ai/context/`.
+**SSOT Rule:** `knowledge/` is the single source of truth for domain knowledge. Technical documentation belongs in `docs/`, requirements in `specs/`, architectural decisions in `decisions/`, and technology stack information in `ai/context/`.
 
-**Minimalny szablon (`terminology.md`):**
+**Minimal Template (`terminology.md`):**
 
 ```md
-# Terminologia
+# Terminology
 
-## Zamówienie
-Transakcja zainicjowana przez klienta, obejmująca minimum jedną pozycję.
+## Order
+A transaction initiated by a customer, consisting of at least one line item.
 
 ## Underwriting
-Proces oceny ryzyka poprzedzający akceptację polisy.
+The process of assessing risk preceding the acceptance of a policy.
 ```
 
-````md
 #### knowledge/
 
-Wiedza domenowa i biznesowa projektu. Katalog zawiera informacje opisujące domenę, procesy biznesowe, użytkowników oraz uwarunkowania prawne. Nie przechowuje dokumentacji technicznej ani implementacyjnej — te należą odpowiednio do `docs/` i `src/`.
+The domain and business knowledge of the project. The directory contains information describing the domain, business processes, users, and legal requirements. It does not store technical or implementation documentation — those belong in `docs/` and `src/` respectively.
 
-Każda kategoria wiedzy jest reprezentowana przez osobny podkatalog. Poszczególne zagadnienia należy zapisywać jako małe, niezależne pliki Markdown zgodnie z zasadą: **jedna kategoria = jeden katalog, jedno zagadnienie = jeden plik**.
+Each knowledge category is represented by a separate subdirectory. Individual issues should be recorded as small, independent Markdown files according to the principle: **one category = one directory, one topic = one file**.
 
 ```txt
 knowledge/
@@ -724,15 +720,11 @@ knowledge/
 └── personas/
 ```
 
-
-
-
-
 ---
 
 #### checklists/
 
-Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
+Checklists verifying the correct execution of specific tasks.
 
 ```txt
 ├── review.md
@@ -741,16 +733,16 @@ Checklisty weryfikujące poprawność wykonania poszczególnych zadań.
 └── testing.md
 ```
 
-Checklisty określają zwięzłe kryteria weryfikacyjne (np. co sprawdzić przed wydaniem wersji), podczas gdy pełne procedury krok po kroku znajdują się w `ai/workflows/`. AI doskonale sprawdza się w automatycznej weryfikacji takich checklist.
+Checklists define concise verification criteria (e.g., what to check before a release), whereas full step-by-step procedures reside in `ai/workflows/`. AI is excellent at automated checklist verification.
 
-**Minimalny szablon (`release.md`):**
+**Minimal Template (`release.md`):**
 
 ```md
 # Checklist: Release
 
-- [ ] Wszystkie testy przechodzą
-- [ ] `CHANGELOG.md` zaktualizowany
-- [ ] Numer wersji podbity
+- [ ] All tests pass
+- [ ] `CHANGELOG.md` is updated
+- [ ] Version number is bumped
 ```
 
 ---
@@ -765,33 +757,32 @@ Architecture Decision Records (ADR).
 └── 003-auth.md
 ```
 
-Opisujemy:
+We describe:
+- the decision,
+- the rationale,
+- alternatives,
+- consequences.
 
-- decyzję,
-- uzasadnienie,
-- alternatywy,
-- konsekwencje.
+AI does not guess why something was chosen.
 
-AI nie zgaduje dlaczego coś zostało wybrane.
-
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
-# ADR 001: Wybór PostgreSQL
+# ADR 001: Selection of PostgreSQL
 
 ## Status
-Zaakceptowane
+Accepted
 
-## Decyzja
+## Decision
 ...
 
-## Uzasadnienie
+## Rationale
 ...
 
-## Alternatywy
+## Alternatives
 ...
 
-## Konsekwencje
+## Consequences
 ...
 ```
 
@@ -799,7 +790,7 @@ Zaakceptowane
 
 #### contracts/
 
-Formalne schematy API i struktur danych.
+Formal API schemas and data structures.
 
 ```txt
 ├── openapi.yaml
@@ -810,18 +801,18 @@ Formalne schematy API i struktur danych.
     └── service.proto
 ```
 
-**Zasada:** `contracts/` zawiera formalne schematy API i struktur danych. `specs/` opisuje wymagania biznesowe i kryteria akceptacji, odwołując się linkami do `contracts/` bez powielania pól.
+**Rule:** `contracts/` contains formal API schemas and data structures. `specs/` describes business requirements and acceptance criteria, linking to `contracts/` without duplicating fields.
 
-AI nie zgaduje struktur danych.
+AI does not guess data structures.
 
-**Minimalny szablon (fragment OpenAPI):**
+**Minimal Template (OpenAPI snippet):**
 
 ```yaml
 openapi: 3.0.0
 paths:
   /users:
     get:
-      summary: Lista użytkowników
+      summary: List users
       responses:
         '200':
           description: OK
@@ -831,7 +822,7 @@ paths:
 
 #### docs/
 
-Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczona do czytania przez programistów i AI w celu zrozumienia kontekstu technicznego systemu.
+Technical, system, and architectural documentation of the project. It is intended to be read by developers and AI to understand the technical context of the system.
 
 ```txt
 ├── architecture/
@@ -842,46 +833,46 @@ Dokumentacja techniczna, systemowa i architektoniczna projektu. Jest przeznaczon
 └── testing/
 ```
 
-**Zasada:** Dokumentacja nie może zawierać fragmentów kodu dłuższych niż 5 linii. Dłuższe przykłady powinny znajdować się wyłącznie w `examples/` lub w kodzie źródłowym.
+**Rule:** Documentation must not contain code snippets longer than 5 lines. Longer examples should reside exclusively in `examples/` or in the source code.
 
-**Minimalny szablon (`architecture/payments.md`):**
+**Minimal Template (`architecture/payments.md`):**
 
 ```md
-# Architektura: Moduł płatności
+# Architecture: Payments Module
 
-## Kontekst
+## Context
 ...
 
-## Decyzje
-Zobacz [decisions/](../../decisions/).
+## Decisions
+See [decisions/](../../decisions/).
 
 ## Diagram
-(diagram lub odnośnik — kod >5 linii przenieś do examples/)
+(diagram or link — move code >5 lines to examples/)
 ```
 
 ---
 
-### Katalogi implementacyjne
+### Implementation Directories
 
-Katalogi zawierające kod, testy i konfigurację techniczną projektu.
+Directories containing code, tests, and technical configuration of the project.
 
 #### src/
 
-Kod aplikacji. Katalog `src/` może zawierać wyłącznie kod źródłowy. Pliki dokumentacyjne (`.md`) są zabronione i muszą znajdować się w `docs/`, `knowledge/` lub `ai/context/`.
+Application code. The `src/` directory can only contain source code. Documentation files (`.md`) are prohibited and must reside in `docs/`, `knowledge/`, or `ai/context/`.
 
 ---
 
 #### tests/
 
-Testy.
+Tests.
 
-Najlepiej podzielone analogicznie do src.
+Ideally structured analogously to `src/`.
 
 ---
 
 #### config/
 
-Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konfiguracji. Jeśli tooling wymaga pliku w root, należy umieścić tam minimalny plik (maks. 5 linii) rozszerzający konfigurację z `config/` lub użyć symlinka.
+The complete project configuration. The `config/` directory is the central repository for configuration. If tooling requires a file in the root directory, place a minimal file (max. 5 lines) there extending the configuration from `config/` or use a symlink.
 
 ```txt
 ├── eslint
@@ -893,7 +884,7 @@ Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konf
 └── docker
 ```
 
-**Minimalny szablon (plik w root rozszerzający `config/`):**
+**Minimal Template (file in root extending `config/`):**
 
 ```json
 { "extends": "./config/tsconfig/base.json" }
@@ -903,7 +894,7 @@ Cała konfiguracja projektu. Katalog `config/` jest centralnym repozytorium konf
 
 #### scripts/
 
-Automatyzacja.
+Automation scripts.
 
 ```txt
 ├── build
@@ -915,19 +906,19 @@ Automatyzacja.
 └── migration
 ```
 
-**Minimalny szablon (nagłówek skryptu):**
+**Minimal Template (script header):**
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-# Cel: krótki opis co robi skrypt
+# Purpose: brief description of what the script does
 ```
 
 ---
 
 #### infrastructure/
 
-DevOps.
+DevOps resources.
 
 ```txt
 ├── docker/
@@ -941,7 +932,7 @@ DevOps.
 
 #### tools/
 
-Narzędzia pomocnicze.
+Helper utilities.
 
 ```txt
 ├── generator
@@ -952,13 +943,13 @@ Narzędzia pomocnicze.
 
 ---
 
-### Katalogi pomocnicze
+### Supporting Directories
 
-Katalogi wspierające, nie wymagane w wersji MINIMAL — powstają zgodnie z zasadą przyrostowego wzrostu.
+Supporting directories, not required in the MINIMAL version — created in accordance with the incremental growth principle.
 
 #### examples/
 
-Przykłady użycia i dłuższe fragmenty kodu (powyżej 5 linii), do których odwołuje się dokumentacja.
+Usage examples and longer code snippets (over 5 lines) referenced by the documentation.
 
 ```txt
 ├── request.json
@@ -967,13 +958,13 @@ Przykłady użycia i dłuższe fragmenty kodu (powyżej 5 linii), do których od
 └── event.json
 ```
 
-LLM bardzo dobrze uczy się przez przykłady (Few-Shot Learning).
+LLMs learn very well from examples (Few-Shot Learning).
 
 ---
 
 #### plans/
 
-Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
+Plans for major changes (epics and large migrations), linked from `TODO.md`.
 
 ```txt
 ├── migration.md
@@ -981,19 +972,19 @@ Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 └── caching.md
 ```
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
-# Plan: Migracja do mikroserwisów
+# Plan: Migration to Microservices
 
-## Cel
+## Goal
 ...
 
-## Fazy
+## Phases
 1. ...
 2. ...
 
-## Ryzyka
+## Risks
 ...
 ```
 
@@ -1001,7 +992,7 @@ Plany większych zmian (epiki i duże zmiany), linkowane z `TODO.md`.
 
 #### experiments/
 
-Eksperymenty.
+Experiments.
 
 ```txt
 ├── rag/
@@ -1010,29 +1001,29 @@ Eksperymenty.
 └── benchmarks/
 ```
 
-Nie mieszamy ich z produkcją.
+We do not mix them with production.
 
-**Minimalny szablon:**
+**Minimal Template:**
 
 ```md
-# Eksperyment: Reranking w RAG
+# Experiment: Reranking in RAG
 
-## Hipoteza
+## Hypothesis
 ...
 
-## Wynik
+## Result
 ...
 
-## Decyzja
-kontynuować / porzucić
+## Decision
+continue / abandon
 ```
 
 ---
 
 #### research/
 
-Materiały analityczne, benchmarki, analizy rynku, wywiady z użytkownikami oraz eksperymenty prowadzące do decyzji projektowych.
-research/ nie jest źródłem obowiązujących wymagań ani decyzji. Wyniki badań trafiają następnie do specs/ lub decisions/.
+Analytical materials, benchmarks, market research, user interviews, and spikes leading to design decisions.
+`research/` is not a source of active requirements or decisions. Research results are subsequently migrated to `specs/` or `decisions/`.
 
 ```txt
 research/
@@ -1048,7 +1039,7 @@ research/
 
 #### archive/
 
-Kod historyczny.
+Historical code and docs.
 
 ```txt
 ├── legacy/
@@ -1056,13 +1047,13 @@ Kod historyczny.
 └── old-docs/
 ```
 
-Pozwala AI odróżnić kod aktywny od starego.
+Helps AI distinguish active code from obsolete files.
 
 ---
 
 #### assets/
 
-Pliki statyczne.
+Static assets.
 
 ```txt
 ├── images/
@@ -1076,31 +1067,31 @@ Pliki statyczne.
 
 #### tmp/
 
-Pliki tymczasowe. AI często generuje tymczasowe pliki — nie powinny trafiać do `src/`.
+Temporary files. AI often generates temporary files — they should not end up in `src/`.
 
-**Zasada:** Katalog `tmp/` musi być ignorowany zgodnie z regułami zdefiniowanymi w `.gitignore` (patrz sekcja wyżej) — nie duplikować tej listy tutaj.
-
----
-
-## Zarządzanie terminologią wg poziomu projektu
-
-**Rozróżnienie kategorii terminów:**
-- **Termin techniczny** — pojęcie ze stosu technologicznego, wzorca projektowego lub struktury systemu, niezależne od domeny klienta (np. „Repository", „Feature flag", „Middleware").
-- **Termin biznesowy** — pojęcie domenowe, specyficzne dla branży lub klienta, zrozumiałe dla osób nietechnicznych (np. „Underwriting", „Zamówienie kompletne", „Klient VIP").
-
-**Zasady wg poziomu projektu:**
-- **MINIMAL i OPTIMAL:** `ai/context/glossary.md` może przechowywać kluczowe terminy biznesowe i techniczne — w tych wersjach nie istnieje `knowledge/terminology.md`, więc plik musi być samowystarczalny.
-- **FULL:** Cała wiedza biznesowa migruje do `knowledge/terminology.md`. `ai/context/glossary.md` zawiera wyłącznie terminy techniczne.
-- **FULL — linkowanie zamiast duplikacji:** jeśli termin techniczny w `glossary.md` jest ściśle powiązany z pojęciem biznesowym, wpis może linkować do właściwej definicji w `knowledge/terminology.md` zamiast ją powtarzać, np. `[Zamówienie](../../knowledge/terminology.md#zamowienie)`.
-- We wszystkich poziomach: `ai/context/glossary.md` musi zawierać definicje jednozdaniowe.
+**Rule:** The `tmp/` directory must be ignored in `.gitignore` (see section above) — do not duplicate the list here.
 
 ---
 
-## Integracja z klientami AI
+## Terminology Management by Project Level
 
-Pliki konfiguracyjne klientów AI powinny zawierać **maksymalnie 2–3 linie** odsyłające model bezpośrednio do `AGENTS.md`. Pliki konfiguracyjne nie mogą zawierać przykładów kodu ani wiedzy biznesowej.
+**Distinction between categories of terms:**
+- **Technical term** — a concept from the technology stack, design pattern, or system structure, independent of the customer's domain (e.g., "Repository", "Feature flag", "Middleware").
+- **Business term** — a domain concept specific to the industry or customer, understandable by non-technical people (e.g., "Underwriting", "Completed order", "VIP client").
 
-Przykłady plików konfiguracyjnych:
+**Rules by project level:**
+- **MINIMAL and OPTIMAL:** `ai/context/glossary.md` can store key business and technical terms — in these versions, `knowledge/terminology.md` does not exist, so the glossary file must be self-sufficient.
+- **FULL:** All business knowledge migrates to `knowledge/terminology.md`. `ai/context/glossary.md` contains only technical terms.
+- **FULL — linking instead of duplication:** if a technical term in `glossary.md` is closely tied to a business concept, the entry can link to the relevant definition in `knowledge/terminology.md` instead of repeating it, e.g., `[Order](../../knowledge/terminology.md#order)`.
+- In all levels: `ai/context/glossary.md` must contain single-sentence definitions.
+
+---
+
+## Integration with AI Clients
+
+AI client configuration files should contain **at most 2–3 lines** directing the model directly to `AGENTS.md`. Configuration files must not contain code examples or business knowledge.
+
+Examples of configuration files:
 
 ```txt
 ├── AGENTS.md
@@ -1112,16 +1103,16 @@ Przykłady plików konfiguracyjnych:
 └── .github/copilot-instructions.md
 ```
 
-**Zasada:**
-- Żaden z tych plików nie powinien zawierać wiedzy biznesowej ani architektonicznej.
-- Powinny jedynie wskazywać lokalizację dokumentacji (max. 2–3 linie).
-- Jeśli klient AI wymaga katalogu konfiguracyjnego (np. `.cursor/`, `.roo/`, `.windsurf/`), zasada 2–3 linii dotyczy głównego pliku reguł wewnątrz tego katalogu — sam katalog nie jest plikiem i nie podlega bezpośrednio limitowi linii.
+**Rule:**
+- None of these files should contain business or architectural knowledge.
+- They should only point to the location of the documentation (max. 2–3 lines).
+- If the AI client requires a configuration directory (e.g., `.cursor/`, `.roo/`, `.windsurf/`), the 2–3 lines rule applies to the main rules file inside that directory — the directory itself is not a file and is not directly subject to the line limit.
 
-Przepływ informacji:
+Information flow:
 
 ```mermaid
 flowchart TD
-    CONFIG["Plik konfiguracyjny klienta AI<br/>(CLAUDE.md / .cursor / .roo / .windsurf / ...)"]
+    CONFIG["AI Client Configuration File<br/>(CLAUDE.md / .cursor / .roo / .windsurf / ...)"]
     AGENTS[AGENTS.md]
     CONTEXT[ai/context/]
     SPECS[specs/]
@@ -1133,48 +1124,48 @@ flowchart TD
     SPECS --> DOCS
 ```
 
-Dzięki temu zmiana IDE nie wymaga przepisywania dokumentacji.
+As a result, changing the IDE does not require rewriting the documentation.
 
 ---
 
-## Dobre praktyki dla AI
+## Best Practices for AI
 
-| Zasada | Korzyść |
+| Principle | Benefit |
 |----------|----------|
-| Jedna odpowiedzialność na plik | Łatwiejsza analiza przez AI |
-| Krótkie pliki (100–300 linii) | Mniejsze zużycie kontekstu |
-| Przewidywalne nazwy | AI szybciej odnajduje informacje |
-| Dokumentacja blisko kodu | Łatwiejsze zrozumienie projektu |
-| ADR (`decisions/`) | AI rozumie decyzje architektoniczne |
-| `specs/` | AI implementuje wymagania zamiast zgadywać |
-| `contracts/` | Brak domysłów dotyczących struktur danych |
-| `examples/` | Few-Shot Learning poprawia jakość odpowiedzi |
-| `checklists/` | Powtarzalne procesy i mniej błędów |
-| `ai/workflows/` | Gotowe procedury operacyjne dla ludzi i AI |
-| `ai/rules/` | Spójność kodu między sesjami |
-| `ai/memory/` | Zachowanie wiedzy historycznej o projekcie |
-| `ai/context/structure-map.md` | AI wie, kiedy i jaki katalog utworzyć, zamiast zgadywać |
-| `MANIFEST.md` | AI szybko odnajduje właściwe pliki |
-| `AGENTS.md` | Jeden punkt wejścia dla wszystkich agentów |
+| One responsibility per file | Easier analysis by AI |
+| Short files (100–300 lines) | Reduced context consumption |
+| Predictable names | AI finds information faster |
+| Documentation close to code | Easier understanding of the project |
+| ADR (`decisions/`) | AI understands architectural decisions |
+| `specs/` | AI implements requirements instead of guessing |
+| `contracts/` | No guesswork regarding data structures |
+| `examples/` | Few-Shot Learning improves response quality |
+| `checklists/` | Repeatable processes and fewer errors |
+| `ai/workflows/` | Ready operational procedures for humans and AI |
+| `ai/rules/` | Code consistency across sessions |
+| `ai/memory/` | Retention of historical project knowledge |
+| `ai/context/structure-map.md` | AI knows when and what directory to create instead of guessing |
+| `MANIFEST.md` | AI quickly finds the correct files |
+| `AGENTS.md` | A single entry point for all agents |
 
 ---
 
-## Podsumowanie
+## Summary
 
-Nowoczesne repozytorium **AI-First** powinno rozdzielać odpowiedzialności na cztery główne obszary:
+A modern **AI-First** repository should separate responsibilities into four main areas:
 
-| Obszar | Przeznaczenie |
+| Area | Purpose |
 |----------|----------------|
-| **Kod (`src/`)** | Implementacja aplikacji |
-| **Dokumentacja (`docs/`, `knowledge/`, `specs/`)** | Wiedza i opis wymagań biznesowych |
-| **Kontekst AI (`ai/`)** | Reguły, workflow, pamięć historyczna, szablony i prompty |
-| **Integracja z narzędziami AI (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.github/copilot-instructions.md` itd.)** | Cienka warstwa (max. 2–3 linie) wskazująca, gdzie znajduje się właściwy kontekst, bez duplikowania wiedzy |
+| **Code (`src/`)** | Application implementation |
+| **Documentation (`docs/`, `knowledge/`, `specs/`)** | Knowledge and description of business requirements |
+| **AI Context (`ai/`)** | Rules, workflows, historical memory, templates, and prompts |
+| **AI Tool Integration (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.github/copilot-instructions.md`, etc.)** | Thin layer (max. 2–3 lines) pointing to where the proper context resides, without duplicating knowledge |
 
-Tak zaprojektowana struktura:
-- jest niezależna od języka programowania i frameworka,
-- działa z większością współczesnych klientów AI,
-- ułatwia zmianę narzędzia bez migracji dokumentacji,
-- minimalizuje błędy wynikające z utraty kontekstu,
-- zapewnia spójność pracy ludzi i agentów AI,
-- rośnie przyrostowo, katalog po katalogu, zamiast wymuszać jeden z trzech sztywnych wariantów,
-- skaluje się od małych aplikacji po duże systemy wielomodułowe.
+A structure designed this way:
+- is independent of the programming language and framework,
+- works with most modern AI clients,
+- makes it easy to change tools without migrating documentation,
+- minimizes errors due to loss of context,
+- ensures consistency in the work of humans and AI agents,
+- grows incrementally, directory by directory, instead of forcing one of three rigid variants,
+- scales from small applications to large multi-module systems.
