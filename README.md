@@ -113,9 +113,15 @@ project/
 ### 1. Initialize the Structure
 You can quickly generate the minimal structure in your workspace root by running the initialization script:
 
+**For macOS / Linux (Bash):**
 ```bash
 chmod +x ./create_minimal_structure.sh
 ./create_minimal_structure.sh
+```
+
+**For Windows (PowerShell):**
+```powershell
+./create_minimal_structure.ps1
 ```
 
 ### 2. Connect Your AI Clients
