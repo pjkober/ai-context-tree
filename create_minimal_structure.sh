@@ -8,6 +8,15 @@ set -e
 BASE_DIR="."
 TEMPLATES_DIR="$BASE_DIR/file-templates"
 
+# Check if templates directory is present
+if [ ! -d "$TEMPLATES_DIR" ]; then
+  echo "Error: 'file-templates/' directory not found at $TEMPLATES_DIR."
+  echo "This script must be run inside the cloned repository context containing file-templates."
+  echo "If you are setting up a new project, copy BOTH this script and the 'file-templates/' directory to your project root."
+  exit 1
+fi
+
+
 # Helper to create a directory if it does not exist
 mkdir_if_not_exists() {
   local dir="$1"
@@ -40,12 +49,6 @@ copy_template_file() {
   fi
 }
 
-# Check if templates directory is present
-if [ ! -d "$TEMPLATES_DIR" ]; then
-  echo "Error: 'file-templates/' directory not found at $TEMPLATES_DIR."
-  echo "This script must be run inside the cloned repository context containing file-templates."
-  exit 1
-fi
 
 # Default values for AI-First rules configuration
 AUTONOMY_MODE_VAL="- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
@@ -334,3 +337,36 @@ generate_rules_file "ai/rules/security.md"
 generate_rules_file "ai/rules/testing.md"
 
 echo "Minimal project structure created successfully."
+
+# --- Post-Setup Cleanup ---
+if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
+  echo ""
+  echo "============================================="
+  echo "   Post-Setup Cleanup"
+  echo "============================================="
+  echo "The initialization script and 'file-templates/' are no longer needed."
+  echo "What would you like to do with them?"
+  echo "  [1] Move to 'tmp/' directory (recommended, keeps root clean) [Default]"
+  echo "  [2] Delete permanently"
+  echo "  [3] Keep them in the root directory"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      echo "Deleting setup script and templates..."
+      rm -rf "$TEMPLATES_DIR"
+      exec rm -f -- "$0"
+      ;;
+    3)
+      echo "Keeping setup script and templates."
+      ;;
+    *)
+      echo "Moving setup script and templates to 'tmp/'..."
+      mkdir_if_not_exists "$BASE_DIR/tmp"
+      if [ -d "$TEMPLATES_DIR" ]; then
+        mv "$TEMPLATES_DIR" "$BASE_DIR/tmp/"
+      fi
+      exec mv -- "$0" "$BASE_DIR/tmp/"
+      ;;
+  esac
+fi
+

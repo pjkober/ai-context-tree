@@ -12,6 +12,15 @@ $BaseDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 if (-not $BaseDir) { $BaseDir = Get-Location }
 $TemplatesDir = Join-Path $BaseDir "file-templates"
 
+# Check if templates directory is present
+if (-not (Test-Path $TemplatesDir -PathType Container)) {
+    Write-Error "Error: 'file-templates/' directory not found at $TemplatesDir."
+    Write-Error "This script must be run inside the cloned repository context containing file-templates."
+    Write-Error "If you are setting up a new project, copy BOTH this script and the 'file-templates/' directory to your project root."
+    exit 1
+}
+
+
 # Helper to create a directory if it does not exist
 function New-DirectoryIfNotExists {
     param([string]$Path)
@@ -45,12 +54,6 @@ function Copy-TemplateFile {
     }
 }
 
-# Check if templates directory is present
-if (-not (Test-Path $TemplatesDir -PathType Container)) {
-    Write-Error "Error: 'file-templates/' directory not found at $TemplatesDir."
-    Write-Error "This script must be run inside the cloned repository context containing file-templates."
-    exit 1
-}
 
 # Default values for AI-First rules configuration
 $AutonomyModeVal = "- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
@@ -276,3 +279,53 @@ Generate-RulesFile "ai/rules/security.md"
 Generate-RulesFile "ai/rules/testing.md"
 
 Write-Host "Minimal project structure created successfully."
+
+# --- Post-Setup Cleanup ---
+if (-not $NonInteractive) {
+    Write-Host ""
+    Write-Host "=============================================" -ForegroundColor Cyan
+    Write-Host "   Post-Setup Cleanup" -ForegroundColor Cyan
+    Write-Host "=============================================" -ForegroundColor Cyan
+    Write-Host "The initialization script and 'file-templates/' are no longer needed."
+    Write-Host "What would you like to do with them?"
+    Write-Host "  [1] Move to 'tmp/' directory (recommended, keeps root clean) [Default]"
+    Write-Host "  [2] Delete permanently"
+    Write-Host "  [3] Keep them in the root directory"
+    $opt = Read-Host "Select option [1-3]"
+    
+    if ($opt -eq "2") {
+        Write-Host "Deleting setup script and templates..."
+        if (Test-Path $TemplatesDir -PathType Container) {
+            Remove-Item -Path $TemplatesDir -Recurse -Force | Out-Null
+        }
+        try {
+            Remove-Item -Path $MyInvocation.MyCommand.Definition -Force -ErrorAction Stop | Out-Null
+            Write-Host "Cleanup complete."
+        } catch {
+            Write-Warning "Could not delete the running script automatically due to file lock. Please delete it manually."
+        }
+    } elseif ($opt -eq "3") {
+        Write-Host "Keeping setup script and templates."
+    } else {
+        Write-Host "Moving setup script and templates to 'tmp/'..."
+        New-DirectoryIfNotExists (Join-Path $BaseDir "tmp")
+        if (Test-Path $TemplatesDir -PathType Container) {
+            $DestTemplates = Join-Path $BaseDir "tmp/file-templates"
+            if (Test-Path $DestTemplates) {
+                Remove-Item -Path $DestTemplates -Recurse -Force | Out-Null
+            }
+            Move-Item -Path $TemplatesDir -Destination (Join-Path $BaseDir "tmp") -Force | Out-Null
+        }
+        try {
+            $DestScript = Join-Path $BaseDir "tmp/$(Split-Path -Leaf $MyInvocation.MyCommand.Definition)"
+            if (Test-Path $DestScript) {
+                Remove-Item -Path $DestScript -Force | Out-Null
+            }
+            Move-Item -Path $MyInvocation.MyCommand.Definition -Destination (Join-Path $BaseDir "tmp") -Force -ErrorAction Stop | Out-Null
+            Write-Host "Cleanup complete. Files moved to 'tmp/'."
+        } catch {
+            Write-Warning "Could not move the running script automatically due to file lock. The templates were moved, but please move this script to 'tmp/' manually."
+        }
+    }
+}
+

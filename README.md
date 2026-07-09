@@ -19,6 +19,8 @@
   - [🏷️ Terminology Management](docs/04-terminology-management.md) — Handling technical vs business terms.
   - [🤖 AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
   - [📘 Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
+  - [🚀 Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
+
 - **File Templates:**
   - [📂 Replicated Structure Templates](file-templates/) — Got standard code/doc templates for every directory.
 - **Directory Guidelines:**
@@ -120,7 +122,11 @@ project/
 ## 🚀 Getting Started
 
 ### 1. Initialize the Structure
-You can quickly generate the minimal structure in your workspace root by running the initialization script:
+You can quickly generate the minimal structure in your workspace root by running the initialization script.
+
+> [!IMPORTANT]
+> The scripts require the `file-templates/` directory to run. If you are setting up a new/existing project, you must copy **both** the script and the `file-templates/` directory to your project's root folder.
+> For step-by-step instructions, see the [Repository Initialization Guide](docs/06-initialization-guide.md).
 
 **For macOS / Linux (Bash):**
 ```bash
@@ -129,6 +135,7 @@ chmod +x ./create_minimal_structure.sh
 ```
 
 **For Windows (PowerShell):**
+
 ```powershell
 ./create_minimal_structure.ps1
 ```
