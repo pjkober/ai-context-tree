@@ -1,3 +1,7 @@
+[Home (README)](../README.md) | [Next: 🛠️ Core Principles →](02-core-principles.md)
+
+---
+
 # Philosophy of AI-First Project Design
 
 A modern software repository is no longer designed solely for human developers. It is a shared space co-inhabited by:
@@ -29,3 +33,7 @@ To minimize guesswork by AI agents and optimize human readability, a project str
 - **Strict naming uniformity:** Every directory in the repository must have a single, official name. Creating aliases, abbreviations, or alternative directory names in documentation or examples is prohibited.
 - **Full and unambiguous names:** Directory names must be full and unambiguous (e.g., `config/` instead of `cfg/`, `infrastructure/` instead of `infra/`). Abbreviations are forbidden.
 - **One knowledge category = one directory; one topic = one file.** This prevents cross-contamination of contexts.
+
+---
+[Home (README)](../README.md) | [Next: 🛠️ Core Principles →](02-core-principles.md)
+

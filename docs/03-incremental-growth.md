@@ -1,3 +1,7 @@
+[← Previous: 🛠️ Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: 🏷️ Terminology Management →](04-terminology-management.md)
+
+---
+
 # The Principle of Incremental Structure Growth
 
 A common pitfall is over-engineering a repository structure before writing actual code. The `ai-context-tree` is built around dynamic growth based on immediate needs.
@@ -52,3 +56,7 @@ This is governed by the [structure-map.md](../file-templates/ai/context/structur
 ## Shrinking the Structure
 
 If a directory is no longer needed (for example, a prototype folder `prototypes/` after a sandbox experiment is finished), it should be deleted or moved to `archive/`. Keeping inactive, obsolete directories in the active workspace pollutes the AI's file-system search results and wastes context.
+
+---
+[← Previous: 🛠️ Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: 🏷️ Terminology Management →](04-terminology-management.md)
+

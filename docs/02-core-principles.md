@@ -1,3 +1,7 @@
+[← Previous: 📖 Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: 🌱 Incremental Growth →](03-incremental-growth.md)
+
+---
+
 # The 5 Core Principles
 
 The entire structure is built upon five foundational principles. Following these principles ensures optimal efficiency for both humans and AI agents.
@@ -40,3 +44,7 @@ Separate the implementation from the rationale.
 
 We must not rewrite our project documentation or conventions when we switch between AI tools. 
 Configuration files for specific AI clients (e.g., `.cursor/rules/main.mdc`, `CLAUDE.md`, `.clinerules`, `.roo/rules.md`) must act as **thin pointers** containing at most 2–3 lines redirecting the model to [AGENTS.md](../AGENTS.md) in the project root. They must never contain inline rules, tech-stack descriptions, or code snippets.
+
+---
+[← Previous: 📖 Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: 🌱 Incremental Growth →](03-incremental-growth.md)
+

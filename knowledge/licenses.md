@@ -17,7 +17,7 @@ For the purposes of this project, software licenses are divided into three tiers
 
 ---
 
-### 1. Permissive Licenses (Bezpieczne / Zezwalające)
+### 1. Permissive Licenses (Safe / Permissive)
 These licenses allow free use, modification, and distribution of the library for any purpose (including commercial), without forcing the host application to open-source its own code.
 
 * **MIT License:** The most common and permissive. Requires only copyright and permission notices. Highly recommended.
@@ -29,7 +29,7 @@ These licenses allow free use, modification, and distribution of the library for
 
 ---
 
-### 2. Weak-Copyleft Licenses (Ograniczone / Hybrydowe)
+### 2. Weak-Copyleft Licenses (Limited / Hybrid)
 These licenses protect the library itself from becoming closed-source, but allow it to be linked by proprietary, closed-source host applications.
 
 * **LGPL (Lesser GNU General Public License):** Allows dynamic linking by proprietary applications. Statically linking or modifying the library code itself forces those modifications to be open-sourced under LGPL.
@@ -40,7 +40,7 @@ These licenses protect the library itself from becoming closed-source, but allow
 
 ---
 
-### 3. Strong-Copyleft / Viral Licenses (Kopiowanie wzajemne / Niebezpieczne dla komercji)
+### 3. Strong-Copyleft / Viral Licenses (Reciprocal / Unsafe for Commercial Use)
 These licenses require any software that links, modifies, or derives from them to be released under the same copyleft license (forcing the entire proprietary application to open-source its codebase).
 
 * **GPL (GNU General Public License v2/v3):** Viral. Static or dynamic linking forces the entire host application to be licensed under GPL.

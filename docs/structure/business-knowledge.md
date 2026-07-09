@@ -1,3 +1,7 @@
+[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+
+---
+
 # Business and Knowledge Directories
 
 These directories separate business requirements, domain knowledge, and architectural choices from the implementation code.
@@ -63,3 +67,7 @@ System technical and architectural documentation.
 - **Role:** High-level guides on how code modules interact, deployment flows, database schemas, and developer setup.
 - **Rule:** Focuses on the *why* and *how* of the codebase. Code examples, templates, and configurations belong in `examples/`, `ai/templates/`, or `config/`.
 - **Template (module-architecture.md):** [file-templates/docs/architecture/module-architecture.md](../../file-templates/docs/architecture/module-architecture.md)
+
+---
+[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+

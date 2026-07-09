@@ -1,3 +1,7 @@
+[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+
+---
+
 # Supporting Directories
 
 These directories are optional, supporting parts of the repository created incrementally as the project scales.
@@ -64,3 +68,7 @@ Temporary working directory.
 
 - **Role:** A local scratchpad for automatically generated logs, temporary build artifacts, or AI tutoring cache files.
 - **Rule:** Must be strictly ignored in `.gitignore` and excluded from CI/CD pipeline steps.
+
+---
+[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+

@@ -1,3 +1,7 @@
+[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+
+---
+
 # Root Directory Files
 
 Files located directly in the root of the repository act as entry points and project-wide metadata.
@@ -89,3 +93,7 @@ GitHub-specific automation configuration.
 
 - **Role:** CI/CD workflows (GitHub Actions) and pull request / issue templates.
 - **Rule:** Workflows must not contain raw business or architecture explanations; refer to scripts in `scripts/` or rules in `ai/workflows/`.
+
+---
+[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+

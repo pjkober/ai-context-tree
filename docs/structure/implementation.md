@@ -1,3 +1,7 @@
+[← Previous: 📘 Business Specifications & Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: 📂 Supporting Directories →](supporting.md)
+
+---
+
 # Implementation Directories
 
 These directories contain executable code, tests, developer scripts, and environment configuration.
@@ -54,3 +58,7 @@ DevOps and infrastructure configuration.
 Local utility helpers.
 
 - **Role:** Custom generators, parser scripts, CLI utilities, and converters built specifically to support development on the project.
+
+---
+[← Previous: 📘 Business Specifications & Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: 📂 Supporting Directories →](supporting.md)
+

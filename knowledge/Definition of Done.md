@@ -1,7 +1,7 @@
 ---
 aliases:
   - DoD
-  - kryteria ukończenia zadania
+  - task completion criteria
 tags:
   - knowledge
 type: docs

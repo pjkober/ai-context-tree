@@ -1,3 +1,7 @@
+[← Previous: 🤖 AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+
+---
+
 # Repository Initialization Guide
 
 This guide explains how to use the initialization scripts (`create_minimal_structure.sh` and `create_minimal_structure.ps1`) to bootstrap the `ai-context-tree` layout in your own projects.
@@ -73,3 +77,7 @@ The script generates a minimal set of files that act as pointers and standard gu
 * [AGENTS.md](../AGENTS.md) — The central hub for AI instruction.
 * [MANIFEST.md](../MANIFEST.md) — A living map of the files in your project.
 * `ai/` — Guidelines, workflows, scripts, and logs.
+
+---
+[← Previous: 🤖 AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+

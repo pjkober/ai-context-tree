@@ -6,7 +6,7 @@ set -euo pipefail
 # Triggered by: AI agent or developer before running integration tests.
 # ------------------------------------------------------------------------------------------
 
-# Load environment variables (Zasada czystości - No Secrets Rule)
+# Load environment variables (Cleanliness - No Secrets Rule)
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
 fi

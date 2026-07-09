@@ -1,3 +1,7 @@
+[← Previous: 🏷️ Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: 🚀 Initialization Guide →](06-initialization-guide.md)
+
+---
+
 # Integration with AI Clients
 
 A core goal of `ai-context-tree` is to make the repository independent of the AI tools used. The developer should be able to switch from Cursor to Claude Code, Cline, Windsurf, or Roo Code (or use them simultaneously) without rewriting documentation or duplicating instructions.
@@ -79,3 +83,7 @@ flowchart TD
     CONTEXT --> SPECS
     SPECS --> DOCS
 ```
+
+---
+[← Previous: 🏷️ Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: 🚀 Initialization Guide →](06-initialization-guide.md)
+
