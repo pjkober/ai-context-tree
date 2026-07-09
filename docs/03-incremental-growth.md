@@ -18,6 +18,8 @@ project/
 │   │   ├── project.md
 │   │   └── structure-map.md
 │   ├── rules/
+│   ├── workflows/
+│   │   └── new-feature.md
 │   ├── skills/
 │   │   └── example-skill.md
 │   ├── history/

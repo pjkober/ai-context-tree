@@ -60,11 +60,13 @@ Every project starts here. It includes the absolute essentials for code, tests, 
 ```txt
 project/
 ├── AGENTS.md           # Entrypoint for AI agents (refer to file-templates/AGENTS.md)
+├── MANIFEST.md         # Index map of all currently existing files (refer to file-templates/MANIFEST.md)
 ├── README.md           # Human-focused overview (refer to file-templates/README.md)
 ├── .gitignore          # Ignores build artifacts and tmp/ (refer to file-templates/.gitignore)
 ├── ai/
 │   ├── context/        # Project goals, stack, and structure map
 │   ├── rules/          # Coding conventions and syntax standards
+│   ├── workflows/      # Step-by-step procedures (refer to file-templates/ai/workflows/new-feature.md)
 │   ├── skills/         # Local agent skills (refer to file-templates/ai/skills/example-skill.md)
 │   ├── history/        # Conversation memory logs
 │   └── runs/           # Reusable execution scripts
