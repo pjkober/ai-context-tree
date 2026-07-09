@@ -12,3 +12,15 @@ __AUTONOMY_MODE__
 
 ## Dependency Policy
 __DEPENDENCY_POLICY__
+
+## Architecture & Scope Policy
+__ARCHITECTURE_POLICY__
+
+## License Policy
+__LICENSE_POLICY__
+
+## Git & Version Control Autonomy
+__GIT_POLICY__
+
+## Safety & Destructive Actions Policy
+__SAFETY_POLICY__

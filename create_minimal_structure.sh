@@ -50,6 +50,10 @@ fi
 # Default values for AI-First rules configuration
 AUTONOMY_MODE_VAL="- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
 DEPENDENCY_POLICY_VAL="- **Strict Dependency Policy:** Never add new libraries or dependencies without explicit user permission. Prefer standard/existing project tools."
+ARCHITECTURE_POLICY_VAL="- **Strict Architecture Scope:** Do not alter the project architecture (e.g., introducing new design patterns, changing database/state-management libraries, or renaming/creating top-level directories) without explicit human confirmation."
+LICENSE_POLICY_VAL="- **License Constraints:** You are allowed to introduce dependencies only under strictly permissive licenses: MIT, Apache 2.0, BSD, or Public Domain. Copyleft/viral licenses (such as GPL, AGPL) are strictly forbidden. Refer to the knowledge/licenses.md file for details."
+GIT_POLICY_VAL="- **Git Autonomy:** Do not stage, commit, or push files to Git. Modify the workspace files only and let the human review and commit."
+SAFETY_POLICY_VAL="- **Critical Operations Policy:** You are strictly forbidden from running potentially destructive commands (e.g., database drops/truncates, force pushes, file deletions outside tmp/) without explicit human confirmation. Always ask first."
 REFACTORING_POLICY_VAL="- **Strict Scope:** Modify only lines and files directly related to the requested task. Do not clean up unrelated code or formatting."
 TESTING_COVERAGE_VAL="- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
 TESTING_APPROACH_VAL="- **Testing Approach:** Write tests post-implementation (after coding features)."
@@ -100,6 +104,62 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   case "$opt" in
     2)
       DEPENDENCY_POLICY_VAL="- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
+      ;;
+  esac
+  echo ""
+
+  echo "1.3) Choose AI Architecture Policy:"
+  echo "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
+  echo "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
+  echo "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      ARCHITECTURE_POLICY_VAL="- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
+      ;;
+    3)
+      ARCHITECTURE_POLICY_VAL="- **Full Architectural Autonomy (NOT RECOMMENDED):** You have full autonomy to make architectural modifications, refactor structural design patterns, or rename/create top-level directories to achieve the task goal."
+      ;;
+  esac
+  echo ""
+
+  echo "1.4) Choose Dependency License Policy:"
+  echo "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
+  echo "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
+  echo "  [3] Any License (No license restrictions)"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      LICENSE_POLICY_VAL="- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
+      ;;
+    3)
+      LICENSE_POLICY_VAL="- **License Constraints:** No strict license restrictions, but prefer widely-adopted, open-source libraries. Ensure compliance before commercial deployment."
+      ;;
+  esac
+  echo ""
+
+  echo "1.5) Choose Git Autonomy Mode:"
+  echo "  [1] None (AI only modifies files; human commits) [Default]"
+  echo "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
+  echo "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
+  read -p "Select option [1-3]: " opt
+  case "$opt" in
+    2)
+      GIT_POLICY_VAL="- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., \"feat(ui): add button\") for commit messages."
+      ;;
+    3)
+      GIT_POLICY_VAL="- **Git Autonomy:** Create a new feature branch for your changes (e.g., \"feature/task-NNN-desc\") and commit there. Do not commit directly to master/main."
+      ;;
+  esac
+  echo ""
+
+  echo "1.6) Choose Critical Operations / Safety Policy:"
+  echo "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
+  echo "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
+  read -p "Select option [1-2]: " opt
+  case "$opt" in
+    2)
+      SAFETY_POLICY_VAL="- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
       ;;
   esac
   echo ""
@@ -212,6 +272,14 @@ generate_from_template() {
       echo "$AUTONOMY_MODE_VAL"
     elif [[ "$line" == *"__DEPENDENCY_POLICY__"* ]]; then
       echo "$DEPENDENCY_POLICY_VAL"
+    elif [[ "$line" == *"__ARCHITECTURE_POLICY__"* ]]; then
+      echo "$ARCHITECTURE_POLICY_VAL"
+    elif [[ "$line" == *"__LICENSE_POLICY__"* ]]; then
+      echo "$LICENSE_POLICY_VAL"
+    elif [[ "$line" == *"__GIT_POLICY__"* ]]; then
+      echo "$GIT_POLICY_VAL"
+    elif [[ "$line" == *"__SAFETY_POLICY__"* ]]; then
+      echo "$SAFETY_POLICY_VAL"
     elif [[ "$line" == *"__TESTING_COVERAGE__"* ]]; then
       echo "$TESTING_COVERAGE_VAL"
     elif [[ "$line" == *"__TESTING_APPROACH__"* ]]; then

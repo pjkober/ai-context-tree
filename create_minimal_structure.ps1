@@ -55,6 +55,10 @@ if (-not (Test-Path $TemplatesDir -PathType Container)) {
 # Default values for AI-First rules configuration
 $AutonomyModeVal = "- **Consultative Mode:** If you don't know something, see multiple solutions, or encounter ambiguity, STOP and ask the user. Do not make assumptions."
 $DependencyPolicyVal = "- **Strict Dependency Policy:** Never add new libraries or dependencies without explicit user permission. Prefer standard/existing project tools."
+$ArchitecturePolicyVal = "- **Strict Architecture Scope:** Do not alter the project architecture (e.g., introducing new design patterns, changing database/state-management libraries, or renaming/creating top-level directories) without explicit human confirmation."
+$LicensePolicyVal = "- **License Constraints:** You are allowed to introduce dependencies only under strictly permissive licenses: MIT, Apache 2.0, BSD, or Public Domain. Copyleft/viral licenses (such as GPL, AGPL) are strictly forbidden. Refer to the knowledge/licenses.md file for details."
+$GitPolicyVal = "- **Git Autonomy:** Do not stage, commit, or push files to Git. Modify the workspace files only and let the human review and commit."
+$SafetyPolicyVal = "- **Critical Operations Policy:** You are strictly forbidden from running potentially destructive commands (e.g., database drops/truncates, force pushes, file deletions outside tmp/) without explicit human confirmation. Always ask first."
 $RefactoringPolicyVal = "- **Strict Scope:** Modify only lines and files directly related to the requested task. Do not clean up unrelated code or formatting."
 $TestingCoverageVal = "- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
 $TestingApproachVal = "- **Testing Approach:** Write tests post-implementation (after coding features)."
@@ -88,6 +92,51 @@ if (-not $NonInteractive) {
     $opt = Read-Host "Select option [1-2]"
     if ($opt -eq "2") {
         $DependencyPolicyVal = "- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
+    }
+    Write-Host ""
+
+    Write-Host "1.3) Choose AI Architecture Policy:"
+    Write-Host "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
+    Write-Host "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
+    Write-Host "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $ArchitecturePolicyVal = "- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
+    } elseif ($opt -eq "3") {
+        $ArchitecturePolicyVal = "- **Full Architectural Autonomy (NOT RECOMMENDED):** You have full autonomy to make architectural modifications, refactor structural design patterns, or rename/create top-level directories to achieve the task goal."
+    }
+    Write-Host ""
+
+    Write-Host "1.4) Choose Dependency License Policy:"
+    Write-Host "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
+    Write-Host "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
+    Write-Host "  [3] Any License (No license restrictions)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $LicensePolicyVal = "- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
+    } elseif ($opt -eq "3") {
+        $LicensePolicyVal = "- **License Constraints:** No strict license restrictions, but prefer widely-adopted, open-source libraries. Ensure compliance before commercial deployment."
+    }
+    Write-Host ""
+
+    Write-Host "1.5) Choose Git Autonomy Mode:"
+    Write-Host "  [1] None (AI only modifies files; human commits) [Default]"
+    Write-Host "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
+    Write-Host "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
+    $opt = Read-Host "Select option [1-3]"
+    if ($opt -eq "2") {
+        $GitPolicyVal = "- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., `"feat(ui): add button`") for commit messages."
+    } elseif ($opt -eq "3") {
+        $GitPolicyVal = "- **Git Autonomy:** Create a new feature branch for your changes (e.g., `"feature/task-NNN-desc`") and commit there. Do not commit directly to master/main."
+    }
+    Write-Host ""
+
+    Write-Host "1.6) Choose Critical Operations / Safety Policy:"
+    Write-Host "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
+    Write-Host "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
+    $opt = Read-Host "Select option [1-2]"
+    if ($opt -eq "2") {
+        $SafetyPolicyVal = "- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
     }
     Write-Host ""
 
@@ -172,6 +221,10 @@ function Generate-FromTemplate {
     $Content = Get-Content $TemplatePath -Raw
     $Content = $Content -replace "__AUTONOMY_MODE__", $AutonomyModeVal
     $Content = $Content -replace "__DEPENDENCY_POLICY__", $DependencyPolicyVal
+    $Content = $Content -replace "__ARCHITECTURE_POLICY__", $ArchitecturePolicyVal
+    $Content = $Content -replace "__LICENSE_POLICY__", $LicensePolicyVal
+    $Content = $Content -replace "__GIT_POLICY__", $GitPolicyVal
+    $Content = $Content -replace "__SAFETY_POLICY__", $SafetyPolicyVal
     $Content = $Content -replace "__REFACTORING_POLICY__", $RefactoringPolicyVal
     $Content = $Content -replace "__TESTING_COVERAGE__", $TestingCoverageVal
     $Content = $Content -replace "__TESTING_APPROACH__", $TestingApproachVal
