@@ -46,12 +46,25 @@ Open PowerShell in the project root and execute:
 ```
 
 ### Step 3: Configure via the Wizard (Optional)
-By default, running the script interactively will guide you through a CLI wizard to customize your AI rules (Autonomy levels, Dependency rules, Git permissions, and Testing approach).
+By default, running the script interactively will guide you through a CLI wizard to customize your AI rules (Autonomy levels, Dependency rules, Git permissions, and Testing approach) and choose which AI IDE pointer files to generate.
+
+All prompts in the wizard support a default option. You can simply press **Enter** to accept the recommended default value and proceed.
+
+The wizard guides you through:
+- **Autonomy Levels:** Ask-First vs. Proactive.
+- **Dependency & License Policy:** Restricting what third-party packages can be added.
+- **Git & Safety Policies:** Permissions to stage/commit or execute destructive cleanup commands.
+- **Testing Approach:** Test coverage goals, TDD vs. Post-implementation, and test execution scope.
+- **Tech Stack:** Scaffolding language-specific rules (Node.js/TypeScript, Python, Go, React/Next.js).
+- **AI IDE Pointer Files:** Option to automatically generate thin pointer files (for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody) to redirect those clients to `AGENTS.md`. (Default: Standard (only AGENTS.md), which is recommended for tools with native support like Antigravity and OpenCode; you can also choose custom individually or generate all).
+
+
 
 If you want to skip the wizard and immediately generate the structure with default settings, run:
 
 * **Bash:** `./create_minimal_structure.sh --non-interactive`
 * **PowerShell:** `./create_minimal_structure.ps1 -NonInteractive`
+
 
 ### Step 4: Cleanup (Automated or Manual)
 Once the files are successfully created and configured in your project, the generator script and `file-templates/` directory are no longer needed.

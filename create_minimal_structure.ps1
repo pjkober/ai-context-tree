@@ -68,6 +68,16 @@ $TestingApproachVal = "- **Testing Approach:** Write tests post-implementation (
 $TestExecutionScopeVal = "- **Test Execution Scope:** Run only relevant unit tests related to modified or new code files during local iterations."
 $TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
 
+$GenClaude = $false
+$GenCursor = $false
+$GenCline = $false
+$GenWindsurf = $false
+$GenCopilot = $false
+$GenJetbrains = $false
+$GenAider = $false
+$GenTabnine = $false
+$GenCody = $false
+
 # Check if interactive
 if (-not $NonInteractive) {
     Write-Host "=============================================" -ForegroundColor Cyan
@@ -81,7 +91,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
     Write-Host "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
     Write-Host "  [3] Plan-First (AI writes a plan for approval first)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $AutonomyModeVal = "- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
     } elseif ($opt -eq "3") {
@@ -92,7 +103,8 @@ if (-not $NonInteractive) {
     Write-Host "1.2) Choose Dependency Policy:"
     Write-Host "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
     Write-Host "  [2] Proactive (AI can install standard packages if needed)"
-    $opt = Read-Host "Select option [1-2]"
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $DependencyPolicyVal = "- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
     }
@@ -102,7 +114,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
     Write-Host "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
     Write-Host "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $ArchitecturePolicyVal = "- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
     } elseif ($opt -eq "3") {
@@ -114,7 +127,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
     Write-Host "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
     Write-Host "  [3] Any License (No license restrictions)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $LicensePolicyVal = "- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
     } elseif ($opt -eq "3") {
@@ -126,7 +140,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] None (AI only modifies files; human commits) [Default]"
     Write-Host "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
     Write-Host "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $GitPolicyVal = "- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., `"feat(ui): add button`") for commit messages."
     } elseif ($opt -eq "3") {
@@ -137,7 +152,8 @@ if (-not $NonInteractive) {
     Write-Host "1.6) Choose Critical Operations / Safety Policy:"
     Write-Host "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
     Write-Host "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
-    $opt = Read-Host "Select option [1-2]"
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $SafetyPolicyVal = "- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
     }
@@ -148,7 +164,8 @@ if (-not $NonInteractive) {
     Write-Host "2.1) Choose Refactoring Policy:"
     Write-Host "  [1] Strict Scope (AI only touches what's requested) [Default]"
     Write-Host "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
-    $opt = Read-Host "Select option [1-2]"
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
     }
@@ -160,7 +177,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
     Write-Host "  [2] None (Skip tests for maximum speed)"
     Write-Host "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $TestingCoverageVal = "- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
     } elseif ($opt -eq "3") {
@@ -171,7 +189,8 @@ if (-not $NonInteractive) {
     Write-Host "3.2) Choose Testing Approach:"
     Write-Host "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
     Write-Host "  [2] TDD / Test-First (Write tests before implementation)"
-    $opt = Read-Host "Select option [1-2]"
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $TestingApproachVal = "- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
     }
@@ -181,7 +200,8 @@ if (-not $NonInteractive) {
     Write-Host "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
     Write-Host "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
     Write-Host "  [3] Full Suite (Run the entire test suite on every change)"
-    $opt = Read-Host "Select option [1-3]"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $TestExecutionScopeVal = "- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
     } elseif ($opt -eq "3") {
@@ -197,7 +217,8 @@ if (-not $NonInteractive) {
     Write-Host "  [3] Go"
     Write-Host "  [4] React / Next.js"
     Write-Host "  [5] Decide later / I'll customize it later [Default]"
-    $opt = Read-Host "Select option [1-5]"
+    $opt = Read-Host "Select option [1-5] [Default: 5]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "5" }
     switch ($opt) {
         "1" {
             $TechStackVal = "- Stack: Node.js / TypeScript.`n- Use strict TypeScript configurations.`n- Prefer async/await over raw Promises.`n- Avoid using ``any`` type annotations; define interfaces or types."
@@ -213,6 +234,58 @@ if (-not $NonInteractive) {
         }
     }
     Write-Host ""
+
+    # --- SECTION 5: AI IDE Configuration ---
+    Write-Host "--- SECTION 5: AI IDE Configuration ---" -ForegroundColor Yellow
+    Write-Host "5.1) Choose which AI IDE configuration files (thin pointers) to generate:"
+    Write-Host "  [1] Standard (only AGENTS.md) [Default]"
+    Write-Host "      (Recommended for tools with native AGENTS.md support: Antigravity, OpenCode, Gemini CLI, etc.)"
+    Write-Host "  [2] Custom (Choose individually)"
+    Write-Host "      (Generate pointers for: Claude Code, Cursor, Cline, Windsurf, Copilot, JetBrains AI, Aider, Tabnine, Cody)"
+    Write-Host "  [3] All (Generate files for all 10 popular AI IDEs)"
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+
+    if ($opt -eq "3") {
+        $GenClaude = $true
+        $GenCursor = $true
+        $GenCline = $true
+        $GenWindsurf = $true
+        $GenCopilot = $true
+        $GenJetbrains = $true
+        $GenAider = $true
+        $GenTabnine = $true
+        $GenCody = $true
+    } elseif ($opt -eq "2") {
+        $choice = Read-Host "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenClaude = $true }
+
+        $choice = Read-Host "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenCursor = $true }
+
+        $choice = Read-Host "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenCline = $true }
+
+        $choice = Read-Host "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenWindsurf = $true }
+
+        $choice = Read-Host "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenCopilot = $true }
+
+        $choice = Read-Host "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenJetbrains = $true }
+
+        $choice = Read-Host "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenAider = $true }
+
+        $choice = Read-Host "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenTabnine = $true }
+
+        $choice = Read-Host "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]"
+        if ($choice -match "^[yY](es)?$") { $GenCody = $true }
+    }
+    Write-Host ""
+}
 }
 
 # Helper to generate file with user preferences replaced
@@ -277,6 +350,101 @@ Copy-TemplateFile "ai/runs/run-001-example-automation.sh"
 Generate-RulesFile "ai/rules/coding.md"
 Generate-RulesFile "ai/rules/security.md"
 Generate-RulesFile "ai/rules/testing.md"
+
+# Generate AI IDE pointer files if requested
+if ($GenClaude) {
+    $Content = @"
+Refer to AGENTS.md for coding guidelines, architecture, and workflows.
+Do not deviate from the workflows defined in ai/workflows/.
+"@
+    Set-Content -Path (Join-Path $BaseDir "CLAUDE.md") -Value $Content -Encoding utf8
+    Write-Host "Generated Claude Code pointer: CLAUDE.md"
+}
+
+if ($GenCursor) {
+    $Content = @"
+Always read AGENTS.md first to understand the project structure and rules.
+Follow the guidelines in ai/rules/coding.md for all code modifications.
+"@
+    Set-Content -Path (Join-Path $BaseDir ".cursorrules") -Value $Content -Encoding utf8
+    Write-Host "Generated Cursor pointer: .cursorrules"
+}
+
+if ($GenCline) {
+    $Content = @"
+Read AGENTS.md to understand the repository structure and context.
+Adhere strictly to the active guidelines in ai/rules/.
+"@
+    Set-Content -Path (Join-Path $BaseDir ".clinerules") -Value $Content -Encoding utf8
+    Write-Host "Generated Cline/Roo Code pointer: .clinerules"
+}
+
+if ($GenWindsurf) {
+    $Content = @"
+Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
+Follow the guidelines in ai/rules/coding.md for code modifications.
+"@
+    Set-Content -Path (Join-Path $BaseDir ".windsurfrules") -Value $Content -Encoding utf8
+    Write-Host "Generated Windsurf pointer: .windsurfrules"
+}
+
+if ($GenCopilot) {
+    $Dir = Join-Path $BaseDir ".github"
+    if (-not (Test-Path $Dir)) { New-Item -ItemType Directory -Path $Dir | Out-Null }
+    $Content = @"
+Always refer to AGENTS.md in the root directory for general project instructions, tech stack rules, and coding standards.
+"@
+    Set-Content -Path (Join-Path $Dir "copilot-instructions.md") -Value $Content -Encoding utf8
+    Write-Host "Generated GitHub Copilot pointer: .github/copilot-instructions.md"
+}
+
+if ($GenJetbrains) {
+    $Dir = Join-Path $BaseDir ".aiassistant/rules"
+    if (-not (Test-Path $Dir)) { New-Item -ItemType Directory -Path $Dir -Force | Out-Null }
+    $Content = @"
+# JetBrains AI Assistant Rules
+Always refer to AGENTS.md in the project root directory for coding standards, autonomy rules, and workflows.
+"@
+    Set-Content -Path (Join-Path $Dir "main.md") -Value $Content -Encoding utf8
+    Write-Host "Generated JetBrains AI Assistant pointer: .aiassistant/rules/main.md"
+}
+
+if ($GenAider) {
+    $Content = @"
+Always read AGENTS.md first to understand coding style, testing rules, and project workflows.
+"@
+    Set-Content -Path (Join-Path $BaseDir "CONVENTIONS.md") -Value $Content -Encoding utf8
+
+    $Content = @"
+read:
+  - CONVENTIONS.md
+"@
+    Set-Content -Path (Join-Path $BaseDir ".aider.conf.yml") -Value $Content -Encoding utf8
+    Write-Host "Generated Aider pointers: CONVENTIONS.md & .aider.conf.yml"
+}
+
+if ($GenTabnine) {
+    $Dir = Join-Path $BaseDir ".tabnine/guidelines"
+    if (-not (Test-Path $Dir)) { New-Item -ItemType Directory -Path $Dir -Force | Out-Null }
+    $Content = @"
+# Tabnine Guidelines
+Refer to AGENTS.md in the project root for coding rules, testing constraints, and workflows.
+"@
+    Set-Content -Path (Join-Path $Dir "main.md") -Value $Content -Encoding utf8
+    Write-Host "Generated Tabnine pointer: .tabnine/guidelines/main.md"
+}
+
+if ($GenCody) {
+    $Dir = Join-Path $BaseDir ".cody"
+    if (-not (Test-Path $Dir)) { New-Item -ItemType Directory -Path $Dir | Out-Null }
+    $Content = @"
+Always read AGENTS.md in the root directory for project-specific rules, tech stack details, and coding conventions.
+"@
+    Set-Content -Path (Join-Path $Dir "rules.md") -Value $Content -Encoding utf8
+    Write-Host "Generated Cody pointer: .cody/rules.md"
+}
+
+
 
 Write-Host "Minimal project structure created successfully."
 

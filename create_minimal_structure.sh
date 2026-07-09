@@ -65,6 +65,17 @@ TECH_STACK_VAL="- Stack: General / To be defined later.
 - Adhere to the existing coding style of any file you edit."
 
 NON_INTERACTIVE=false
+GEN_CLAUDE=false
+GEN_CURSOR=false
+GEN_CLINE=false
+GEN_WINDSURF=false
+GEN_COPILOT=false
+GEN_JETBRAINS=false
+GEN_AIDER=false
+GEN_TABNINE=false
+GEN_CODY=false
+
+
 
 # Parse flags
 for arg in "$@"; do
@@ -89,7 +100,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
   echo "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
   echo "  [3] Plan-First (AI writes a plan for approval first)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       AUTONOMY_MODE_VAL="- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
@@ -103,7 +115,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "1.2) Choose Dependency Policy:"
   echo "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
   echo "  [2] Proactive (AI can install standard packages if needed)"
-  read -p "Select option [1-2]: " opt
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       DEPENDENCY_POLICY_VAL="- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
@@ -115,7 +128,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
   echo "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
   echo "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       ARCHITECTURE_POLICY_VAL="- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
@@ -130,7 +144,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
   echo "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
   echo "  [3] Any License (No license restrictions)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       LICENSE_POLICY_VAL="- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
@@ -145,7 +160,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] None (AI only modifies files; human commits) [Default]"
   echo "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
   echo "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       GIT_POLICY_VAL="- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., \"feat(ui): add button\") for commit messages."
@@ -159,7 +175,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "1.6) Choose Critical Operations / Safety Policy:"
   echo "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
   echo "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
-  read -p "Select option [1-2]: " opt
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       SAFETY_POLICY_VAL="- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
@@ -172,7 +189,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "2.1) Choose Refactoring Policy:"
   echo "  [1] Strict Scope (AI only touches what's requested) [Default]"
   echo "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
-  read -p "Select option [1-2]: " opt
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       REFACTORING_POLICY_VAL="- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
@@ -186,7 +204,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
   echo "  [2] None (Skip tests for maximum speed)"
   echo "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       TESTING_COVERAGE_VAL="- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
@@ -200,7 +219,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "3.2) Choose Testing Approach:"
   echo "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
   echo "  [2] TDD / Test-First (Write tests before implementation)"
-  read -p "Select option [1-2]: " opt
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       TESTING_APPROACH_VAL="- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
@@ -212,7 +232,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
   echo "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
   echo "  [3] Full Suite (Run the entire test suite on every change)"
-  read -p "Select option [1-3]: " opt
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
   case "$opt" in
     2)
       TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
@@ -231,7 +252,8 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "  [3] Go"
   echo "  [4] React / Next.js"
   echo "  [5] Decide later / I'll customize it later [Default]"
-  read -p "Select option [1-5]: " opt
+  read -p "Select option [1-5] [Default: 5]: " opt
+  opt=${opt:-5}
   case "$opt" in
     1)
       TECH_STACK_VAL="- Stack: Node.js / TypeScript.
@@ -256,6 +278,71 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 - Use functional components with hooks.
 - Keep components small, reusable, and state localized.
 - Follow Next.js directory and routing conventions."
+      ;;
+  esac
+  echo ""
+
+  # --- SECTION 5: AI IDE Configuration ---
+  echo "--- SECTION 5: AI IDE Configuration ---"
+  echo "5.1) Choose which AI IDE configuration files (thin pointers) to generate:"
+  echo "  [1] Standard (only AGENTS.md) [Default]"
+  echo "      (Recommended for tools with native AGENTS.md support: Antigravity, OpenCode, Gemini CLI, etc.)"
+  echo "  [2] Custom (Choose individually)"
+  echo "      (Generate pointers for: Claude Code, Cursor, Cline, Windsurf, Copilot, JetBrains AI, Aider, Tabnine, Cody)"
+  echo "  [3] All (Generate files for all 10 popular AI IDEs)"
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    1)
+      # Standard (only AGENTS.md) - already initialized to false
+      ;;
+    3)
+      GEN_CLAUDE=true
+      GEN_CURSOR=true
+      GEN_CLINE=true
+      GEN_WINDSURF=true
+      GEN_COPILOT=true
+      GEN_JETBRAINS=true
+      GEN_AIDER=true
+      GEN_TABNINE=true
+      GEN_CODY=true
+      ;;
+    2)
+      read -p "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CLAUDE=true; fi
+
+      read -p "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CURSOR=true; fi
+
+      read -p "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CLINE=true; fi
+
+      read -p "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_WINDSURF=true; fi
+
+      read -p "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_COPILOT=true; fi
+
+      read -p "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_JETBRAINS=true; fi
+
+      read -p "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_AIDER=true; fi
+
+      read -p "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_TABNINE=true; fi
+
+      read -p "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]: " choice
+      choice=${choice:-n}
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CODY=true; fi
       ;;
   esac
   echo ""
@@ -335,6 +422,86 @@ copy_template_file "ai/runs/run-001-example-automation.sh"
 generate_rules_file "ai/rules/coding.md"
 generate_rules_file "ai/rules/security.md"
 generate_rules_file "ai/rules/testing.md"
+
+# Generate AI IDE pointer files if requested
+if [ "$GEN_CLAUDE" = true ]; then
+  cat << 'EOF' > "$BASE_DIR/CLAUDE.md"
+Refer to AGENTS.md for coding guidelines, architecture, and workflows.
+Do not deviate from the workflows defined in ai/workflows/.
+EOF
+  echo "Generated Claude Code pointer: CLAUDE.md"
+fi
+
+if [ "$GEN_CURSOR" = true ]; then
+  cat << 'EOF' > "$BASE_DIR/.cursorrules"
+Always read AGENTS.md first to understand the project structure and rules.
+Follow the guidelines in ai/rules/coding.md for all code modifications.
+EOF
+  echo "Generated Cursor pointer: .cursorrules"
+fi
+
+if [ "$GEN_CLINE" = true ]; then
+  cat << 'EOF' > "$BASE_DIR/.clinerules"
+Read AGENTS.md to understand the repository structure and context.
+Adhere strictly to the active guidelines in ai/rules/.
+EOF
+  echo "Generated Cline/Roo Code pointer: .clinerules"
+fi
+
+if [ "$GEN_WINDSURF" = true ]; then
+  cat << 'EOF' > "$BASE_DIR/.windsurfrules"
+Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
+Follow the guidelines in ai/rules/coding.md for code modifications.
+EOF
+  echo "Generated Windsurf pointer: .windsurfrules"
+fi
+
+if [ "$GEN_COPILOT" = true ]; then
+  mkdir -p "$BASE_DIR/.github"
+  cat << 'EOF' > "$BASE_DIR/.github/copilot-instructions.md"
+Always refer to AGENTS.md in the root directory for general project instructions, tech stack rules, and coding standards.
+EOF
+  echo "Generated GitHub Copilot pointer: .github/copilot-instructions.md"
+fi
+
+if [ "$GEN_JETBRAINS" = true ]; then
+  mkdir -p "$BASE_DIR/.aiassistant/rules"
+  cat << 'EOF' > "$BASE_DIR/.aiassistant/rules/main.md"
+# JetBrains AI Assistant Rules
+Always refer to AGENTS.md in the project root directory for coding standards, autonomy rules, and workflows.
+EOF
+  echo "Generated JetBrains AI Assistant pointer: .aiassistant/rules/main.md"
+fi
+
+if [ "$GEN_AIDER" = true ]; then
+  cat << 'EOF' > "$BASE_DIR/CONVENTIONS.md"
+Always read AGENTS.md first to understand coding style, testing rules, and project workflows.
+EOF
+  cat << 'EOF' > "$BASE_DIR/.aider.conf.yml"
+read:
+  - CONVENTIONS.md
+EOF
+  echo "Generated Aider pointers: CONVENTIONS.md & .aider.conf.yml"
+fi
+
+if [ "$GEN_TABNINE" = true ]; then
+  mkdir -p "$BASE_DIR/.tabnine/guidelines"
+  cat << 'EOF' > "$BASE_DIR/.tabnine/guidelines/main.md"
+# Tabnine Guidelines
+Refer to AGENTS.md in the project root for coding rules, testing constraints, and workflows.
+EOF
+  echo "Generated Tabnine pointer: .tabnine/guidelines/main.md"
+fi
+
+if [ "$GEN_CODY" = true ]; then
+  mkdir -p "$BASE_DIR/.cody"
+  cat << 'EOF' > "$BASE_DIR/.cody/rules.md"
+Always read AGENTS.md in the root directory for project-specific rules, tech stack details, and coding conventions.
+EOF
+  echo "Generated Cody pointer: .cody/rules.md"
+fi
+
+
 
 echo "Minimal project structure created successfully."
 

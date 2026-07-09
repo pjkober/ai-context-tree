@@ -19,25 +19,69 @@ If the AI client requires a configuration directory (e.g. `.cursor/`, `.roo/`, `
 
 ## Pointer Examples
 
-Here is how you configure various popular AI clients:
+Here is how you configure various popular AI clients to point to the central `AGENTS.md` file:
 
-### For Claude Code (`CLAUDE.md` in root)
+### 1. Claude Code (`CLAUDE.md` in root)
 ```markdown
 Refer to AGENTS.md for coding guidelines, architecture, and workflows.
 Do not deviate from the workflows defined in ai/workflows/.
 ```
 
-### For Cursor (`.cursor/rules/main.mdc`)
+### 2. Cursor (`.cursorrules` in root)
 ```markdown
 Always read AGENTS.md first to understand the project structure and rules.
 Follow the guidelines in ai/rules/coding.md for all code modifications.
 ```
 
-### For Cline / Roo Code (`.clinerules` in root)
+### 3. Cline / Roo Code (`.clinerules` in root)
 ```markdown
 Read AGENTS.md to understand the repository structure and context.
 Adhere strictly to the active guidelines in ai/rules/.
 ```
+
+### 4. Windsurf (`.windsurfrules` in root)
+```markdown
+Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
+Follow the guidelines in ai/rules/coding.md for code modifications.
+```
+
+### 5. GitHub Copilot (`.github/copilot-instructions.md`)
+```markdown
+Always refer to AGENTS.md in the root directory for general project instructions, tech stack rules, and coding standards.
+```
+
+### 6. JetBrains AI Assistant (`.aiassistant/rules/main.md`)
+```markdown
+# JetBrains AI Assistant Rules
+Always refer to AGENTS.md in the project root directory for coding standards, autonomy rules, and workflows.
+```
+
+### 7. Aider (`CONVENTIONS.md` in root + `.aider.conf.yml`)
+Create `CONVENTIONS.md`:
+```markdown
+Always read AGENTS.md first to understand coding style, testing rules, and project workflows.
+```
+Configure `.aider.conf.yml`:
+```yaml
+read:
+  - CONVENTIONS.md
+```
+
+### 8. Tabnine (`.tabnine/guidelines/main.md`)
+```markdown
+# Tabnine Guidelines
+Refer to AGENTS.md in the project root for coding rules, testing constraints, and workflows.
+```
+
+### 9. Sourcegraph Cody (`.cody/rules.md`)
+```markdown
+Always read AGENTS.md in the root directory for project-specific rules, tech stack details, and coding conventions.
+```
+
+### 10. Antigravity & OpenCode (Natively Supported)
+Antigravity and OpenCode automatically discover and parse [AGENTS.md](../AGENTS.md) in the project root directly. No additional thin pointer files are needed for these tools.
+
+
 
 ## Linking Tool-Specific Rules to Universal Skills
 
