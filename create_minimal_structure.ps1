@@ -66,6 +66,11 @@ $RefactoringPolicyVal = "- **Strict Scope:** Modify only lines and files directl
 $TestingCoverageVal = "- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
 $TestingApproachVal = "- **Testing Approach:** Write tests post-implementation (after coding features)."
 $TestExecutionScopeVal = "- **Test Execution Scope:** Run only relevant unit tests related to modified or new code files during local iterations."
+$CommunicationPolicyVal = "- **Communication Style:** Be extremely concise and technical. Avoid conversational filler. Focus explanations on high-level architecture and exact code changes."
+$LintingPolicyVal = "- **Linting & Formatting:** You MUST run code formatters and linters (e.g. Prettier, ESLint, Black, gofmt) on modified files after every edit to ensure styling compliance before finalizing tasks."
+$TaskManagementPolicyVal = "- **Task Boundaries:** Restrict modifications to the exact files needed. Do not touch more than 3 files or implement more than one logical sub-task per iteration without checking in or seeking approval."
+$ContextManagementPolicyVal = "- **Context Management:** Minimize file reads. Do not read entire directories or large files unless essential. Target specific line ranges using line-specific tools or grep search first."
+$SecretsPolicyVal = "- **Secrets & Security:** Never write API keys, passwords, or credentials to any files, including local env files or comments. Prompt the user to set them locally if needed."
 $TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
 
 $GenClaude = $false
@@ -159,6 +164,38 @@ if (-not $NonInteractive) {
     }
     Write-Host ""
 
+    Write-Host "1.7) Choose Secrets & Security Policy:"
+    Write-Host "  [1] Zero-Trust / Strict Secret Protection [Default]"
+    Write-Host "      - Pros: Maximum security, zero risk of committing API keys, tokens, or credentials."
+    Write-Host "      - Cons: Developer must manually configure env files and local environment settings."
+    Write-Host "      - Consequence: AI is strictly forbidden from writing keys or credentials to any file."
+    Write-Host "  [2] Auto-Config / Permissive"
+    Write-Host "      - Pros: Automatic and seamless local environment configuration."
+    Write-Host "      - Cons: High risk of accidental credential leaks to Git."
+    Write-Host "      - Consequence: AI is allowed to write mock/test credentials to local config files."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    if ($opt -eq "2") {
+        $SecretsPolicyVal = "- **Secrets & Security:** You may generate or update local configuration and .env files with test or dummy credentials for local execution, but never commit them to Git."
+    }
+    Write-Host ""
+
+    Write-Host "1.8) Choose Context & Cost Control Policy:"
+    Write-Host "  [1] Strict Token Diet (Targeted Reads) [Default]"
+    Write-Host "      - Pros: Highly token-efficient, lower costs, fast response times."
+    Write-Host "      - Cons: AI might miss global dependencies or duplicate helper code."
+    Write-Host "      - Consequence: AI prioritizes grep and targeted line range reads over full file reads."
+    Write-Host "  [2] Context Rich (Comprehensive Reads)"
+    Write-Host "      - Pros: Deeper understanding of full codebase dependencies, safer refactoring."
+    Write-Host "      - Cons: Extremely high token consumption, high costs, risks context window saturation."
+    Write-Host "      - Consequence: AI reads entire files and directories before making modifications."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    if ($opt -eq "2") {
+        $ContextManagementPolicyVal = "- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
+    }
+    Write-Host ""
+
     # --- SECTION 2: Coding & Refactoring ---
     Write-Host "--- SECTION 2: Coding & Refactoring ---" -ForegroundColor Yellow
     Write-Host "2.1) Choose Refactoring Policy:"
@@ -168,6 +205,54 @@ if (-not $NonInteractive) {
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
     if ($opt -eq "2") {
         $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
+    }
+    Write-Host ""
+
+    Write-Host "2.2) Choose Code Quality & Linting Policy:"
+    Write-Host "  [1] Automatic Formatter & Linter [Default]"
+    Write-Host "      - Pros: Code is always clean, matches project style, prevents merge conflicts."
+    Write-Host "      - Cons: Adds minor execution overhead and delay during tasks."
+    Write-Host "      - Consequence: AI will run tools like Prettier/ESLint/Black after modifications."
+    Write-Host "  [2] Minimalist (On-demand / Manual)"
+    Write-Host "      - Pros: Maximum iteration speed, zero tool execution overhead."
+    Write-Host "      - Cons: Risk of committing unformatted or style-violating code if developer forgets."
+    Write-Host "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    if ($opt -eq "2") {
+        $LintingPolicyVal = "- **Linting & Formatting:** Do not run formatting or linting commands automatically unless explicitly requested. Focus on functional correctness, adhering to the surrounding code style manually."
+    }
+    Write-Host ""
+
+    Write-Host "2.3) Choose Task Boundaries & Granularity:"
+    Write-Host "  [1] Strict Boundaries & Micro-tasks [Default]"
+    Write-Host "      - Pros: Prevents scope creep, keeps PRs small, low risk of code conflicts."
+    Write-Host "      - Cons: Higher interaction frequency, requires user approval more often."
+    Write-Host "      - Consequence: AI will restrict modifications to <= 3 files and one sub-task at a time."
+    Write-Host "  [2] Flexible / Broad Scope"
+    Write-Host "      - Pros: Rapid implementation of wide features, fewer prompts."
+    Write-Host "      - Cons: Harder to debug, larger PRs, high risk of breaking unrelated systems."
+    Write-Host "      - Consequence: AI will implement multi-file refactors in a single pass."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    if ($opt -eq "2") {
+        $TaskManagementPolicyVal = "- **Task Boundaries:** You have flexible scope. If a feature requires modifying several files or modules, implement them in a single stream, but document the full list of files affected in the summary."
+    }
+    Write-Host ""
+
+    Write-Host "2.4) Choose AI Communication & Explanation Style:"
+    Write-Host "  [1] Concise & Technical [Default]"
+    Write-Host "      - Pros: Low token overhead, fast response times, fits cleanly in context."
+    Write-Host "      - Cons: Skips beginner-friendly explanations or pattern breakdowns."
+    Write-Host "      - Consequence: AI expects senior-level understanding and skips tutorial-like text."
+    Write-Host "  [2] Detailed & Educational"
+    Write-Host "      - Pros: High educational value, explains design patterns and choices."
+    Write-Host "      - Cons: Large token consumption, slower responses, potential context bloat."
+    Write-Host "      - Consequence: Good for learning a new stack, but increases costs and latency."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    if ($opt -eq "2") {
+        $CommunicationPolicyVal = "- **Communication Style:** Provide detailed, step-by-step explanations of your implementation decisions, design patterns, and potential alternatives. Focus on educational value."
     }
     Write-Host ""
 
@@ -305,6 +390,11 @@ function Generate-FromTemplate {
     $Content = $Content -replace "__TESTING_COVERAGE__", $TestingCoverageVal
     $Content = $Content -replace "__TESTING_APPROACH__", $TestingApproachVal
     $Content = $Content -replace "__TEST_EXECUTION_SCOPE__", $TestExecutionScopeVal
+    $Content = $Content -replace "__COMMUNICATION_POLICY__", $CommunicationPolicyVal
+    $Content = $Content -replace "__LINTING_POLICY__", $LintingPolicyVal
+    $Content = $Content -replace "__TASK_MANAGEMENT_POLICY__", $TaskManagementPolicyVal
+    $Content = $Content -replace "__CONTEXT_MANAGEMENT_POLICY__", $ContextManagementPolicyVal
+    $Content = $Content -replace "__SECRETS_POLICY__", $SecretsPolicyVal
     $Content = $Content -replace "__TECH_STACK__", $TechStackVal
     $Content | Set-Content $DestPath -NoNewline
 }

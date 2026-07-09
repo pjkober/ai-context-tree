@@ -24,3 +24,12 @@ __GIT_POLICY__
 
 ## Safety & Destructive Actions Policy
 __SAFETY_POLICY__
+
+## Task Management & Boundaries
+__TASK_MANAGEMENT_POLICY__
+
+## Context & Cost Control
+__CONTEXT_MANAGEMENT_POLICY__
+
+## Secrets & Security Policy
+__SECRETS_POLICY__

@@ -54,6 +54,12 @@ The wizard guides you through:
 - **Autonomy Levels:** Ask-First vs. Proactive.
 - **Dependency & License Policy:** Restricting what third-party packages can be added.
 - **Git & Safety Policies:** Permissions to stage/commit or execute destructive cleanup commands.
+- **Secrets & Security:** Zero-Trust (Strict Secret Protection) vs. Auto-Config (mock keys setup).
+- **Context & Cost Control:** Strict Token Diet (Targeted Reads) vs. Context Rich (Comprehensive Reads).
+- **Refactoring Policy:** Strict Scope (requested files only) vs. Boy Scout Rule (cleaning code smells).
+- **Code Quality & Linting:** Automatic Formatter & Linter (running Prettier/ESLint/Black) vs. Minimalist (manual formatting).
+- **Task Boundaries:** Strict Boundaries & Micro-tasks (<= 3 files) vs. Flexible / Broad Scope.
+- **Communication & Explanation Style:** Concise & Technical vs. Detailed & Educational.
 - **Testing Approach:** Test coverage goals, TDD vs. Post-implementation, and test execution scope.
 - **Tech Stack:** Scaffolding language-specific rules (Node.js/TypeScript, Python, Go, React/Next.js).
 - **AI IDE Pointer Files:** Option to automatically generate thin pointer files (for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody) to redirect those clients to `AGENTS.md`. (Default: Standard (only AGENTS.md), which is recommended for tools with native support like Antigravity and OpenCode; you can also choose custom individually or generate all).

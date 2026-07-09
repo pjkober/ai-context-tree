@@ -13,3 +13,9 @@ __REFACTORING_POLICY__
 
 ## Tech Stack & Language Conventions
 __TECH_STACK__
+
+## Communication & Explanation Style
+__COMMUNICATION_POLICY__
+
+## Code Quality & Linting Policy
+__LINTING_POLICY__

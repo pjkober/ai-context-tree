@@ -61,6 +61,11 @@ REFACTORING_POLICY_VAL="- **Strict Scope:** Modify only lines and files directly
 TESTING_COVERAGE_VAL="- **Testing Coverage:** Write tests only for the key/critical codebase functionality. Do not waste time on 100% coverage of minor helper functions."
 TESTING_APPROACH_VAL="- **Testing Approach:** Write tests post-implementation (after coding features)."
 TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run only relevant unit tests related to modified or new code files during local iterations."
+COMMUNICATION_POLICY_VAL="- **Communication Style:** Be extremely concise and technical. Avoid conversational filler. Focus explanations on high-level architecture and exact code changes."
+LINTING_POLICY_VAL="- **Linting & Formatting:** You MUST run code formatters and linters (e.g. Prettier, ESLint, Black, gofmt) on modified files after every edit to ensure styling compliance before finalizing tasks."
+TASK_MANAGEMENT_POLICY_VAL="- **Task Boundaries:** Restrict modifications to the exact files needed. Do not touch more than 3 files or implement more than one logical sub-task per iteration without checking in or seeking approval."
+CONTEXT_MANAGEMENT_POLICY_VAL="- **Context Management:** Minimize file reads. Do not read entire directories or large files unless essential. Target specific line ranges using line-specific tools or grep search first."
+SECRETS_POLICY_VAL="- **Secrets & Security:** Never write API keys, passwords, or credentials to any files, including local env files or comments. Prompt the user to set them locally if needed."
 TECH_STACK_VAL="- Stack: General / To be defined later.
 - Adhere to the existing coding style of any file you edit."
 
@@ -184,6 +189,42 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   esac
   echo ""
 
+  echo "1.7) Choose Secrets & Security Policy:"
+  echo "  [1] Zero-Trust / Strict Secret Protection [Default]"
+  echo "      - Pros: Maximum security, zero risk of committing API keys, tokens, or credentials."
+  echo "      - Cons: Developer must manually configure env files and local environment settings."
+  echo "      - Consequence: AI is strictly forbidden from writing keys or credentials to any file."
+  echo "  [2] Auto-Config / Permissive"
+  echo "      - Pros: Automatic and seamless local environment configuration."
+  echo "      - Cons: High risk of accidental credential leaks to Git."
+  echo "      - Consequence: AI is allowed to write mock/test credentials to local config files."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    2)
+      SECRETS_POLICY_VAL="- **Secrets & Security:** You may generate or update local configuration and .env files with test or dummy credentials for local execution, but never commit them to Git."
+      ;;
+  esac
+  echo ""
+
+  echo "1.8) Choose Context & Cost Control Policy:"
+  echo "  [1] Strict Token Diet (Targeted Reads) [Default]"
+  echo "      - Pros: Highly token-efficient, lower costs, fast response times."
+  echo "      - Cons: AI might miss global dependencies or duplicate helper code."
+  echo "      - Consequence: AI prioritizes grep and targeted line range reads over full file reads."
+  echo "  [2] Context Rich (Comprehensive Reads)"
+  echo "      - Pros: Deeper understanding of full codebase dependencies, safer refactoring."
+  echo "      - Cons: Extremely high token consumption, high costs, risks context window saturation."
+  echo "      - Consequence: AI reads entire files and directories before making modifications."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    2)
+      CONTEXT_MANAGEMENT_POLICY_VAL="- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
+      ;;
+  esac
+  echo ""
+
   # --- SECTION 2: Coding & Refactoring ---
   echo "--- SECTION 2: Coding & Refactoring ---"
   echo "2.1) Choose Refactoring Policy:"
@@ -194,6 +235,60 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   case "$opt" in
     2)
       REFACTORING_POLICY_VAL="- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
+      ;;
+  esac
+  echo ""
+
+  echo "2.2) Choose Code Quality & Linting Policy:"
+  echo "  [1] Automatic Formatter & Linter [Default]"
+  echo "      - Pros: Code is always clean, matches project style, prevents merge conflicts."
+  echo "      - Cons: Adds minor execution overhead and delay during tasks."
+  echo "      - Consequence: AI will run tools like Prettier/ESLint/Black after modifications."
+  echo "  [2] Minimalist (On-demand / Manual)"
+  echo "      - Pros: Maximum iteration speed, zero tool execution overhead."
+  echo "      - Cons: Risk of committing unformatted or style-violating code if developer forgets."
+  echo "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    2)
+      LINTING_POLICY_VAL="- **Linting & Formatting:** Do not run formatting or linting commands automatically unless explicitly requested. Focus on functional correctness, adhering to the surrounding code style manually."
+      ;;
+  esac
+  echo ""
+
+  echo "2.3) Choose Task Boundaries & Granularity:"
+  echo "  [1] Strict Boundaries & Micro-tasks [Default]"
+  echo "      - Pros: Prevents scope creep, keeps PRs small, low risk of code conflicts."
+  echo "      - Cons: Higher interaction frequency, requires user approval more often."
+  echo "      - Consequence: AI will restrict modifications to <= 3 files and one sub-task at a time."
+  echo "  [2] Flexible / Broad Scope"
+  echo "      - Pros: Rapid implementation of wide features, fewer prompts."
+  echo "      - Cons: Harder to debug, larger PRs, high risk of breaking unrelated systems."
+  echo "      - Consequence: AI will implement multi-file refactors in a single pass."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    2)
+      TASK_MANAGEMENT_POLICY_VAL="- **Task Boundaries:** You have flexible scope. If a feature requires modifying several files or modules, implement them in a single stream, but document the full list of files affected in the summary."
+      ;;
+  esac
+  echo ""
+
+  echo "2.4) Choose AI Communication & Explanation Style:"
+  echo "  [1] Concise & Technical [Default]"
+  echo "      - Pros: Low token overhead, fast response times, fits cleanly in context."
+  echo "      - Cons: Skips beginner-friendly explanations or pattern breakdowns."
+  echo "      - Consequence: AI expects senior-level understanding and skips tutorial-like text."
+  echo "  [2] Detailed & Educational"
+  echo "      - Pros: High educational value, explains design patterns and choices."
+  echo "      - Cons: Large token consumption, slower responses, potential context bloat."
+  echo "      - Consequence: Good for learning a new stack, but increases costs and latency."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  case "$opt" in
+    2)
+      COMMUNICATION_POLICY_VAL="- **Communication Style:** Provide detailed, step-by-step explanations of your implementation decisions, design patterns, and potential alternatives. Focus on educational value."
       ;;
   esac
   echo ""
@@ -376,6 +471,16 @@ generate_from_template() {
       echo "$TESTING_APPROACH_VAL"
     elif [[ "$line" == *"__TEST_EXECUTION_SCOPE__"* ]]; then
       echo "$TEST_EXECUTION_SCOPE_VAL"
+    elif [[ "$line" == *"__COMMUNICATION_POLICY__"* ]]; then
+      echo "$COMMUNICATION_POLICY_VAL"
+    elif [[ "$line" == *"__LINTING_POLICY__"* ]]; then
+      echo "$LINTING_POLICY_VAL"
+    elif [[ "$line" == *"__TASK_MANAGEMENT_POLICY__"* ]]; then
+      echo "$TASK_MANAGEMENT_POLICY_VAL"
+    elif [[ "$line" == *"__CONTEXT_MANAGEMENT_POLICY__"* ]]; then
+      echo "$CONTEXT_MANAGEMENT_POLICY_VAL"
+    elif [[ "$line" == *"__SECRETS_POLICY__"* ]]; then
+      echo "$SECRETS_POLICY_VAL"
     else
       echo "$line"
     fi
