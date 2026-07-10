@@ -922,10 +922,10 @@ fi
 # Print final status message
 echo ""
 echo "============================================================="
-echo "   Struktura dla projektu: $PROJECT_NAME"
-echo "   do efektywnej współpracy z AI jest gotowa!"
+echo "   Project structure for: $PROJECT_NAME"
+echo "   is ready for AI-first collaboration!"
 echo ""
-echo "   Informacje o Twoim projekcie znajdziesz w README.md"
+echo "   Project information is available in README.md"
 echo "============================================================="
 echo ""
 

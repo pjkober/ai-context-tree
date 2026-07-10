@@ -10,19 +10,19 @@
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 - **Core Concepts:**
-  - [📖 Philosophy & Purpose](docs/01-philosophy.md) — Why design repositories for both humans and AI.
-  - [🛠️ The 5 Core Principles](docs/02-core-principles.md) — SSOT, predictability, file sizes, proximity, and tool independence.
-  - [🌱 Incremental Growth Principle](docs/03-incremental-growth.md) — How the repository tree grows organically on demand.
-  - [🏷️ Terminology Management](docs/04-terminology-management.md) — Handling technical vs business terms.
-  - [🤖 AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
-  - [📘 Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
-  - [🚀 Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
+  - [Philosophy & Purpose](docs/01-philosophy.md) — Why design repositories for both humans and AI.
+  - [The 5 Core Principles](docs/02-core-principles.md) — SSOT, predictability, file sizes, proximity, and tool independence.
+  - [Incremental Growth Principle](docs/03-incremental-growth.md) — How the repository tree grows organically on demand.
+  - [Terminology Management](docs/04-terminology-management.md) — Handling technical vs business terms.
+  - [AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
+  - [Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
+  - [Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
 
 - **File Templates:**
-  - [📂 Replicated Structure Templates](file-templates/) — Got standard code/doc templates for every directory.
+  - [Replicated Structure Templates](file-templates/) — Standard code/doc templates for every directory.
 - **Directory Guidelines:**
   - [Root Files](docs/structure/root-files.md) — `AGENTS.md`, `MANIFEST.md`, `.gitignore`, etc.
   - [AI Agent Rules & Workflows (`ai/`)](docs/structure/ai-agents.md) — Coding conventions, step-by-step procedures, prompts.
@@ -32,7 +32,7 @@
 
 ---
 
-## 🗺️ Information & Context Flow
+## Information & Context Flow
 
 To keep the workspace clean and avoid polluting the LLM's context, information flows through a clear hierarchy. IDE-specific configuration files act as thin pointers to `AGENTS.md`, which serves as the central hub:
 
@@ -52,7 +52,7 @@ flowchart TD
 
 ---
 
-## 📁 Repository Structure Snapshots
+## Repository Structure Snapshots
 
 The structure grows **incrementally** (as described in the [Incremental Growth Guide](docs/03-incremental-growth.md)). Below are snapshots illustrating how a project starts and how it matures.
 
@@ -80,7 +80,7 @@ project/
 
 ### 2. Target Structure Example (Mature/AI-Native Project)
 
-As the project grows, new directories and files are created dynamically to match your requirements. The repository structure is designed to be organic and should expand strictly on demand, which is why there is no single "ideal" complete structure for every project. 
+As the project grows, new directories and files are created dynamically to match your requirements. The repository structure is designed to be organic and should expand strictly on demand, which is why there is no single "ideal" complete structure for every project.
 
 If you follow the guidelines in [ai-agents structure guide](docs/structure/ai-agents.md) and `ai/context/structure-map.md`, your mature project structure might look like this:
 
@@ -123,7 +123,7 @@ project/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Initialize the Structure
 You can quickly generate the minimal structure in your workspace root by running the initialization script.
@@ -151,6 +151,6 @@ For detailed pointer files for Cursor, Claude Code, Cline, Roo Code, and Windsur
 
 ---
 
-## 📄 License
+## License
 
 This layout standard is open-source and available under the [MIT License](LICENSE).

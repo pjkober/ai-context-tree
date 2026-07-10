@@ -857,10 +857,10 @@ if ($InitGit) {
 # Print final status message
 Write-Host ""
 Write-Host "=============================================================" -ForegroundColor Green
-Write-Host "   Struktura dla projektu: $ProjectName" -ForegroundColor Green
-Write-Host "   do efektywnej współpracy z AI jest gotowa!" -ForegroundColor Green
+Write-Host "   Project structure for: $ProjectName" -ForegroundColor Green
+Write-Host "   is ready for AI-first collaboration!" -ForegroundColor Green
 Write-Host ""
-Write-Host "   Informacje o Twoim projekcie znajdziesz w README.md" -ForegroundColor Green
+Write-Host "   Project information is available in README.md" -ForegroundColor Green
 Write-Host "=============================================================" -ForegroundColor Green
 Write-Host ""
 
