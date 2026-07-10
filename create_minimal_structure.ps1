@@ -20,6 +20,19 @@ if (-not (Test-Path $TemplatesDir -PathType Container)) {
     exit 1
 }
 
+# Determine default project name based on the target/base directory name
+$ResolvedBaseDir = Resolve-Path $BaseDir
+$BaseDirName = (Get-Item $ResolvedBaseDir).Name
+$DefaultProjectName = $BaseDirName -replace '[^a-zA-Z0-9 _.-]', ''
+if ($DefaultProjectName.Length -gt 50) {
+    $DefaultProjectName = $DefaultProjectName.Substring(0, 50)
+}
+if ([string]::IsNullOrWhiteSpace($DefaultProjectName)) {
+    $DefaultProjectName = "my-project"
+}
+$ProjectName = $DefaultProjectName
+
+
 
 # Helper to create a directory if it does not exist
 function New-DirectoryIfNotExists {
@@ -44,8 +57,15 @@ function Copy-TemplateFile {
 
     if (-not (Test-Path $DestFile -PathType Leaf)) {
         if (Test-Path $SrcFile -PathType Leaf) {
-            Copy-Item -Path $SrcFile -Destination $DestFile -Force
-            Write-Host "Copied template to: $DestFile"
+            if ($RelPath -eq "README.md" -or $RelPath -eq "ai/context/project.md") {
+                $Content = Get-Content -Path $SrcFile -Raw
+                $Content = $Content -replace '# Project Name', "# $ProjectName"
+                Set-Content -Path $DestFile -Value $Content
+                Write-Host "Generated custom $RelPath for project: $ProjectName"
+            } else {
+                Copy-Item -Path $SrcFile -Destination $DestFile -Force
+                Write-Host "Copied template to: $DestFile"
+            }
         } else {
             Write-Warning "Template source file missing: $SrcFile"
         }
@@ -90,6 +110,48 @@ if (-not $NonInteractive) {
     Write-Host "=============================================" -ForegroundColor Cyan
     Write-Host ""
     
+    # --- SECTION 0: Project Details ---
+    Write-Host "--- SECTION 0: Project Details ---" -ForegroundColor Yellow
+    while ($true) {
+        Write-Host "Please enter the project name."
+        Write-Host "Guidelines:"
+        Write-Host "  - Length: 3 to 50 characters"
+        Write-Host "  - Allowed characters: letters, numbers, spaces, hyphens (-), underscores (_), dots (.)"
+        Write-Host "  - Avoid special shell/system characters (e.g. /, \, *, ?, <, >, |, $, &)"
+        Write-Host ""
+        $userProjName = Read-Host "Enter project name [Default: $DefaultProjectName]"
+        
+        # Use default if empty
+        if ([string]::IsNullOrWhiteSpace($userProjName)) {
+            $userProjName = $DefaultProjectName
+        }
+        
+        # Validate length
+        if ($userProjName.Length -gt 50) {
+            Write-Warning "Error: Project name is too long ($($userProjName.Length) chars). Max length is 50 characters."
+            Write-Host ""
+            continue
+        }
+        if ($userProjName.Length -lt 3) {
+            Write-Warning "Error: Project name is too short ($($userProjName.Length) chars). Min length is 3 characters."
+            Write-Host ""
+            continue
+        }
+        
+        # Validate regex
+        if ($userProjName -notmatch '^[a-zA-Z0-9 _.-]+$') {
+            Write-Warning "Error: Project name contains forbidden characters."
+            Write-Warning "Allowed: letters, numbers, spaces, dashes (-), underscores (_), and dots (.)"
+            Write-Host ""
+            continue
+        }
+        
+        $ProjectName = $userProjName
+        break
+    }
+    Write-Host "Project name set to: $ProjectName" -ForegroundColor Green
+    Write-Host ""
+
     # --- SECTION 1: Autonomy & Decisions ---
     Write-Host "--- SECTION 1: Autonomy & Decisions ---" -ForegroundColor Yellow
     Write-Host "1.1) Choose AI Autonomy Mode:"

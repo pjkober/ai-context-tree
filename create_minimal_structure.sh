@@ -16,6 +16,17 @@ if [ ! -d "$TEMPLATES_DIR" ]; then
   exit 1
 fi
 
+# Determine default project name based on the target/base directory name
+# Extract base folder name and sanitize it (only keep alphanumeric, spaces, hyphens, underscores, dots)
+DIR_NAME=$(basename "$(cd "$BASE_DIR" && pwd)")
+DEFAULT_PROJECT_NAME=$(echo "$DIR_NAME" | sed 's/[^a-zA-Z0-9 _.-]//g')
+# Limit to 50 characters
+DEFAULT_PROJECT_NAME=${DEFAULT_PROJECT_NAME:0:50}
+# Fallback if empty or invalid
+DEFAULT_PROJECT_NAME=${DEFAULT_PROJECT_NAME:-"my-project"}
+PROJECT_NAME="$DEFAULT_PROJECT_NAME"
+
+
 
 # Helper to create a directory if it does not exist
 mkdir_if_not_exists() {
@@ -39,8 +50,14 @@ copy_template_file() {
 
   if [ ! -f "$dest_file" ]; then
     if [ -f "$src_file" ]; then
-      cp "$src_file" "$dest_file"
-      echo "Copied template to: $dest_file"
+      if [ "$rel_path" = "README.md" ] || [ "$rel_path" = "ai/context/project.md" ]; then
+        # Replace '# Project Name' with '# $PROJECT_NAME'
+        sed "s/# Project Name/# $PROJECT_NAME/g" "$src_file" > "$dest_file"
+        echo "Generated custom $rel_path for project: $PROJECT_NAME"
+      else
+        cp "$src_file" "$dest_file"
+        echo "Copied template to: $dest_file"
+      fi
     else
       echo "Warning: Template source file missing: $src_file"
     fi
@@ -48,6 +65,7 @@ copy_template_file() {
     echo "File already exists, skipping: $dest_file"
   fi
 }
+
 
 
 # Default values for AI-First rules configuration
@@ -99,6 +117,46 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "============================================="
   echo ""
   
+  # --- SECTION 0: Project Details ---
+  echo "--- SECTION 0: Project Details ---"
+  while true; do
+    echo "Please enter the project name."
+    echo "Guidelines:"
+    echo "  - Length: 3 to 50 characters"
+    echo "  - Allowed characters: letters, numbers, spaces, hyphens (-), underscores (_), dots (.)"
+    echo "  - Avoid special shell/system characters (e.g. /, \, *, ?, <, >, |, $, &)"
+    echo ""
+    read -p "Enter project name [Default: $DEFAULT_PROJECT_NAME]: " user_proj_name
+    
+    # Use default if empty
+    user_proj_name=${user_proj_name:-$DEFAULT_PROJECT_NAME}
+    
+    # Validate length
+    if [ ${#user_proj_name} -gt 50 ]; then
+      echo "Error: Project name is too long (${#user_proj_name} chars). Max length is 50 characters."
+      echo ""
+      continue
+    fi
+    if [ ${#user_proj_name} -lt 3 ]; then
+      echo "Error: Project name is too short (${#user_proj_name} chars). Min length is 3 characters."
+      echo ""
+      continue
+    fi
+    
+    # Validate character regex
+    if [[ ! "$user_proj_name" =~ ^[a-zA-Z0-9\ _.-]+$ ]]; then
+      echo "Error: Project name contains forbidden characters."
+      echo "Allowed: letters, numbers, spaces, dashes (-), underscores (_), and dots (.)"
+      echo ""
+      continue
+    fi
+    
+    PROJECT_NAME="$user_proj_name"
+    break
+  done
+  echo "Project name set to: $PROJECT_NAME"
+  echo ""
+
   # --- SECTION 1: Autonomy & Decisions ---
   echo "--- SECTION 1: Autonomy & Decisions ---"
   echo "1.1) Choose AI Autonomy Mode:"
