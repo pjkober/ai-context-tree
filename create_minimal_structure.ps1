@@ -872,6 +872,10 @@ if ($CleanupOption -eq "1") {
     Write-Host "Deleting all templates and setup scripts..."
     if (Test-Path $TemplatesDir -PathType Container) { Remove-Item -Path $TemplatesDir -Recurse -Force | Out-Null }
     if (Test-Path $SiblingScript -PathType Leaf) { Remove-Item -Path $SiblingScript -Force | Out-Null }
+    $ManifestPath = Join-Path $BaseDir "MANIFEST.md"
+    if (Test-Path $ManifestPath -PathType Leaf) {
+        (Get-Content $ManifestPath) | Where-Object { $_ -notmatch 'file-templates/' } | Set-Content $ManifestPath -Encoding utf8
+    }
 } else {
     Write-Host "Keeping all files as-is."
 }

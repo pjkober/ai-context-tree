@@ -935,6 +935,9 @@ case "$CLEANUP_OPTION" in
     echo "Deleting all templates and setup scripts..."
     rm -rf "$TEMPLATES_DIR"
     rm -f "$BASE_DIR/create_minimal_structure.ps1"
+    if [ -f "$BASE_DIR/MANIFEST.md" ]; then
+      grep -v 'file-templates/' "$BASE_DIR/MANIFEST.md" > "$BASE_DIR/MANIFEST.md.tmp" && mv "$BASE_DIR/MANIFEST.md.tmp" "$BASE_DIR/MANIFEST.md"
+    fi
     ;;
   3)
     echo "Keeping all files as-is."
