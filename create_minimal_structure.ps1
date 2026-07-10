@@ -102,6 +102,7 @@ $GenJetbrains = $false
 $GenAider = $false
 $GenTabnine = $false
 $GenCody = $false
+$InitGit = $false
 
 # Check if interactive
 if (-not $NonInteractive) {
@@ -156,10 +157,20 @@ if (-not $NonInteractive) {
     Write-Host "--- SECTION 1: Autonomy & Decisions ---" -ForegroundColor Yellow
     Write-Host "1.1) Choose AI Autonomy Mode:"
     Write-Host "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
+    Write-Host "      - Pros: Safest mode. AI will never make assumptions or execute risky changes."
+    Write-Host "      - Cons: Slowest mode. Requires manual human confirmation for every ambiguous task."
+    Write-Host "      - Consequence: AI will stop and prompt for confirmation on any ambiguity."
     Write-Host "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
+    Write-Host "      - Pros: Fast development. AI uses senior expertise to resolve ambiguity and write code."
+    Write-Host "      - Cons: Riskier. AI might make incorrect assumptions or write unwanted code."
+    Write-Host "      - Consequence: AI will make senior-level design decisions independently."
     Write-Host "  [3] Plan-First (AI writes a plan for approval first)"
+    Write-Host "      - Pros: High control. You review a formal design document before any code is written."
+    Write-Host "      - Cons: Adds an extra review step for all tasks, including minor ones."
+    Write-Host "      - Consequence: AI must write and get approval for an implementation plan first."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $AutonomyModeVal = "- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
     } elseif ($opt -eq "3") {
@@ -169,9 +180,16 @@ if (-not $NonInteractive) {
 
     Write-Host "1.2) Choose Dependency Policy:"
     Write-Host "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
+    Write-Host "      - Pros: Absolute control over external dependencies. Prevents bloat or license issues."
+    Write-Host "      - Cons: Developer must manually approve or install every library."
+    Write-Host "      - Consequence: AI is forbidden from adding packages to package.json/requirements.txt."
     Write-Host "  [2] Proactive (AI can install standard packages if needed)"
+    Write-Host "      - Pros: Seamless development. AI handles package installations on its own."
+    Write-Host "      - Cons: Risk of installing unneeded, heavy, or poorly-licensed libraries."
+    Write-Host "      - Consequence: AI may add standard, safe packages without prompting."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $DependencyPolicyVal = "- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
     }
@@ -179,10 +197,20 @@ if (-not $NonInteractive) {
 
     Write-Host "1.3) Choose AI Architecture Policy:"
     Write-Host "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
+    Write-Host "      - Pros: Protects codebase structure, patterns, and framework decisions."
+    Write-Host "      - Cons: AI cannot perform minor refactoring or structure cleanups independently."
+    Write-Host "      - Consequence: AI cannot change project patterns or folder paths without asking."
     Write-Host "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
-    Write-Host "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
+    Write-Host "      - Pros: Allows AI to refactor small parts of code to improve design patterns."
+    Write-Host "      - Cons: Minor risk of codebase drifting from original developer design."
+    Write-Host "      - Consequence: AI can suggest and run minor refactorings as long as documented."
+    Write-Host "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED)"
+    Write-Host "      - Pros: AI can completely redesign structures and libraries for optimal efficiency."
+    Write-Host "      - Cons: High risk of structure fragmentation and incompatible design patterns."
+    Write-Host "      - Consequence: AI has full control over files, directories, databases, and schemas."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $ArchitecturePolicyVal = "- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
     } elseif ($opt -eq "3") {
@@ -192,10 +220,20 @@ if (-not $NonInteractive) {
 
     Write-Host "1.4) Choose Dependency License Policy:"
     Write-Host "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
+    Write-Host "      - Pros: Safe for proprietary and commercial software development."
+    Write-Host "      - Cons: Restricts the usage of some popular libraries under copyleft."
+    Write-Host "      - Consequence: AI will block any copyleft or viral licenses (like GPL/AGPL)."
     Write-Host "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
+    Write-Host "      - Pros: Access to a wider range of open source packages."
+    Write-Host "      - Cons: Requires caution when statically linking or distributing products."
+    Write-Host "      - Consequence: AI allows LGPL/MPL but still blocks GPL/AGPL."
     Write-Host "  [3] Any License (No license restrictions)"
+    Write-Host "      - Pros: Maximum access to any library on npm/pip/go package registries."
+    Write-Host "      - Cons: High risk of legal violations or open-sourcing proprietary code."
+    Write-Host "      - Consequence: AI will not verify licenses when adding dependencies."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $LicensePolicyVal = "- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
     } elseif ($opt -eq "3") {
@@ -205,10 +243,20 @@ if (-not $NonInteractive) {
 
     Write-Host "1.5) Choose Git Autonomy Mode:"
     Write-Host "  [1] None (AI only modifies files; human commits) [Default]"
+    Write-Host "      - Pros: Maximum control. Every line of code is reviewed before staging."
+    Write-Host "      - Cons: Developer must manually stage, write commit messages, and commit."
+    Write-Host "      - Consequence: AI will leave git actions entirely to the developer."
     Write-Host "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
+    Write-Host "      - Pros: Hands-free version control for rapid iterations."
+    Write-Host "      - Cons: Messy commit history if AI commits broken or half-implemented code."
+    Write-Host "      - Consequence: AI will stage and commit code using Conventional Commits."
     Write-Host "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
+    Write-Host "      - Pros: Completely isolates AI work from main development branch."
+    Write-Host "      - Cons: Requires managing, reviewing, and merging additional git branches."
+    Write-Host "      - Consequence: AI creates a dedicated task branch to commit its changes."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $GitPolicyVal = "- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., `"feat(ui): add button`") for commit messages."
     } elseif ($opt -eq "3") {
@@ -218,9 +266,16 @@ if (-not $NonInteractive) {
 
     Write-Host "1.6) Choose Critical Operations / Safety Policy:"
     Write-Host "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
+    Write-Host "      - Pros: Blocks accidental drops/truncates of databases, force pushes, or deletes."
+    Write-Host "      - Cons: AI will pause and ask even for simple deletions of obsolete files."
+    Write-Host "      - Consequence: AI is forbidden from running destructive CLI commands without asking."
     Write-Host "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
+    Write-Host "      - Pros: Fast cleanups of project history and deprecated components."
+    Write-Host "      - Cons: Risk of executing commands that permanently destroy data."
+    Write-Host "      - Consequence: AI is allowed to delete files or run cleanup commands independently."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $SafetyPolicyVal = "- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
     }
@@ -237,6 +292,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Consequence: AI is allowed to write mock/test credentials to local config files."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $SecretsPolicyVal = "- **Secrets & Security:** You may generate or update local configuration and .env files with test or dummy credentials for local execution, but never commit them to Git."
     }
@@ -253,6 +309,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Consequence: AI reads entire files and directories before making modifications."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $ContextManagementPolicyVal = "- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
     }
@@ -262,9 +319,16 @@ if (-not $NonInteractive) {
     Write-Host "--- SECTION 2: Coding & Refactoring ---" -ForegroundColor Yellow
     Write-Host "2.1) Choose Refactoring Policy:"
     Write-Host "  [1] Strict Scope (AI only touches what's requested) [Default]"
+    Write-Host "      - Pros: Tiny PRs, minimal code churn, low risk of regression."
+    Write-Host "      - Cons: Technical debt and code smells persist in modified files."
+    Write-Host "      - Consequence: AI will modify only the exact lines requested for the task."
     Write-Host "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
+    Write-Host "      - Pros: Continuous code health improvements, fixes types/formatting in passing."
+    Write-Host "      - Cons: Larger diffs, slight risk of regression in surrounding code."
+    Write-Host "      - Consequence: AI will format and clean up adjacent code smells in modified files."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
     }
@@ -281,6 +345,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $LintingPolicyVal = "- **Linting & Formatting:** Do not run formatting or linting commands automatically unless explicitly requested. Focus on functional correctness, adhering to the surrounding code style manually."
     }
@@ -297,6 +362,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Consequence: AI will implement multi-file refactors in a single pass."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TaskManagementPolicyVal = "- **Task Boundaries:** You have flexible scope. If a feature requires modifying several files or modules, implement them in a single stream, but document the full list of files affected in the summary."
     }
@@ -313,6 +379,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Consequence: Good for learning a new stack, but increases costs and latency."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $CommunicationPolicyVal = "- **Communication Style:** Provide detailed, step-by-step explanations of your implementation decisions, design patterns, and potential alternatives. Focus on educational value."
     }
@@ -322,10 +389,20 @@ if (-not $NonInteractive) {
     Write-Host "--- SECTION 3: Testing Strategy ---" -ForegroundColor Yellow
     Write-Host "3.1) Choose Testing Coverage Policy:"
     Write-Host "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
+    Write-Host "      - Pros: Good safety-to-overhead ratio. Focuses tests where they matter most."
+    Write-Host "      - Cons: Helper functions and edge cases might remain untested."
+    Write-Host "      - Consequence: AI will write tests only for critical paths and core logic."
     Write-Host "  [2] None (Skip tests for maximum speed)"
+    Write-Host "      - Pros: Faster implementations, zero testing overhead."
+    Write-Host "      - Cons: High risk of regression and undetected bugs in production."
+    Write-Host "      - Consequence: AI will focus entirely on code and skip writing any tests."
     Write-Host "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
+    Write-Host "      - Pros: Maximum stability, code correctness verified automatically."
+    Write-Host "      - Cons: Much slower implementation times due to writing extensive test cases."
+    Write-Host "      - Consequence: AI will write thorough unit/integration tests for all paths."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestingCoverageVal = "- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
     } elseif ($opt -eq "3") {
@@ -335,9 +412,16 @@ if (-not $NonInteractive) {
 
     Write-Host "3.2) Choose Testing Approach:"
     Write-Host "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
+    Write-Host "      - Pros: Easier to write tests once code structure is established."
+    Write-Host "      - Cons: Tests might be biased by the implementation rather than requirements."
+    Write-Host "      - Consequence: AI writes code first, then writes tests to verify it."
     Write-Host "  [2] TDD / Test-First (Write tests before implementation)"
+    Write-Host "      - Pros: Ensures clean API design, forces implementation of requirements."
+    Write-Host "      - Cons: Higher startup overhead; requires mock setups before code is written."
+    Write-Host "      - Consequence: AI writes failing tests first, then implements code to pass."
     $opt = Read-Host "Select option [1-2] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestingApproachVal = "- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
     }
@@ -345,10 +429,20 @@ if (-not $NonInteractive) {
 
     Write-Host "3.3) Choose Test Execution Scope:"
     Write-Host "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
+    Write-Host "      - Pros: Fast test runs, local verification is quick."
+    Write-Host "      - Cons: Misses regressions in cross-module interactions."
+    Write-Host "      - Consequence: AI runs only single test files related to modified code."
     Write-Host "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
+    Write-Host "      - Pros: Catches integration issues within the module or domain."
+    Write-Host "      - Cons: Slower test feedback loop."
+    Write-Host "      - Consequence: AI runs tests for the modified module/domain."
     Write-Host "  [3] Full Suite (Run the entire test suite on every change)"
+    Write-Host "      - Pros: 100% certainty that no regressions exist anywhere in the codebase."
+    Write-Host "      - Cons: Very slow developer loop if the test suite is large."
+    Write-Host "      - Consequence: AI runs the entire repository test suite on every change."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestExecutionScopeVal = "- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
     } elseif ($opt -eq "3") {
@@ -360,12 +454,28 @@ if (-not $NonInteractive) {
     Write-Host "--- SECTION 4: Tech Stack ---" -ForegroundColor Yellow
     Write-Host "4.1) Select Tech Stack / Framework:"
     Write-Host "  [1] Node.js / TypeScript"
+    Write-Host "      - Pros: Strict types, modern async/await patterns, standard backend runtime."
+    Write-Host "      - Cons: Requires package.json, npm/yarn setup, and tsconfig compilation."
+    Write-Host "      - Consequence: Presets rules for strict TypeScript types and async patterns."
     Write-Host "  [2] Python"
+    Write-Host "      - Pros: Clean, highly readable, standard for scripting, tooling, and data."
+    Write-Host "      - Cons: Environment/dependency management can sometimes conflict."
+    Write-Host "      - Consequence: Presets rules for PEP 8 compliance and type hints."
     Write-Host "  [3] Go"
+    Write-Host "      - Pros: High performance, simple language design, fast compilation."
+    Write-Host "      - Cons: Strict conventions, verbose error handling."
+    Write-Host "      - Consequence: Presets rules for standard Go patterns and error handling."
     Write-Host "  [4] React / Next.js"
-    Write-Host "  [5] Decide later / I'll customize it later [Default]"
+    Write-Host "      - Pros: Structured framework conventions for full-stack web development."
+    Write-Host "      - Cons: High build complexity, client vs. server component management."
+    Write-Host "      - Consequence: Presets rules for React hooks, functional components, and routing."
+    Write-Host "  [5] Decide later / General [Default]"
+    Write-Host "      - Pros: Universal layout. Adapts to any language or framework automatically."
+    Write-Host "      - Cons: No language-specific coding rules generated at bootstrap."
+    Write-Host "      - Consequence: Default general coding rules are applied."
     $opt = Read-Host "Select option [1-5] [Default: 5]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "5" }
+    Write-Host "Selected: $opt"
     switch ($opt) {
         "1" {
             $TechStackVal = "- Stack: Node.js / TypeScript.`n- Use strict TypeScript configurations.`n- Prefer async/await over raw Promises.`n- Avoid using ``any`` type annotations; define interfaces or types."
@@ -386,12 +496,20 @@ if (-not $NonInteractive) {
     Write-Host "--- SECTION 5: AI IDE Configuration ---" -ForegroundColor Yellow
     Write-Host "5.1) Choose which AI IDE configuration files (thin pointers) to generate:"
     Write-Host "  [1] Standard (only AGENTS.md) [Default]"
-    Write-Host "      (Recommended for tools with native AGENTS.md support: Antigravity, OpenCode, Gemini CLI, etc.)"
-    Write-Host "  [2] Custom (Choose individually)"
-    Write-Host "      (Generate pointers for: Claude Code, Cursor, Cline, Windsurf, Copilot, JetBrains AI, Aider, Tabnine, Cody)"
+    Write-Host "      - Pros: Zero root directory clutter, works with all modern AI agents natively."
+    Write-Host "      - Cons: Requires AI agents to discover rules from the root file without custom pointers."
+    Write-Host "      - Consequence: Only the central AGENTS.md is created."
+    Write-Host "  [2] Custom (Generates AGENTS.md plus choice of additional AI IDE pointers)"
+    Write-Host "      - Pros: Tailored configuration files created only for the IDEs you actually use."
+    Write-Host "      - Cons: Requires answering individual prompts for each supported IDE."
+    Write-Host "      - Consequence: AGENTS.md is generated, and you choose which extra pointer files to add."
     Write-Host "  [3] All (Generate files for all 10 popular AI IDEs)"
+    Write-Host "      - Pros: Complete workspace readiness. Any team developer's IDE will pick up the rules."
+    Write-Host "      - Cons: Creates minor clutter by adding 10 pointer files in the root."
+    Write-Host "      - Consequence: Pointers for Claude Code, Cursor, Cline, Windsurf, Copilot, etc., are all created."
     $opt = Read-Host "Select option [1-3] [Default: 1]"
     if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
 
     if ($opt -eq "3") {
         $GenClaude = $true
@@ -405,31 +523,95 @@ if (-not $NonInteractive) {
         $GenCody = $true
     } elseif ($opt -eq "2") {
         $choice = Read-Host "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenClaude = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenClaude = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenCursor = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenCursor = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenCline = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenCline = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenWindsurf = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenWindsurf = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenCopilot = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenCopilot = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenJetbrains = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenJetbrains = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenAider = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenAider = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenTabnine = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenTabnine = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
 
         $choice = Read-Host "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") { $GenCody = $true }
+        if ($choice -match "^[yY](es)?$") {
+            $GenCody = $true
+            Write-Host "Selected: Yes"
+        } else {
+            Write-Host "Selected: No"
+        }
+    }
+    Write-Host ""
+
+    # --- SECTION 6: Git Version Control ---
+    Write-Host "--- SECTION 6: Git Version Control ---" -ForegroundColor Yellow
+    Write-Host "6.1) Do you want to initialize Git repository tracking?"
+    Write-Host "  [1] No (Skip Git tracking) [Default]"
+    Write-Host "      - Pros: Quick setup, no Git repository directory created."
+    Write-Host "      - Cons: No version control or change tracking immediately."
+    Write-Host "      - Consequence: Git repository will not be initialized."
+    Write-Host "  [2] Yes, initialize Git and track changes from the start"
+    Write-Host "      - Pros: Instant tracking, easy to review changes, standard professional setup."
+    Write-Host "      - Cons: Adds the '.git' directory to the workspace root."
+    Write-Host "      - Consequence: Initializes Git repo, copies 'knowledge/git.md' template, and stages initial files."
+    $opt = Read-Host "Select option [1-2] [Default: 1]"
+    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    Write-Host "Selected: $opt"
+    if ($opt -eq "2") {
+        $InitGit = $true
     }
     Write-Host ""
 }
@@ -485,6 +667,8 @@ function Generate-RulesFile {
 New-DirectoryIfNotExists (Join-Path $BaseDir "docs")
 New-DirectoryIfNotExists (Join-Path $BaseDir "src")
 New-DirectoryIfNotExists (Join-Path $BaseDir "tests")
+New-DirectoryIfNotExists (Join-Path $BaseDir "tmp")
+New-Item -ItemType File -Path (Join-Path $BaseDir "tmp/.gitkeep") -Force | Out-Null
 
 # Copy minimal files from templates
 Copy-TemplateFile "AGENTS.md"
@@ -598,54 +782,95 @@ Always read AGENTS.md in the root directory for project-specific rules, tech sta
 
 
 
+if ($InitGit) {
+    New-DirectoryIfNotExists (Join-Path $BaseDir "knowledge")
+    Copy-TemplateFile "knowledge/git.md"
+}
+
 Write-Host "Minimal project structure created successfully."
 
 # --- Post-Setup Cleanup ---
+$CleanupOption = "1"
+
 if (-not $NonInteractive) {
     Write-Host ""
     Write-Host "=============================================" -ForegroundColor Cyan
     Write-Host "   Post-Setup Cleanup" -ForegroundColor Cyan
     Write-Host "=============================================" -ForegroundColor Cyan
-    Write-Host "The initialization script and 'file-templates/' are no longer needed."
-    Write-Host "What would you like to do with them?"
-    Write-Host "  [1] Move to 'tmp/' directory (recommended, keeps root clean) [Default]"
-    Write-Host "  [2] Delete permanently"
-    Write-Host "  [3] Keep them in the root directory"
-    $opt = Read-Host "Select option [1-3]"
+    Write-Host "The setup scripts are no longer needed and will be removed."
+    Write-Host "The 'file-templates/' directory contains some one-time templates that have already"
+    Write-Host "been initialized, as well as optional templates for future project growth."
+    Write-Host ""
+    Write-Host "What would you like to do?"
+    Write-Host "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'file-templates/' [Default]"
+    Write-Host "      - Pros: Preserves incremental templates for future use while keeping them clean."
+    Write-Host "      - Cons: Keeps the 'file-templates/' folder in your project root."
+    Write-Host "  [2] Delete the entire 'file-templates/' directory permanently"
+    Write-Host "      - Pros: Absolute minimal project files in root."
+    Write-Host "      - Cons: You lose the templates for future directory scaffolding."
+    Write-Host "  [3] Keep everything as-is (do not delete or cleanup anything)"
+    Write-Host "      - Pros: Leaves all setup files and templates completely untouched."
+    Write-Host "      - Cons: Clutters the root directory with unused setup scripts."
+    $opt = Read-Host "Select option [1-3] [Default: 1]"
+    if (-not [string]::IsNullOrWhiteSpace($opt)) { $CleanupOption = $opt }
+    Write-Host "Selected: $CleanupOption"
+} else {
+    Write-Host "Non-interactive run: Cleaning up setup scripts and one-time templates..."
+    $CleanupOption = "1"
+}
+
+# Define clean-up paths
+$SiblingScript = Join-Path $BaseDir "create_minimal_structure.sh"
+
+if ($CleanupOption -eq "1") {
+    Write-Host "Cleaning up one-time templates and setup scripts..."
+    # Remove one-time template files
+    $OneTimeFiles = @("README.md", "AGENTS.md", "MANIFEST.md", ".gitignore")
+    foreach ($File in $OneTimeFiles) {
+        $FilePath = Join-Path $TemplatesDir $File
+        if (Test-Path $FilePath -PathType Leaf) { Remove-Item -Path $FilePath -Force | Out-Null }
+    }
+    # Remove one-time template folder
+    $OneTimeFolder = Join-Path $TemplatesDir "ai"
+    if (Test-Path $OneTimeFolder -PathType Container) { Remove-Item -Path $OneTimeFolder -Recurse -Force | Out-Null }
     
-    if ($opt -eq "2") {
-        Write-Host "Deleting setup script and templates..."
-        if (Test-Path $TemplatesDir -PathType Container) {
-            Remove-Item -Path $TemplatesDir -Recurse -Force | Out-Null
-        }
-        try {
-            Remove-Item -Path $MyInvocation.MyCommand.Definition -Force -ErrorAction Stop | Out-Null
-            Write-Host "Cleanup complete."
-        } catch {
-            Write-Warning "Could not delete the running script automatically due to file lock. Please delete it manually."
-        }
-    } elseif ($opt -eq "3") {
-        Write-Host "Keeping setup script and templates."
-    } else {
-        Write-Host "Moving setup script and templates to 'tmp/'..."
-        New-DirectoryIfNotExists (Join-Path $BaseDir "tmp")
-        if (Test-Path $TemplatesDir -PathType Container) {
-            $DestTemplates = Join-Path $BaseDir "tmp/file-templates"
-            if (Test-Path $DestTemplates) {
-                Remove-Item -Path $DestTemplates -Recurse -Force | Out-Null
-            }
-            Move-Item -Path $TemplatesDir -Destination (Join-Path $BaseDir "tmp") -Force | Out-Null
-        }
-        try {
-            $DestScript = Join-Path $BaseDir "tmp/$(Split-Path -Leaf $MyInvocation.MyCommand.Definition)"
-            if (Test-Path $DestScript) {
-                Remove-Item -Path $DestScript -Force | Out-Null
-            }
-            Move-Item -Path $MyInvocation.MyCommand.Definition -Destination (Join-Path $BaseDir "tmp") -Force -ErrorAction Stop | Out-Null
-            Write-Host "Cleanup complete. Files moved to 'tmp/'."
-        } catch {
-            Write-Warning "Could not move the running script automatically due to file lock. The templates were moved, but please move this script to 'tmp/' manually."
-        }
+    # Remove sibling setup script
+    if (Test-Path $SiblingScript -PathType Leaf) { Remove-Item -Path $SiblingScript -Force | Out-Null }
+} elseif ($CleanupOption -eq "2") {
+    Write-Host "Deleting all templates and setup scripts..."
+    if (Test-Path $TemplatesDir -PathType Container) { Remove-Item -Path $TemplatesDir -Recurse -Force | Out-Null }
+    if (Test-Path $SiblingScript -PathType Leaf) { Remove-Item -Path $SiblingScript -Force | Out-Null }
+} else {
+    Write-Host "Keeping all files as-is."
+}
+
+if ($InitGit) {
+    Write-Host "Initializing Git repository..."
+    git init
+    Write-Host "Staging files in Git..."
+    git add .
+    # Unstage the setup scripts from Git tracking
+    git reset -- $MyInvocation.MyCommand.Definition $SiblingScript 2>$null
+    Write-Host "Git repository initialized and files staged successfully."
+}
+
+# Print final status message
+Write-Host ""
+Write-Host "=============================================================" -ForegroundColor Green
+Write-Host "   Struktura dla projektu: $ProjectName" -ForegroundColor Green
+Write-Host "   do efektywnej współpracy z AI jest gotowa!" -ForegroundColor Green
+Write-Host ""
+Write-Host "   Informacje o Twoim projekcie znajdziesz w README.md" -ForegroundColor Green
+Write-Host "=============================================================" -ForegroundColor Green
+Write-Host ""
+
+# Self delete at the very end if cleanup was requested
+if ($CleanupOption -eq "1" -or $CleanupOption -eq "2") {
+    try {
+        Remove-Item -Path $MyInvocation.MyCommand.Definition -Force -ErrorAction Stop | Out-Null
+        Write-Host "Cleanup complete."
+    } catch {
+        Write-Warning "Could not delete the running script automatically due to file lock. Please delete it manually."
     }
 }
 

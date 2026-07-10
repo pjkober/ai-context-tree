@@ -74,11 +74,15 @@ project/
 │   └── runs/           # Reusable execution scripts
 ├── docs/               # System and technical documentation
 ├── src/                # Application source code
-└── tests/              # Test suites
+├── tests/              # Test suites
+└── tmp/                # Temporary directory (excluded from git/CI)
 ```
 
-### 2. Full Structure (Mature/AI-Native Project)
-As the project grows, new directories are created based on the definitions in the `ai/context/structure-map.md` (see [ai-agents structure guide](docs/structure/ai-agents.md)):
+### 2. Target Structure Example (Mature/AI-Native Project)
+
+As the project grows, new directories and files are created dynamically to match your requirements. The repository structure is designed to be organic and should expand strictly on demand, which is why there is no single "ideal" complete structure for every project. 
+
+If you follow the guidelines in [ai-agents structure guide](docs/structure/ai-agents.md) and `ai/context/structure-map.md`, your mature project structure might look like this:
 
 ```txt
 project/

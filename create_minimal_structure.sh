@@ -97,6 +97,7 @@ GEN_JETBRAINS=false
 GEN_AIDER=false
 GEN_TABNINE=false
 GEN_CODY=false
+INIT_GIT=false
 
 
 
@@ -161,10 +162,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "--- SECTION 1: Autonomy & Decisions ---"
   echo "1.1) Choose AI Autonomy Mode:"
   echo "  [1] Consultative / Ask-First (AI stops and asks if unsure) [Default]"
+  echo "      - Pros: Safest mode. AI will never make assumptions or execute risky changes."
+  echo "      - Cons: Slowest mode. Requires manual human confirmation for every ambiguous task."
+  echo "      - Consequence: AI will stop and prompt for confirmation on any ambiguity."
   echo "  [2] Autonomous / Proactive (AI decides and implements, explains later)"
+  echo "      - Pros: Fast development. AI uses senior expertise to resolve ambiguity and write code."
+  echo "      - Cons: Riskier. AI might make incorrect assumptions or write unwanted code."
+  echo "      - Consequence: AI will make senior-level design decisions independently."
   echo "  [3] Plan-First (AI writes a plan for approval first)"
+  echo "      - Pros: High control. You review a formal design document before any code is written."
+  echo "      - Cons: Adds an extra review step for all tasks, including minor ones."
+  echo "      - Consequence: AI must write and get approval for an implementation plan first."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       AUTONOMY_MODE_VAL="- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
@@ -177,9 +188,16 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "1.2) Choose Dependency Policy:"
   echo "  [1] Strict / Ask-First (AI must ask before installing packages) [Default]"
+  echo "      - Pros: Absolute control over external dependencies. Prevents bloat or license issues."
+  echo "      - Cons: Developer must manually approve or install every library."
+  echo "      - Consequence: AI is forbidden from adding packages to package.json/requirements.txt."
   echo "  [2] Proactive (AI can install standard packages if needed)"
+  echo "      - Pros: Seamless development. AI handles package installations on its own."
+  echo "      - Cons: Risk of installing unneeded, heavy, or poorly-licensed libraries."
+  echo "      - Consequence: AI may add standard, safe packages without prompting."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       DEPENDENCY_POLICY_VAL="- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
@@ -189,10 +207,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "1.3) Choose AI Architecture Policy:"
   echo "  [1] Strict / Ask-First (AI cannot change patterns/directories/database without approval) [Default]"
+  echo "      - Pros: Protects codebase structure, patterns, and framework decisions."
+  echo "      - Cons: AI cannot perform minor refactoring or structure cleanups independently."
+  echo "      - Consequence: AI cannot change project patterns or folder paths without asking."
   echo "  [2] Flexible (AI can propose and implement minor refactors, but must document)"
-  echo "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED) (AI can fully change architecture and patterns without asking)"
+  echo "      - Pros: Allows AI to refactor small parts of code to improve design patterns."
+  echo "      - Cons: Minor risk of codebase drifting from original developer design."
+  echo "      - Consequence: AI can suggest and run minor refactorings as long as documented."
+  echo "  [3] Full Autonomy / Change Architecture (NOT RECOMMENDED)"
+  echo "      - Pros: AI can completely redesign structures and libraries for optimal efficiency."
+  echo "      - Cons: High risk of structure fragmentation and incompatible design patterns."
+  echo "      - Consequence: AI has full control over files, directories, databases, and schemas."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       ARCHITECTURE_POLICY_VAL="- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
@@ -205,10 +233,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "1.4) Choose Dependency License Policy:"
   echo "  [1] Permissive Only (MIT, Apache 2.0, BSD, Public Domain) [Default]"
+  echo "      - Pros: Safe for proprietary and commercial software development."
+  echo "      - Cons: Restricts the usage of some popular libraries under copyleft."
+  echo "      - Consequence: AI will block any copyleft or viral licenses (like GPL/AGPL)."
   echo "  [2] Copyleft Tolerant (Permissive + LGPL, MPL)"
+  echo "      - Pros: Access to a wider range of open source packages."
+  echo "      - Cons: Requires caution when statically linking or distributing products."
+  echo "      - Consequence: AI allows LGPL/MPL but still blocks GPL/AGPL."
   echo "  [3] Any License (No license restrictions)"
+  echo "      - Pros: Maximum access to any library on npm/pip/go package registries."
+  echo "      - Cons: High risk of legal violations or open-sourcing proprietary code."
+  echo "      - Consequence: AI will not verify licenses when adding dependencies."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       LICENSE_POLICY_VAL="- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
@@ -221,10 +259,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "1.5) Choose Git Autonomy Mode:"
   echo "  [1] None (AI only modifies files; human commits) [Default]"
+  echo "      - Pros: Maximum control. Every line of code is reviewed before staging."
+  echo "      - Cons: Developer must manually stage, write commit messages, and commit."
+  echo "      - Consequence: AI will leave git actions entirely to the developer."
   echo "  [2] Commit-First (AI commits changes on current branch using Conventional Commits)"
+  echo "      - Pros: Hands-free version control for rapid iterations."
+  echo "      - Cons: Messy commit history if AI commits broken or half-implemented code."
+  echo "      - Consequence: AI will stage and commit code using Conventional Commits."
   echo "  [3] Branch-First (AI creates dedicated feature branch and commits there)"
+  echo "      - Pros: Completely isolates AI work from main development branch."
+  echo "      - Cons: Requires managing, reviewing, and merging additional git branches."
+  echo "      - Consequence: AI creates a dedicated task branch to commit its changes."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       GIT_POLICY_VAL="- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., \"feat(ui): add button\") for commit messages."
@@ -237,9 +285,16 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "1.6) Choose Critical Operations / Safety Policy:"
   echo "  [1] Strict Protection (AI forbidden from running destructive commands like DROP/DELETE/force push without asking) [Default]"
+  echo "      - Pros: Blocks accidental drops/truncates of databases, force pushes, or deletes."
+  echo "      - Cons: AI will pause and ask even for simple deletions of obsolete files."
+  echo "      - Consequence: AI is forbidden from running destructive CLI commands without asking."
   echo "  [2] Collaborative / Loose (AI can run destructive cleanup if task calls for it)"
+  echo "      - Pros: Fast cleanups of project history and deprecated components."
+  echo "      - Cons: Risk of executing commands that permanently destroy data."
+  echo "      - Consequence: AI is allowed to delete files or run cleanup commands independently."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       SAFETY_POLICY_VAL="- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
@@ -258,6 +313,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Consequence: AI is allowed to write mock/test credentials to local config files."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       SECRETS_POLICY_VAL="- **Secrets & Security:** You may generate or update local configuration and .env files with test or dummy credentials for local execution, but never commit them to Git."
@@ -276,6 +332,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Consequence: AI reads entire files and directories before making modifications."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       CONTEXT_MANAGEMENT_POLICY_VAL="- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
@@ -287,9 +344,16 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "--- SECTION 2: Coding & Refactoring ---"
   echo "2.1) Choose Refactoring Policy:"
   echo "  [1] Strict Scope (AI only touches what's requested) [Default]"
+  echo "      - Pros: Tiny PRs, minimal code churn, low risk of regression."
+  echo "      - Cons: Technical debt and code smells persist in modified files."
+  echo "      - Consequence: AI will modify only the exact lines requested for the task."
   echo "  [2] Boy Scout Rule (AI cleans up minor smells in edited files)"
+  echo "      - Pros: Continuous code health improvements, fixes types/formatting in passing."
+  echo "      - Cons: Larger diffs, slight risk of regression in surrounding code."
+  echo "      - Consequence: AI will format and clean up adjacent code smells in modified files."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       REFACTORING_POLICY_VAL="- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
@@ -308,6 +372,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       LINTING_POLICY_VAL="- **Linting & Formatting:** Do not run formatting or linting commands automatically unless explicitly requested. Focus on functional correctness, adhering to the surrounding code style manually."
@@ -326,6 +391,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Consequence: AI will implement multi-file refactors in a single pass."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       TASK_MANAGEMENT_POLICY_VAL="- **Task Boundaries:** You have flexible scope. If a feature requires modifying several files or modules, implement them in a single stream, but document the full list of files affected in the summary."
@@ -344,6 +410,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Consequence: Good for learning a new stack, but increases costs and latency."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       COMMUNICATION_POLICY_VAL="- **Communication Style:** Provide detailed, step-by-step explanations of your implementation decisions, design patterns, and potential alternatives. Focus on educational value."
@@ -355,10 +422,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "--- SECTION 3: Testing Strategy ---"
   echo "3.1) Choose Testing Coverage Policy:"
   echo "  [1] Critical Path only (Write tests only for key logic/critical paths) [Default]"
+  echo "      - Pros: Good safety-to-overhead ratio. Focuses tests where they matter most."
+  echo "      - Cons: Helper functions and edge cases might remain untested."
+  echo "      - Consequence: AI will write tests only for critical paths and core logic."
   echo "  [2] None (Skip tests for maximum speed)"
+  echo "      - Pros: Faster implementations, zero testing overhead."
+  echo "      - Cons: High risk of regression and undetected bugs in production."
+  echo "      - Consequence: AI will focus entirely on code and skip writing any tests."
   echo "  [3] Full Coverage (Task is complete only when fully covered and tests pass)"
+  echo "      - Pros: Maximum stability, code correctness verified automatically."
+  echo "      - Cons: Much slower implementation times due to writing extensive test cases."
+  echo "      - Consequence: AI will write thorough unit/integration tests for all paths."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       TESTING_COVERAGE_VAL="- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
@@ -371,9 +448,16 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "3.2) Choose Testing Approach:"
   echo "  [1] Write-After / Post-Implementation (Write tests after implementation) [Default]"
+  echo "      - Pros: Easier to write tests once code structure is established."
+  echo "      - Cons: Tests might be biased by the implementation rather than requirements."
+  echo "      - Consequence: AI writes code first, then writes tests to verify it."
   echo "  [2] TDD / Test-First (Write tests before implementation)"
+  echo "      - Pros: Ensures clean API design, forces implementation of requirements."
+  echo "      - Cons: Higher startup overhead; requires mock setups before code is written."
+  echo "      - Consequence: AI writes failing tests first, then implements code to pass."
   read -p "Select option [1-2] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       TESTING_APPROACH_VAL="- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
@@ -383,10 +467,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   echo "3.3) Choose Test Execution Scope:"
   echo "  [1] Unit Tests only (Run single unit tests related to changed code) [Default]"
+  echo "      - Pros: Fast test runs, local verification is quick."
+  echo "      - Cons: Misses regressions in cross-module interactions."
+  echo "      - Consequence: AI runs only single test files related to modified code."
   echo "  [2] Module / Integration Tests (Run unit and integration tests for the module)"
+  echo "      - Pros: Catches integration issues within the module or domain."
+  echo "      - Cons: Slower test feedback loop."
+  echo "      - Consequence: AI runs tests for the modified module/domain."
   echo "  [3] Full Suite (Run the entire test suite on every change)"
+  echo "      - Pros: 100% certainty that no regressions exist anywhere in the codebase."
+  echo "      - Cons: Very slow developer loop if the test suite is large."
+  echo "      - Consequence: AI runs the entire repository test suite on every change."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     2)
       TEST_EXECUTION_SCOPE_VAL="- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
@@ -401,12 +495,28 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "--- SECTION 4: Tech Stack ---"
   echo "4.1) Select Tech Stack / Framework:"
   echo "  [1] Node.js / TypeScript"
+  echo "      - Pros: Strict types, modern async/await patterns, standard backend runtime."
+  echo "      - Cons: Requires package.json, npm/yarn setup, and tsconfig compilation."
+  echo "      - Consequence: Presets rules for strict TypeScript types and async patterns."
   echo "  [2] Python"
+  echo "      - Pros: Clean, highly readable, standard for scripting, tooling, and data."
+  echo "      - Cons: Environment/dependency management can sometimes conflict."
+  echo "      - Consequence: Presets rules for PEP 8 compliance and type hints."
   echo "  [3] Go"
+  echo "      - Pros: High performance, simple language design, fast compilation."
+  echo "      - Cons: Strict conventions, verbose error handling."
+  echo "      - Consequence: Presets rules for standard Go patterns and error handling."
   echo "  [4] React / Next.js"
-  echo "  [5] Decide later / I'll customize it later [Default]"
+  echo "      - Pros: Structured framework conventions for full-stack web development."
+  echo "      - Cons: High build complexity, client vs. server component management."
+  echo "      - Consequence: Presets rules for React hooks, functional components, and routing."
+  echo "  [5] Decide later / General [Default]"
+  echo "      - Pros: Universal layout. Adapts to any language or framework automatically."
+  echo "      - Cons: No language-specific coding rules generated at bootstrap."
+  echo "      - Consequence: Default general coding rules are applied."
   read -p "Select option [1-5] [Default: 5]: " opt
   opt=${opt:-5}
+  echo "Selected: $opt"
   case "$opt" in
     1)
       TECH_STACK_VAL="- Stack: Node.js / TypeScript.
@@ -439,12 +549,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "--- SECTION 5: AI IDE Configuration ---"
   echo "5.1) Choose which AI IDE configuration files (thin pointers) to generate:"
   echo "  [1] Standard (only AGENTS.md) [Default]"
-  echo "      (Recommended for tools with native AGENTS.md support: Antigravity, OpenCode, Gemini CLI, etc.)"
-  echo "  [2] Custom (Choose individually)"
-  echo "      (Generate pointers for: Claude Code, Cursor, Cline, Windsurf, Copilot, JetBrains AI, Aider, Tabnine, Cody)"
+  echo "      - Pros: Zero root directory clutter, works with all modern AI agents natively."
+  echo "      - Cons: Requires AI agents to discover rules from the root file without custom pointers."
+  echo "      - Consequence: Only the central AGENTS.md is created."
+  echo "  [2] Custom (Generates AGENTS.md plus choice of additional AI IDE pointers)"
+  echo "      - Pros: Tailored configuration files created only for the IDEs you actually use."
+  echo "      - Cons: Requires answering individual prompts for each supported IDE."
+  echo "      - Consequence: AGENTS.md is generated, and you choose which extra pointer files to add."
   echo "  [3] All (Generate files for all 10 popular AI IDEs)"
+  echo "      - Pros: Complete workspace readiness. Any team developer's IDE will pick up the rules."
+  echo "      - Cons: Creates minor clutter by adding 10 pointer files in the root."
+  echo "      - Consequence: Pointers for Claude Code, Cursor, Cline, Windsurf, Copilot, etc., are all created."
   read -p "Select option [1-3] [Default: 1]: " opt
   opt=${opt:-1}
+  echo "Selected: $opt"
   case "$opt" in
     1)
       # Standard (only AGENTS.md) - already initialized to false
@@ -463,41 +581,105 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
     2)
       read -p "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CLAUDE=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_CLAUDE=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CURSOR=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_CURSOR=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CLINE=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_CLINE=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_WINDSURF=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_WINDSURF=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_COPILOT=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_COPILOT=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_JETBRAINS=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_JETBRAINS=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_AIDER=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_AIDER=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_TABNINE=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_TABNINE=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
 
       read -p "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]: " choice
       choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then GEN_CODY=true; fi
+      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+        GEN_CODY=true
+        echo "Selected: Yes"
+      else
+        echo "Selected: No"
+      fi
       ;;
   esac
+  echo ""
+
+  # --- SECTION 6: Git Version Control ---
+  echo "--- SECTION 6: Git Version Control ---"
+  echo "6.1) Do you want to initialize Git repository tracking?"
+  echo "  [1] No (Skip Git tracking) [Default]"
+  echo "      - Pros: Quick setup, no Git repository directory created."
+  echo "      - Cons: No version control or change tracking immediately."
+  echo "      - Consequence: Git repository will not be initialized."
+  echo "  [2] Yes, initialize Git and track changes from the start"
+  echo "      - Pros: Instant tracking, easy to review changes, standard professional setup."
+  echo "      - Cons: Adds the '.git' directory to the workspace root."
+  echo "      - Consequence: Initializes Git repo, copies 'knowledge/git.md' template, and stages initial files."
+  read -p "Select option [1-2] [Default: 1]: " opt
+  opt=${opt:-1}
+  echo "Selected: $opt"
+  if [ "$opt" = "2" ]; then
+    INIT_GIT=true
+  fi
   echo ""
 fi
 
@@ -568,6 +750,8 @@ generate_rules_file() {
 mkdir_if_not_exists "$BASE_DIR/docs"
 mkdir_if_not_exists "$BASE_DIR/src"
 mkdir_if_not_exists "$BASE_DIR/tests"
+mkdir_if_not_exists "$BASE_DIR/tmp"
+touch "$BASE_DIR/tmp/.gitkeep"
 
 # Copy minimal files from templates
 copy_template_file "AGENTS.md"
@@ -666,37 +850,87 @@ fi
 
 
 
+if [ "$INIT_GIT" = true ]; then
+  mkdir_if_not_exists "$BASE_DIR/knowledge"
+  copy_template_file "knowledge/git.md"
+fi
+
 echo "Minimal project structure created successfully."
 
 # --- Post-Setup Cleanup ---
+CLEANUP_OPTION=1
+
 if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo ""
   echo "============================================="
   echo "   Post-Setup Cleanup"
   echo "============================================="
-  echo "The initialization script and 'file-templates/' are no longer needed."
-  echo "What would you like to do with them?"
-  echo "  [1] Move to 'tmp/' directory (recommended, keeps root clean) [Default]"
-  echo "  [2] Delete permanently"
-  echo "  [3] Keep them in the root directory"
-  read -p "Select option [1-3]: " opt
-  case "$opt" in
-    2)
-      echo "Deleting setup script and templates..."
-      rm -rf "$TEMPLATES_DIR"
-      exec rm -f -- "$0"
-      ;;
-    3)
-      echo "Keeping setup script and templates."
-      ;;
-    *)
-      echo "Moving setup script and templates to 'tmp/'..."
-      mkdir_if_not_exists "$BASE_DIR/tmp"
-      if [ -d "$TEMPLATES_DIR" ]; then
-        mv "$TEMPLATES_DIR" "$BASE_DIR/tmp/"
-      fi
-      exec mv -- "$0" "$BASE_DIR/tmp/"
-      ;;
-  esac
+  echo "The setup scripts are no longer needed and will be removed."
+  echo "The 'file-templates/' directory contains some one-time templates that have already"
+  echo "been initialized, as well as optional templates for future project growth."
+  echo ""
+  echo "What would you like to do?"
+  echo "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'file-templates/' [Default]"
+  echo "      - Pros: Preserves incremental templates for future use while keeping them clean."
+  echo "      - Cons: Keeps the 'file-templates/' folder in your project root."
+  echo "  [2] Delete the entire 'file-templates/' directory permanently"
+  echo "      - Pros: Absolute minimal project files in root."
+  echo "      - Cons: You lose the templates for future directory scaffolding."
+  echo "  [3] Keep everything as-is (do not delete or cleanup anything)"
+  echo "      - Pros: Leaves all setup files and templates completely untouched."
+  echo "      - Cons: Clutters the root directory with unused setup scripts."
+  read -p "Select option [1-3] [Default: 1]: " opt
+  opt=${opt:-1}
+  echo "Selected: $opt"
+  CLEANUP_OPTION=$opt
+else
+  # Default to option 1 in non-interactive mode
+  echo "Non-interactive run: Cleaning up setup scripts and one-time templates..."
+  CLEANUP_OPTION=1
+fi
+
+case "$CLEANUP_OPTION" in
+  1)
+    echo "Cleaning up one-time templates and setup scripts..."
+    # Remove one-time template files
+    rm -f "$TEMPLATES_DIR/README.md" "$TEMPLATES_DIR/AGENTS.md" "$TEMPLATES_DIR/MANIFEST.md" "$TEMPLATES_DIR/.gitignore"
+    # Remove one-time template folder
+    rm -rf "$TEMPLATES_DIR/ai"
+    # Remove sibling setup script
+    rm -f "$BASE_DIR/create_minimal_structure.ps1"
+    ;;
+  2)
+    echo "Deleting all templates and setup scripts..."
+    rm -rf "$TEMPLATES_DIR"
+    rm -f "$BASE_DIR/create_minimal_structure.ps1"
+    ;;
+  3)
+    echo "Keeping all files as-is."
+    ;;
+esac
+
+if [ "$INIT_GIT" = true ]; then
+  echo "Initializing Git repository..."
+  git init
+  echo "Staging files in Git..."
+  git add .
+  # Unstage the setup scripts from Git tracking
+  git reset -- "$0" "$BASE_DIR/create_minimal_structure.ps1" 2>/dev/null || true
+  echo "Git repository initialized and files staged successfully."
+fi
+
+# Print final status message
+echo ""
+echo "============================================================="
+echo "   Struktura dla projektu: $PROJECT_NAME"
+echo "   do efektywnej współpracy z AI jest gotowa!"
+echo ""
+echo "   Informacje o Twoim projekcie znajdziesz w README.md"
+echo "============================================================="
+echo ""
+
+# Self delete at the very end if cleanup was requested
+if [ "$CLEANUP_OPTION" = "1" ] || [ "$CLEANUP_OPTION" = "2" ]; then
+  exec rm -f -- "$0"
 fi
 

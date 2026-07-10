@@ -63,11 +63,11 @@ Static design files.
 ---
 
 ## tmp/
-
+ 
 Temporary working directory.
-
+ 
 - **Role:** A local scratchpad for automatically generated logs, temporary build artifacts, or AI tutoring cache files.
-- **Rule:** Must be strictly ignored in `.gitignore` and excluded from CI/CD pipeline steps.
+- **Rule:** Created at project start containing a `.gitkeep` file. All contents are ignored via `.gitignore` (`tmp/*`), but the directory itself is tracked. Must be excluded from CI/CD pipeline steps.
 
 ---
 [← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)

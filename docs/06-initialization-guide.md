@@ -51,20 +51,13 @@ By default, running the script interactively will guide you through a CLI wizard
 All prompts in the wizard support a default option. You can simply press **Enter** to accept the recommended default value and proceed.
 
 The wizard guides you through:
-- **Autonomy Levels:** Ask-First vs. Proactive.
-- **Dependency & License Policy:** Restricting what third-party packages can be added.
-- **Git & Safety Policies:** Permissions to stage/commit or execute destructive cleanup commands.
-- **Secrets & Security:** Zero-Trust (Strict Secret Protection) vs. Auto-Config (mock keys setup).
-- **Context & Cost Control:** Strict Token Diet (Targeted Reads) vs. Context Rich (Comprehensive Reads).
-- **Refactoring Policy:** Strict Scope (requested files only) vs. Boy Scout Rule (cleaning code smells).
-- **Code Quality & Linting:** Automatic Formatter & Linter (running Prettier/ESLint/Black) vs. Minimalist (manual formatting).
-- **Task Boundaries:** Strict Boundaries & Micro-tasks (<= 3 files) vs. Flexible / Broad Scope.
-- **Communication & Explanation Style:** Concise & Technical vs. Detailed & Educational.
-- **Testing Approach:** Test coverage goals, TDD vs. Post-implementation, and test execution scope.
-- **Tech Stack:** Scaffolding language-specific rules (Node.js/TypeScript, Python, Go, React/Next.js).
-- **AI IDE Pointer Files:** Option to automatically generate thin pointer files (for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody) to redirect those clients to `AGENTS.md`. (Default: Standard (only AGENTS.md), which is recommended for tools with native support like Antigravity and OpenCode; you can also choose custom individually or generate all).
-
-
+- **Section 0 – Project Details:** Set your project name (used in README.md and completion message).
+- **Section 1 – Autonomy & Decisions:** Ask-First vs. Proactive autonomy, Dependency/License/Git/Safety/Security/Cost policies.
+- **Section 2 – Coding & Refactoring:** Refactoring policy, linting, task granularity, and communication style.
+- **Section 3 – Testing Strategy:** Coverage goals, TDD vs. Post-implementation, and test execution scope.
+- **Section 4 – Tech Stack:** Language-specific rules (Node.js/TypeScript, Python, Go, React/Next.js, or General).
+- **Section 5 – AI IDE Pointer Files:** Optionally generate thin pointer files for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody.
+- **Section 6 – Git Version Control:** Optionally initialize a Git repository (`git init`), copy the `knowledge/git.md` reference guide, and stage all initial project files (`git add .`). Default: skip (no Git).
 
 If you want to skip the wizard and immediately generate the structure with default settings, run:
 
@@ -76,17 +69,39 @@ If you want to skip the wizard and immediately generate the structure with defau
 Once the files are successfully created and configured in your project, the generator script and `file-templates/` directory are no longer needed.
 
 If running interactively, the script will prompt you at the very end with a post-setup cleanup menu:
-* **Move to `tmp/` (Default & Recommended):** Moves both `file-templates/` and the setup script to the project's `tmp/` directory. Since `tmp/` is ignored by Git, this keeps your project root clean but preserves the files locally in case you need to refer back to them.
-* **Delete permanently:** Deletes `file-templates/` and the setup script immediately.
-* **Keep:** Leaves both files in your root directory.
+* **Clean up one-time templates, but KEEP remaining future-growth templates in `file-templates/` (Default & Recommended):** Deletes the setup scripts (`create_minimal_structure.sh` / `.ps1`) and cleans up templates that are only needed once at startup (like `README.md`, `AGENTS.md`, and the `ai/` context folder). It keeps the optional templates for future repository scaffolding in `file-templates/` so you can use them as your project scales.
+* **Delete permanently:** Deletes all template files and setup scripts immediately to keep the root directory completely minimal.
+* **Keep everything:** Leaves all setup scripts and templates untouched in the root.
 
-If you ran the script in `--non-interactive` mode (or want to clean up manually), you can do so by running:
+If running in `--non-interactive` mode, the script automatically executes the recommended cleanup (Option 1).
 
+If you want to manually clean up at any point, you can delete the setup scripts and any unused templates:
 ```bash
-# Clean up generator script and templates manually
-rm -rf file-templates/ create_minimal_structure.sh
+# Delete setup scripts
+rm -f create_minimal_structure.sh create_minimal_structure.ps1
 ```
 
+---
+
+## 📂 About the `file-templates/` Directory
+
+The `file-templates/` directory contains two types of templates:
+
+| Type | Description | Lifecycle |
+|---|---|---|
+| **One-time templates** | Files initialized directly into your project by the script (e.g., `README.md`, `AGENTS.md`, `ai/rules/`, `.gitignore`). | **Deleted after setup** (cleanup option 1). No longer needed once initialized. |
+| **Reusable scaffolding templates** | Optional templates for directories you may create as your project grows (e.g., `specs/`, `contracts/`, `plans/`, `decisions/`). | **Kept after setup.** Use them whenever you need to scaffold a new directory. |
+
+You can:
+- **Use the existing templates** as starting points for new project directories.
+- **Customize them** to match your team's conventions.
+- **Add your own templates** to the directory to make scaffolding new areas of the project consistent and repeatable.
+
+> [!TIP]
+> The `knowledge/git.md` template is copied to your project only if you choose to initialize Git during setup (Section 6). You can also copy it manually at any time with:
+> ```bash
+> cp file-templates/knowledge/git.md knowledge/git.md
+> ```
 
 ---
 
@@ -99,4 +114,3 @@ The script generates a minimal set of files that act as pointers and standard gu
 
 ---
 [← Previous: 🤖 AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
-
