@@ -1,42 +1,22 @@
----
-aliases:
-  - gitignore
-  - gitignore policy
-tags:
-  - knowledge
-type: docs
----
+# Git - Version Control System
 
-# Git and .gitignore Policy
+Git is a distributed version control system that tracks the history of changes in project files, enables collaboration between multiple developers on the same codebase, and allows easy rollback to previous versions when issues occur. Since history is stored locally, most operations execute instantly, and the branching mechanism allows safe testing of new features without affecting the stable version of the code.
 
-This document defines the project's policy for Git version control and the configuration of `.gitignore` files.
+## Essential Git Commands
 
-## Core Principles
+### Help & Status
+* `git -h` or `git --help` — displays general help and a list of commonly used commands.
+* `git status` — shows the current state of the project: which files have been modified, which are tracked/untracked, and which changes are staged for the next commit.
 
-The version control strategy is built around distinguishing between **transient/generated artifacts** and **configuration/manifest source code**.
+### Staging Files
+* `git add <filename>` — stages a specific file for inclusion in the next commit.
+* `git add <directory>` — stages all files within a given directory.
+* `git add .` or `git add -A` — stages all modified and new files across the entire project.
 
-### 1. Ignore Generated Library Code
-* **Rule:** Always exclude directories containing downloaded package/library code from the repository.
-* **Why:** These folders are automatically populated and managed by package managers during the build or setup phase. Storing them in Git causes repository bloat, merge conflicts, and redundant files.
-* **Examples of ignored directories:**
-  * `node_modules/` (Node.js/npm)
-  * `vendor/` (PHP/Composer or Go Modules)
-  * `.venv/`, `venv/`, `env/` (Python virtual environments)
-  * `packages/` (various package managers)
+### Undoing Changes & Removing from Stage
+* `git reset HEAD <filename>` (or `git restore --staged <filename>`) — removes a file from the staging area (undoes `git add`), so it will not be included in the next commit.
+* `git rm --cached <filename>` — removes a file from Git's index (stops tracking it), but keeps the file on disk.
+* `git rm <filename>` — removes a file from both Git's index and from the disk.
 
-### 2. Retain Manifest & Configuration Files
-* **Rule:** Never ignore the configuration files that describe which libraries and versions to install.
-* **Why:** These files are the single source of truth (SSOT) defining the environment and dependencies. They allow other developers and CI/CD pipelines to reproduce the exact environment.
-* **Examples of files that must be committed:**
-  * `package.json` and `package-lock.json`
-  * `composer.json` and `composer.lock`
-  * `requirements.txt`, `Pipfile`, `pyproject.toml`, and `poetry.lock`
-  * `go.mod` and `go.sum`
-
-### 3. Exclude Temporary Directories
-* **Rule:** Exclude directories used for temporary file storage, build outputs, or local environment variables.
-* **Examples of excluded patterns:**
-  * `tmp/` (used for temporary files and excluded from Git and CI/CD)
-  * `dist/`, `build/`, `out/` (compilation outputs)
-  * `.env`, `.env.local` (local environment secrets)
-  * `*.log` (execution logs)
+### Committing Changes
+* `git commit -m "description of changes"` — commits all staged changes and creates a new point in the project history with the provided description.
