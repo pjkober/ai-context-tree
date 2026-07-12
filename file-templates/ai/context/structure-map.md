@@ -7,7 +7,7 @@
 | `contracts/` | when the project starts exposing APIs or exchanging data between modules |
 | `knowledge/` | when business knowledge grows too large to fit in a single `glossary.md` |
 | `checklists/` | when a repeatable process (e.g., release) begins to be executed manually more than once |
-| `plans/` | when the first change too large for a single entry in `task.md` is introduced |
+| `plans/` | when the first change too large for a single entry in `tasks.md` is introduced |
 | `prototypes/` | when the team starts testing solutions not intended for immediate production release |
 | `archive/` | when the first piece of code or documentation becomes inactive but is worth preserving |
 | `research/` | when the team begins analytical research, spikes, or market/competitor analysis |

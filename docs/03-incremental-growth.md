@@ -46,12 +46,12 @@ When a new requirement emerges, the team (human or AI) creates the corresponding
 
 How do humans and AI agents know what folder names to use and when to create them? 
 
-This is governed by the [structure-map.md](../file-templates/ai/context/structure-map.md) file, which acts as a full catalog of all officially named directories. Before creating a new top-level directory, the AI **must** consult the map to retrieve the official directory name and its creation conditions.
+This is governed by the [structure-map.md](../templates/ai/context/structure-map.md) file, which acts as a full catalog of all officially named directories. Before creating a new top-level directory, the AI **must** consult the map to retrieve the official directory name and its creation conditions.
 
 ### Rules for adding directories:
 1. Check `ai/context/structure-map.md` to see if there is an official name and definition for the folder you need.
-2. If it exists, create the directory with that exact name and add it to [MANIFEST.md](../file-templates/MANIFEST.md).
-3. If the directory is not listed in `structure-map.md`, **do not create it on your own**. Adding a new top-level directory is an architectural decision that must be approved by a human (e.g. raised as a task in `task.md` or a direct question).
+2. If it exists, create the directory with that exact name and add it to [MANIFEST.md](../templates/MANIFEST.md).
+3. If the directory is not listed in `structure-map.md`, **do not create it on your own**. Adding a new top-level directory is an architectural decision that must be approved by a human (e.g. raised as a task in `tasks.md` or a direct question).
 
 ## Shrinking the Structure
 

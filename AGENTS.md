@@ -1,20 +1,31 @@
 # AGENTS.md
 
-Read first (Core Context & Tasks):
-├── ai/context/project.md           # Project scope and technology stack
-├── ai/context/structure-map.md    # Map of allowed directories
-└── tasks.md                       # Active task queue and task conventions
+Read first (Project Scope & Core Docs):
+├── README.md                          # Repository overview, table of contents, and flow map
+├── docs/01-philosophy.md              # Design philosophy of AI-First structures
+├── docs/02-core-principles.md        # Core rules (SSOT, proximity, etc.)
+├── docs/05-ai-integration.md         # AI IDE configuration details
+└── tasks.md                           # Active task index and task creation conventions
 
-Follow (Rules & Guidelines):
-├── ai/rules/coding.md             # Code conventions and syntax standards
-├── ai/rules/security.md           # Security & Autonomy mode guidelines (ask/decide policy)
-├── ai/rules/testing.md            # Testing configuration and coverage strategy
-└── Completed Task Lifecycle Rule  # Mark done AND append verification walkthrough to the bottom of the tasks/task-NNN.md file
+Structure Specification:
+├── docs/structure/root-files.md       # Root configurations (AGENTS.md, MANIFEST.md, etc.)
+├── docs/structure/ai-agents.md       # Target project agent rules (ai/ directory)
+└── docs/structure/supporting.md      # Other generated directory templates
 
-Execute using (Workflows & Skills):
-├── ai/workflows/new-feature.md    # Step-by-step feature implementation workflow
-└── ai/skills/                     # Custom project-specific local agent skills
+Implementation & Scaffolding:
+├── create_minimal_structure.sh        # Bash wizard to bootstrap rules
+├── create_minimal_structure.ps1       # PowerShell wizard to bootstrap rules
+└── templates/                         # Directory structure templates copied by wizard
 
-Log history & runs (No Secrets!):
-├── ai/history/                    # Conversation memory logs (conver-NNN-desc.md)
-└── ai/runs/                       # Reusable script logs (run-NNN-desc.sh/.ps1)
+Guidelines & Terminology:
+└── knowledge/                         # Policies (git.md, gitignore.md, licenses.md)
+
+Project Rules for AI Agents:
+1. Documentation Language:
+   - All written documentation and task descriptions MUST be in English.
+2. No Emojis:
+   - Never use emojis anywhere in the documentation, rules, or codebase.
+3. Strict Scope Compliance:
+   - Implement tasks exactly as requested by the user. Do not add any extra functionalities or speculative features.
+4. Task-Driven Execution:
+   - Always create and update task files in the `tasks/` directory when changing files or directories. Every change must be linked to a tracked task. Follow the Completed Task Lifecycle Rule (mark done AND append the verification walkthrough to the bottom of the tasks/task-NNN.md file).

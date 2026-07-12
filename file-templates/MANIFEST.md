@@ -11,7 +11,7 @@
 ├── [contracts/](contracts/)             # API contracts (OpenAPI, Protobuf, GraphQL schemas)
 ├── [decisions/](decisions/)             # Architecture Decision Records (ADRs)
 ├── [docs/](docs/)                       # System and technical architecture documentation
-├── [file-templates/](file-templates/)   # Templates and blueprints for future project scaffolding
+├── [templates/](templates/)             # Templates and blueprints for future project scaffolding
 ├── [knowledge/](knowledge/)             # Domain knowledge base (terminology, FAQ, personas, guides)
 ├── [scripts/](scripts/)                 # Build, seed, and automation scripts
 ├── [specs/](specs/)                     # Business requirements, user stories, and acceptance criteria

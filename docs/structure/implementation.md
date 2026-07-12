@@ -32,7 +32,7 @@ Centralized project configuration.
 
 - **Role:** Configuration files for toolchains, linters, and compilers (e.g. ESLint, Prettier, TypeScript, Vite, Docker, Nginx).
 - **Rule:** If toolchains require configuration files to be at the root directory, place a minimal 1–5 line file there extending the configuration from `config/` (or use symlinks).
-- **Template:** [file-templates/config/tsconfig-base.json](../../file-templates/config/tsconfig-base.json)
+- **Template:** [templates/config/tsconfig-base.json](../../templates/config/tsconfig-base.json)
 
 ---
 
@@ -41,7 +41,7 @@ Centralized project configuration.
 Automation and helper scripts.
 
 - **Role:** Shell scripts or simple utility scripts for building, testing, database seeding, database migrations, or linting.
-- **Template:** [file-templates/scripts/script-header.sh](../../file-templates/scripts/script-header.sh)
+- **Template:** [templates/scripts/script-header.sh](../../templates/scripts/script-header.sh)
 
 ---
 

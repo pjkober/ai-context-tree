@@ -6,13 +6,13 @@ set -e
 
 # Determine the directory where this script lives – treat it as the project root
 BASE_DIR="."
-TEMPLATES_DIR="$BASE_DIR/file-templates"
+TEMPLATES_DIR="$BASE_DIR/templates"
 
 # Check if templates directory is present
 if [ ! -d "$TEMPLATES_DIR" ]; then
-  echo "Error: 'file-templates/' directory not found at $TEMPLATES_DIR."
-  echo "This script must be run inside the cloned repository context containing file-templates."
-  echo "If you are setting up a new project, copy BOTH this script and the 'file-templates/' directory to your project root."
+  echo "Error: 'templates/' directory not found at $TEMPLATES_DIR."
+  echo "This script must be run inside the cloned repository context containing templates."
+  echo "If you are setting up a new project, copy BOTH this script and the 'templates/' directory to your project root."
   exit 1
 fi
 
@@ -26,7 +26,60 @@ DEFAULT_PROJECT_NAME=${DEFAULT_PROJECT_NAME:0:50}
 DEFAULT_PROJECT_NAME=${DEFAULT_PROJECT_NAME:-"my-project"}
 PROJECT_NAME="$DEFAULT_PROJECT_NAME"
 
+# Helper function to get validated selection from numeric menus
+# Arguments:
+#   1: Prompt text (e.g. "Select option [1-3]")
+#   2: Default value (e.g. 1)
+#   3: Max option number (e.g. 3)
+get_validated_choice() {
+  local prompt_text="$1"
+  local default_val="$2"
+  local max_val="$3"
+  local val
+  while true; do
+    read -p "$prompt_text [Default: $default_val]: " val
+    val=${val:-$default_val}
+    # Check if val is a number and between 1 and max_val
+    if [[ "$val" =~ ^[0-9]+$ ]] && [ "$val" -ge 1 ] && [ "$val" -le "$max_val" ]; then
+      echo "$val"
+      return 0
+    else
+      echo "Invalid selection. Please choose a number between 1 and $max_val." >&2
+    fi
+  done
+}
 
+# Helper function to get validated y/n
+# Arguments:
+#   1: Prompt text (e.g. "Include Python?")
+#   2: Default value (e.g. "n")
+get_validated_yn() {
+  local prompt_text="$1"
+  local default_val="$2"
+  local val
+  local display_default
+  if [ "$default_val" = "y" ] || [ "$default_val" = "Y" ]; then
+    display_default="Y/n"
+  else
+    display_default="y/N"
+  fi
+  while true; do
+    read -p "$prompt_text [$display_default] [Default: $default_val]: " val
+    val=${val:-$default_val}
+    case "$val" in
+      [Yy]|[Nn])
+        case "$val" in
+          [Yy]) echo "y" ;;
+          [Nn]) echo "n" ;;
+        esac
+        return 0
+        ;;
+      *)
+        echo "Invalid selection. Please enter y or n." >&2
+        ;;
+    esac
+  done
+}
 
 # Helper to create a directory if it does not exist
 mkdir_if_not_exists() {
@@ -176,8 +229,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: High control. You review a formal design document before any code is written."
   echo "      - Cons: Adds an extra review step for all tasks, including minor ones."
   echo "      - Consequence: AI must write and get approval for an implementation plan first."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -200,8 +252,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Seamless development. AI handles package installations on its own."
   echo "      - Cons: Risk of installing unneeded, heavy, or poorly-licensed libraries."
   echo "      - Consequence: AI may add standard, safe packages without prompting."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -225,8 +276,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: AI can completely redesign structures and libraries for optimal efficiency."
   echo "      - Cons: High risk of structure fragmentation and incompatible design patterns."
   echo "      - Consequence: AI has full control over files, directories, databases, and schemas."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -254,8 +304,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Maximum access to any library on npm/pip/go package registries."
   echo "      - Cons: High risk of legal violations or open-sourcing proprietary code."
   echo "      - Consequence: AI will not verify licenses when adding dependencies."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -283,8 +332,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Completely isolates AI work from main development branch."
   echo "      - Cons: Requires managing, reviewing, and merging additional git branches."
   echo "      - Consequence: AI creates a dedicated task branch to commit its changes."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -307,8 +355,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Fast cleanups of project history and deprecated components."
   echo "      - Cons: Risk of executing commands that permanently destroy data."
   echo "      - Consequence: AI is allowed to delete files or run cleanup commands independently."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -326,8 +373,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Automatic and seamless local environment configuration."
   echo "      - Cons: High risk of accidental credential leaks to Git."
   echo "      - Consequence: AI is allowed to write mock/test credentials to local config files."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -347,8 +393,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Deeper understanding of full codebase dependencies, safer refactoring."
   echo "      - Cons: Extremely high token consumption, high costs, risks context window saturation."
   echo "      - Consequence: AI reads entire files and directories before making modifications."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -370,8 +415,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Continuous code health improvements, fixes types/formatting in passing."
   echo "      - Cons: Larger diffs, slight risk of regression in surrounding code."
   echo "      - Consequence: AI will format and clean up adjacent code smells in modified files."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -390,8 +434,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Maximum iteration speed, zero tool execution overhead."
   echo "      - Cons: Risk of committing unformatted or style-violating code if developer forgets."
   echo "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -409,8 +452,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Rapid implementation of wide features, fewer prompts."
   echo "      - Cons: Harder to debug, larger PRs, high risk of breaking unrelated systems."
   echo "      - Consequence: AI will implement multi-file refactors in a single pass."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -428,8 +470,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: High educational value, explains design patterns and choices."
   echo "      - Cons: Large token consumption, slower responses, potential context bloat."
   echo "      - Consequence: Good for learning a new stack, but increases costs and latency."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -456,8 +497,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Maximum stability, code correctness verified automatically."
   echo "      - Cons: Much slower implementation times due to writing extensive test cases."
   echo "      - Consequence: AI will write thorough unit/integration tests for all paths."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -480,8 +520,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Ensures clean API design, forces implementation of requirements."
   echo "      - Cons: Higher startup overhead; requires mock setups before code is written."
   echo "      - Consequence: AI writes failing tests first, then implements code to pass."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -506,8 +545,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: 100% certainty that no regressions exist anywhere in the codebase."
   echo "      - Cons: Very slow developer loop if the test suite is large."
   echo "      - Consequence: AI runs the entire repository test suite on every change."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     2)
@@ -521,56 +559,107 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   # --- SECTION 4: Tech Stack ---
   echo "--- SECTION 4: Tech Stack ---"
-  echo "4.1) Select Tech Stack / Framework:"
-  echo "  [1] Node.js / TypeScript"
-  echo "      - Pros: Strict types, modern async/await patterns, standard backend runtime."
-  echo "      - Cons: Requires package.json, npm/yarn setup, and tsconfig compilation."
-  echo "      - Consequence: Presets rules for strict TypeScript types and async patterns."
-  echo "  [2] Python"
-  echo "      - Pros: Clean, highly readable, standard for scripting, tooling, and data."
-  echo "      - Cons: Environment/dependency management can sometimes conflict."
-  echo "      - Consequence: Presets rules for PEP 8 compliance and type hints."
-  echo "  [3] Go"
-  echo "      - Pros: High performance, simple language design, fast compilation."
-  echo "      - Cons: Strict conventions, verbose error handling."
-  echo "      - Consequence: Presets rules for standard Go patterns and error handling."
-  echo "  [4] React / Next.js"
-  echo "      - Pros: Structured framework conventions for full-stack web development."
-  echo "      - Cons: High build complexity, client vs. server component management."
-  echo "      - Consequence: Presets rules for React hooks, functional components, and routing."
-  echo "  [5] Decide later / General [Default]"
-  echo "      - Pros: Universal layout. Adapts to any language or framework automatically."
-  echo "      - Cons: No language-specific coding rules generated at bootstrap."
-  echo "      - Consequence: Default general coding rules are applied."
-  read -p "Select option [1-5] [Default: 5]: " opt
-  opt=${opt:-5}
+  echo "WARNING: Select ONLY the technologies you will actually use. Adding unnecessary"
+  echo "technologies clutters the AI's memory, leading to inefficient token usage and costs."
+  echo "Since a project grows over time, adding new technologies or rules incrementally"
+  echo "(by editing 'ai/rules/coding.md') is the recommended approach."
+  echo ""
+  echo "4.1) Select Tech Stack / Framework option:"
+  echo "  [1] Decide later / General [Default]"
+  echo "      - Universal layout. Adapts to any language or framework automatically."
+  echo "  [2] Custom Selection / Choose multiple"
+  echo "      - Choose specific technologies from a list of popular options."
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
-  case "$opt" in
-    1)
-      TECH_STACK_VAL="- Stack: Node.js / TypeScript.
+
+  if [ "$opt" -eq 1 ]; then
+    TECH_STACK_VAL="- Stack: General / To be defined later.
+- Adhere to the existing coding style of any file you edit."
+  else
+    chosen_stacks=()
+    
+    choice=$(get_validated_yn "Include Node.js / TypeScript?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: Node.js / TypeScript.
 - Use strict TypeScript configurations.
 - Prefer async/await over raw Promises.
-- Avoid using \`any\` type annotations; define interfaces or types."
-      ;;
-    2)
-      TECH_STACK_VAL="- Stack: Python.
+- Avoid using \`any\` type annotations; define interfaces or types.")
+    fi
+
+    choice=$(get_validated_yn "Include Python?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: Python.
 - Adhere to PEP 8 standards.
 - Use type hints for all public function signatures.
-- Prefer list comprehensions and generator expressions where readable."
-      ;;
-    3)
-      TECH_STACK_VAL="- Stack: Go.
+- Prefer list comprehensions and generator expressions where readable.")
+    fi
+
+    choice=$(get_validated_yn "Include Go?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: Go.
 - Use standard Go conventions (\`gofmt\`, \`go lint\`).
 - Explicitly handle all errors; do not ignore them.
-- Keep packages cohesive and API surfaces clean."
-      ;;
-    4)
-      TECH_STACK_VAL="- Stack: React / Next.js.
+- Keep packages cohesive and API surfaces clean.")
+    fi
+
+    choice=$(get_validated_yn "Include React / Next.js?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: React / Next.js.
 - Use functional components with hooks.
 - Keep components small, reusable, and state localized.
-- Follow Next.js directory and routing conventions."
-      ;;
-  esac
+- Follow Next.js directory and routing conventions.")
+    fi
+
+    choice=$(get_validated_yn "Include Rust?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: Rust.
+- Follow Cargo and standard Clippy lints.
+- Handle results/errors explicitly; avoid \`.unwrap()\` in production code.
+- Adhere to ownership and borrowing rules without unnecessary cloning.")
+    fi
+
+    choice=$(get_validated_yn "Include Java / Spring Boot?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: Java / Spring Boot.
+- Follow standard Java CamelCase naming conventions.
+- Use constructor-based dependency injection.
+- Utilize standard Spring Boot annotations correctly and keep controllers thin.")
+    fi
+
+    choice=$(get_validated_yn "Include C# / .NET?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: C# / .NET.
+- Follow Microsoft C# coding conventions and naming guidelines (PascalCase).
+- Use modern C# language features and expression-bodied members.
+- Implement async/await correctly for all I/O bound operations.")
+    fi
+
+    choice=$(get_validated_yn "Include PHP / Laravel?" "n")
+    if [ "$choice" = "y" ]; then
+      chosen_stacks+=("- Stack: PHP / Laravel.
+- Adhere to PSR-12 coding standard.
+- Declare strict types (\`declare(strict_types=1);\`).
+- Leverage Eloquent ORM correctly and avoid raw SQL where possible.")
+    fi
+
+    if [ ${#chosen_stacks[@]} -eq 0 ]; then
+      echo "No technologies selected. Defaulting to General."
+      TECH_STACK_VAL="- Stack: General / To be defined later.
+- Adhere to the existing coding style of any file you edit."
+    else
+      # Join with empty line separating the blocks
+      TECH_STACK_VAL=""
+      for idx in "${!chosen_stacks[@]}"; do
+        if [ $idx -eq 0 ]; then
+          TECH_STACK_VAL="${chosen_stacks[$idx]}"
+        else
+          TECH_STACK_VAL="${TECH_STACK_VAL}
+
+${chosen_stacks[$idx]}"
+        fi
+      done
+    fi
+  fi
   echo ""
 
   # --- SECTION 5: AI IDE Configuration ---
@@ -591,8 +680,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Complete workspace readiness. Any team developer's IDE will pick up the rules."
   echo "      - Cons: Creates minor clutter by adding 10 pointer files in the root."
   echo "      - Consequence: Pointers for Claude Code, Cursor, Cline, Windsurf, Copilot, etc., are all created."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   case "$opt" in
     1)
@@ -610,81 +698,72 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
       GEN_CODY=true
       ;;
     2)
-      read -p "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Claude Code pointer (CLAUDE.md)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_CLAUDE=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Cursor pointer (.cursorrules)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_CURSOR=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Cline/Roo Code pointer (.clinerules)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_CLINE=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Windsurf pointer (.windsurfrules)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_WINDSURF=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate GitHub Copilot pointer (.github/copilot-instructions.md)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_COPILOT=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_JETBRAINS=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_AIDER=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Tabnine pointer (.tabnine/guidelines/main.md)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_TABNINE=true
         echo "Selected: Yes"
       else
         echo "Selected: No"
       fi
 
-      read -p "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]: " choice
-      choice=${choice:-n}
-      if [[ "$choice" =~ ^[yY](es)?$ ]]; then
+      choice=$(get_validated_yn "Generate Sourcegraph Cody pointer (.cody/rules.md)?" "n")
+      if [ "$choice" = "y" ]; then
         GEN_CODY=true
         echo "Selected: Yes"
       else
@@ -706,8 +785,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "      - Pros: Instant tracking, easy to review changes, standard professional setup."
   echo "      - Cons: Adds the '.git' directory to the workspace root."
   echo "      - Consequence: Initializes Git repo, copies 'knowledge/git.md' template, and stages initial files."
-  read -p "Select option [1-2] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
   echo "Selected: $opt"
   if [ "$opt" = "2" ]; then
     INIT_GIT=true
@@ -898,21 +976,20 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "   Post-Setup Cleanup"
   echo "============================================="
   echo "The setup scripts are no longer needed and will be removed."
-  echo "The 'file-templates/' directory contains some one-time templates that have already"
+  echo "The 'templates/' directory contains some one-time templates that have already"
   echo "been initialized, as well as optional templates for future project growth."
   echo ""
   echo "What would you like to do?"
-  echo "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'file-templates/' [Default]"
+  echo "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'templates/' [Default]"
   echo "      - Pros: Preserves incremental templates for future use while keeping them clean."
-  echo "      - Cons: Keeps the 'file-templates/' folder in your project root."
-  echo "  [2] Delete the entire 'file-templates/' directory permanently"
+  echo "      - Cons: Keeps the 'templates/' folder in your project root."
+  echo "  [2] Delete the entire 'templates/' directory permanently"
   echo "      - Pros: Absolute minimal project files in root."
   echo "      - Cons: You lose the templates for future directory scaffolding."
   echo "  [3] Keep everything as-is (do not delete or cleanup anything)"
   echo "      - Pros: Leaves all setup files and templates completely untouched."
   echo "      - Cons: Clutters the root directory with unused setup scripts."
-  read -p "Select option [1-3] [Default: 1]: " opt
-  opt=${opt:-1}
+  opt=$(get_validated_choice "Select option [1-3]" 1 3)
   echo "Selected: $opt"
   CLEANUP_OPTION=$opt
 else
@@ -936,7 +1013,7 @@ case "$CLEANUP_OPTION" in
     rm -rf "$TEMPLATES_DIR"
     rm -f "$BASE_DIR/create_minimal_structure.ps1"
     if [ -f "$BASE_DIR/MANIFEST.md" ]; then
-      grep -v 'file-templates/' "$BASE_DIR/MANIFEST.md" > "$BASE_DIR/MANIFEST.md.tmp" && mv "$BASE_DIR/MANIFEST.md.tmp" "$BASE_DIR/MANIFEST.md"
+      grep -v 'templates/' "$BASE_DIR/MANIFEST.md" > "$BASE_DIR/MANIFEST.md.tmp" && mv "$BASE_DIR/MANIFEST.md.tmp" "$BASE_DIR/MANIFEST.md"
     fi
     ;;
   3)
