@@ -15,7 +15,7 @@ Structure Specification:
 Implementation & Scaffolding:
 ├── create_minimal_structure.sh        # Bash wizard to bootstrap rules
 ├── create_minimal_structure.ps1       # PowerShell wizard to bootstrap rules
-└── file-templates/                    # Directory structure templates copied by wizard
+└── templates/                         # Directory structure templates copied by wizard
 
 Guidelines & Terminology:
 └── knowledge/                         # Policies (git.md, gitignore.md, licenses.md)

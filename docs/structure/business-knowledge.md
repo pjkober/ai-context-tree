@@ -13,10 +13,10 @@ These directories separate business requirements, domain knowledge, and architec
 Business specifications.
 
 - **Role:** Describes functional requirements and acceptance criteria. Excludes implementation details.
-- **Rule:** Must not contain active task checklists (those go in `task.md`) or field-level data schemas (those belong in `contracts/`).
+- **Rule:** Must not contain active task checklists (those go in `tasks.md`) or field-level data schemas (those belong in `contracts/`).
 - **Templates:** 
-  - [file-templates/specs/requirements.md](../../file-templates/specs/requirements.md)
-  - [file-templates/specs/acceptance.md](../../file-templates/specs/acceptance.md)
+  - [templates/specs/requirements.md](../../templates/specs/requirements.md)
+  - [templates/specs/acceptance.md](../../templates/specs/acceptance.md)
 
 ---
 
@@ -26,7 +26,7 @@ The domain knowledge base.
 
 - **Role:** Stores domain lexicon, FAQs, personas, edge-cases, and regulatory rules (e.g. GDPR). Organized into subdirectories: `business/`, `faq/`, `terminology/`, `edge-cases/`, `legal/`, `personas/`.
 - **Rule:** One topic per file. No technical documentation is allowed here (technical docs go in `docs/`).
-- **Template (terminology.md):** [file-templates/knowledge/terminology.md](../../file-templates/knowledge/terminology.md)
+- **Template (terminology.md):** [templates/knowledge/terminology.md](../../templates/knowledge/terminology.md)
 
 ---
 
@@ -36,7 +36,7 @@ Verification checklists.
 
 - **Role:** Simple, checklist-based verification lists for release, security, or testing (e.g. `release.md`).
 - **Rule:** Contains only checkboxes and evaluation criteria, not procedural steps. Step-by-step instructions belong in `ai/workflows/`.
-- **Template (release.md):** [file-templates/checklists/release.md](../../file-templates/checklists/release.md)
+- **Template (release.md):** [templates/checklists/release.md](../../templates/checklists/release.md)
 
 ---
 
@@ -46,7 +46,7 @@ Architectural Decision Records (ADR).
 
 - **Role:** Documents architectural decisions, rationales, alternatives, and consequences (e.g. choosing Postgres over MongoDB).
 - **Benefit:** Prevents AI from guessing architecture choices and rewriting working structures.
-- **Template:** [file-templates/decisions/001-example-adr.md](../../file-templates/decisions/001-example-adr.md)
+- **Template:** [templates/decisions/001-example-adr.md](../../templates/decisions/001-example-adr.md)
 
 ---
 
@@ -56,7 +56,7 @@ Formal data structure specifications.
 
 - **Role:** API definitions, data schemas, and interface descriptions (OpenAPI, GraphQL, Protobuf, JSON Schema).
 - **Benefit:** Provides a strict boundary, preventing AI from guessing API request/response properties.
-- **Template:** [file-templates/contracts/openapi.yaml](../../file-templates/contracts/openapi.yaml)
+- **Template:** [templates/contracts/openapi.yaml](../../templates/contracts/openapi.yaml)
 
 ---
 
@@ -66,7 +66,7 @@ System technical and architectural documentation.
 
 - **Role:** High-level guides on how code modules interact, deployment flows, database schemas, and developer setup.
 - **Rule:** Focuses on the *why* and *how* of the codebase. Code examples, templates, and configurations belong in `examples/`, `ai/templates/`, or `config/`.
-- **Template (module-architecture.md):** [file-templates/docs/architecture/module-architecture.md](../../file-templates/docs/architecture/module-architecture.md)
+- **Template (module-architecture.md):** [templates/docs/architecture/module-architecture.md](../../templates/docs/architecture/module-architecture.md)
 
 ---
 [← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)

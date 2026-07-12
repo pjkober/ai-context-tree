@@ -22,7 +22,7 @@
   - [Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
 
 - **File Templates:**
-  - [Replicated Structure Templates](file-templates/) — Standard code/doc templates for every directory.
+  - [Replicated Structure Templates](templates/) — Standard code/doc templates for every directory.
 - **Directory Guidelines:**
   - [Root Files](docs/structure/root-files.md) — `AGENTS.md`, `MANIFEST.md`, `.gitignore`, etc.
   - [AI Agent Rules & Workflows (`ai/`)](docs/structure/ai-agents.md) — Coding conventions, step-by-step procedures, prompts.
@@ -61,15 +61,15 @@ Every project starts here. It includes the absolute essentials for code, tests, 
 
 ```txt
 project/
-├── AGENTS.md           # Entrypoint for AI agents (refer to file-templates/AGENTS.md)
-├── MANIFEST.md         # Index map of all currently existing files (refer to file-templates/MANIFEST.md)
-├── README.md           # Human-focused overview (refer to file-templates/README.md)
-├── .gitignore          # Ignores build artifacts and tmp/ (refer to file-templates/.gitignore)
+├── AGENTS.md           # Entrypoint for AI agents (refer to templates/AGENTS.md)
+├── MANIFEST.md         # Index map of all currently existing files (refer to templates/MANIFEST.md)
+├── README.md           # Human-focused overview (refer to templates/README.md)
+├── .gitignore          # Ignores build artifacts and tmp/ (refer to templates/.gitignore)
 ├── ai/
 │   ├── context/        # Project goals, stack, and structure map
 │   ├── rules/          # Coding conventions and syntax standards
-│   ├── workflows/      # Step-by-step procedures (refer to file-templates/ai/workflows/new-feature.md)
-│   ├── skills/         # Local agent skills (refer to file-templates/ai/skills/example-skill.md)
+│   ├── workflows/      # Step-by-step procedures (refer to templates/ai/workflows/new-feature.md)
+│   ├── skills/         # Local agent skills (refer to templates/ai/skills/example-skill.md)
 │   ├── history/        # Conversation memory logs
 │   └── runs/           # Reusable execution scripts
 ├── docs/               # System and technical documentation
@@ -129,7 +129,7 @@ project/
 You can quickly generate the minimal structure in your workspace root by running the initialization script.
 
 > [!IMPORTANT]
-> The scripts require the `file-templates/` directory to run. If you are setting up a new/existing project, you must copy **both** the script and the `file-templates/` directory to your project's root folder.
+> The scripts require the `templates/` directory to run. If you are setting up a new/existing project, you must copy **both** the script and the `templates/` directory to your project's root folder.
 > For step-by-step instructions, see the [Repository Initialization Guide](docs/06-initialization-guide.md).
 
 **For macOS / Linux (Bash):**

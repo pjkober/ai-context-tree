@@ -10,13 +10,13 @@ $ErrorActionPreference = "Stop"
 # Determine the directory where this script lives
 $BaseDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 if (-not $BaseDir) { $BaseDir = Get-Location }
-$TemplatesDir = Join-Path $BaseDir "file-templates"
+$TemplatesDir = Join-Path $BaseDir "templates"
 
 # Check if templates directory is present
 if (-not (Test-Path $TemplatesDir -PathType Container)) {
-    Write-Error "Error: 'file-templates/' directory not found at $TemplatesDir."
-    Write-Error "This script must be run inside the cloned repository context containing file-templates."
-    Write-Error "If you are setting up a new project, copy BOTH this script and the 'file-templates/' directory to your project root."
+    Write-Error "Error: 'templates/' directory not found at $TemplatesDir."
+    Write-Error "This script must be run inside the cloned repository context containing templates."
+    Write-Error "If you are setting up a new project, copy BOTH this script and the 'templates/' directory to your project root."
     exit 1
 }
 
@@ -878,14 +878,14 @@ if (-not $NonInteractive) {
     Write-Host "   Post-Setup Cleanup" -ForegroundColor Cyan
     Write-Host "=============================================" -ForegroundColor Cyan
     Write-Host "The setup scripts are no longer needed and will be removed."
-    Write-Host "The 'file-templates/' directory contains some one-time templates that have already"
+    Write-Host "The 'templates/' directory contains some one-time templates that have already"
     Write-Host "been initialized, as well as optional templates for future project growth."
     Write-Host ""
     Write-Host "What would you like to do?"
-    Write-Host "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'file-templates/' [Default]"
+    Write-Host "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'templates/' [Default]"
     Write-Host "      - Pros: Preserves incremental templates for future use while keeping them clean."
-    Write-Host "      - Cons: Keeps the 'file-templates/' folder in your project root."
-    Write-Host "  [2] Delete the entire 'file-templates/' directory permanently"
+    Write-Host "      - Cons: Keeps the 'templates/' folder in your project root."
+    Write-Host "  [2] Delete the entire 'templates/' directory permanently"
     Write-Host "      - Pros: Absolute minimal project files in root."
     Write-Host "      - Cons: You lose the templates for future directory scaffolding."
     Write-Host "  [3] Keep everything as-is (do not delete or cleanup anything)"
@@ -922,7 +922,7 @@ if ($CleanupOption -eq "1") {
     if (Test-Path $SiblingScript -PathType Leaf) { Remove-Item -Path $SiblingScript -Force | Out-Null }
     $ManifestPath = Join-Path $BaseDir "MANIFEST.md"
     if (Test-Path $ManifestPath -PathType Leaf) {
-        (Get-Content $ManifestPath) | Where-Object { $_ -notmatch 'file-templates/' } | Set-Content $ManifestPath -Encoding utf8
+        (Get-Content $ManifestPath) | Where-Object { $_ -notmatch 'templates/' } | Set-Content $ManifestPath -Encoding utf8
     }
 } else {
     Write-Host "Keeping all files as-is."

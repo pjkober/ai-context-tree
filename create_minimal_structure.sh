@@ -6,13 +6,13 @@ set -e
 
 # Determine the directory where this script lives – treat it as the project root
 BASE_DIR="."
-TEMPLATES_DIR="$BASE_DIR/file-templates"
+TEMPLATES_DIR="$BASE_DIR/templates"
 
 # Check if templates directory is present
 if [ ! -d "$TEMPLATES_DIR" ]; then
-  echo "Error: 'file-templates/' directory not found at $TEMPLATES_DIR."
-  echo "This script must be run inside the cloned repository context containing file-templates."
-  echo "If you are setting up a new project, copy BOTH this script and the 'file-templates/' directory to your project root."
+  echo "Error: 'templates/' directory not found at $TEMPLATES_DIR."
+  echo "This script must be run inside the cloned repository context containing templates."
+  echo "If you are setting up a new project, copy BOTH this script and the 'templates/' directory to your project root."
   exit 1
 fi
 
@@ -976,14 +976,14 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "   Post-Setup Cleanup"
   echo "============================================="
   echo "The setup scripts are no longer needed and will be removed."
-  echo "The 'file-templates/' directory contains some one-time templates that have already"
+  echo "The 'templates/' directory contains some one-time templates that have already"
   echo "been initialized, as well as optional templates for future project growth."
   echo ""
   echo "What would you like to do?"
-  echo "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'file-templates/' [Default]"
+  echo "  [1] Clean up one-time templates, but KEEP remaining future-growth templates in 'templates/' [Default]"
   echo "      - Pros: Preserves incremental templates for future use while keeping them clean."
-  echo "      - Cons: Keeps the 'file-templates/' folder in your project root."
-  echo "  [2] Delete the entire 'file-templates/' directory permanently"
+  echo "      - Cons: Keeps the 'templates/' folder in your project root."
+  echo "  [2] Delete the entire 'templates/' directory permanently"
   echo "      - Pros: Absolute minimal project files in root."
   echo "      - Cons: You lose the templates for future directory scaffolding."
   echo "  [3] Keep everything as-is (do not delete or cleanup anything)"
@@ -1013,7 +1013,7 @@ case "$CLEANUP_OPTION" in
     rm -rf "$TEMPLATES_DIR"
     rm -f "$BASE_DIR/create_minimal_structure.ps1"
     if [ -f "$BASE_DIR/MANIFEST.md" ]; then
-      grep -v 'file-templates/' "$BASE_DIR/MANIFEST.md" > "$BASE_DIR/MANIFEST.md.tmp" && mv "$BASE_DIR/MANIFEST.md.tmp" "$BASE_DIR/MANIFEST.md"
+      grep -v 'templates/' "$BASE_DIR/MANIFEST.md" > "$BASE_DIR/MANIFEST.md.tmp" && mv "$BASE_DIR/MANIFEST.md.tmp" "$BASE_DIR/MANIFEST.md"
     fi
     ;;
   3)

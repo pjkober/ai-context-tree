@@ -21,8 +21,8 @@ Code usage examples.
 
 Design plans for large changes.
 
-- **Role:** Epic planning docs, database migration strategies, or caching refactoring plans. Linked from `task.md`.
-- **Template:** [file-templates/plans/plan-template.md](../../file-templates/plans/plan-template.md)
+- **Role:** Epic planning docs, database migration strategies, or caching refactoring plans. Linked from `tasks.md`.
+- **Template:** [templates/plans/plan-template.md](../../templates/plans/plan-template.md)
 
 ---
 
@@ -32,7 +32,7 @@ PoC and sandbox experiments.
 
 - **Role:** Independent directories containing sandbox research code, benchmarking scripts, and draft RAG pipelines.
 - **Rule:** Kept completely separate from production `src/` to prevent LLMs from confusing experiments with production logic.
-- **Template:** [file-templates/prototypes/prototype-template.md](../../file-templates/prototypes/prototype-template.md)
+- **Template:** [templates/prototypes/prototype-template.md](../../templates/prototypes/prototype-template.md)
 
 ---
 

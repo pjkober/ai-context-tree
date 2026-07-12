@@ -11,8 +11,8 @@ This guide explains how to use the initialization scripts (`create_minimal_struc
 ## ⚠️ Prerequisites & Dependencies
 
 The initialization scripts **are not standalone**. They depend on the templates directory to work:
-* **Required Directory:** `file-templates/` must exist in the same folder as the script.
-* **Failure to comply:** If the script is run without `file-templates/` present, it will exit immediately with an error.
+* **Required Directory:** `templates/` must exist in the same folder as the script.
+* **Failure to comply:** If the script is run without `templates/` present, it will exit immediately with an error.
 
 ---
 
@@ -21,11 +21,11 @@ The initialization scripts **are not standalone**. They depend on the templates 
 Follow these steps to apply the AI-First structure to your project:
 
 ### Step 1: Copy the files to your project
-Copy both the script matching your OS and the `file-templates/` directory to the root of your project:
+Copy both the script matching your OS and the `templates/` directory to the root of your project:
 
 ```
 your-project/
-├── file-templates/         <-- COPY THIS DIR
+├── templates/              <-- COPY THIS DIR
 ├── create_minimal_structure.sh (or .ps1)  <-- COPY THIS SCRIPT
 └── [your existing project files]
 ```
@@ -68,10 +68,10 @@ If you want to skip the wizard and immediately generate the structure with defau
 
 
 ### Step 4: Cleanup (Automated or Manual)
-Once the files are successfully created and configured in your project, the generator script and `file-templates/` directory are no longer needed.
+Once the files are successfully created and configured in your project, the generator script and `templates/` directory are no longer needed.
 
 If running interactively, the script will prompt you at the very end with a post-setup cleanup menu:
-* **Clean up one-time templates, but KEEP remaining future-growth templates in `file-templates/` (Default & Recommended):** Deletes the setup scripts (`create_minimal_structure.sh` / `.ps1`) and cleans up templates that are only needed once at startup (like `README.md`, `AGENTS.md`, and the `ai/` context folder). It keeps the optional templates for future repository scaffolding in `file-templates/` so you can use them as your project scales.
+* **Clean up one-time templates, but KEEP remaining future-growth templates in `templates/` (Default & Recommended):** Deletes the setup scripts (`create_minimal_structure.sh` / `.ps1`) and cleans up templates that are only needed once at startup (like `README.md`, `AGENTS.md`, and the `ai/` context folder). It keeps the optional templates for future repository scaffolding in `templates/` so you can use them as your project scales.
 * **Delete permanently:** Deletes all template files and setup scripts immediately to keep the root directory completely minimal.
 * **Keep everything:** Leaves all setup scripts and templates untouched in the root.
 
@@ -85,9 +85,9 @@ rm -f create_minimal_structure.sh create_minimal_structure.ps1
 
 ---
 
-## 📂 About the `file-templates/` Directory
+## 📂 About the `templates/` Directory
 
-The `file-templates/` directory contains two types of templates:
+The `templates/` directory contains two types of templates:
 
 | Type | Description | Lifecycle |
 |---|---|---|
@@ -102,7 +102,7 @@ You can:
 > [!TIP]
 > The `knowledge/git.md` template is copied to your project only if you choose to initialize Git during setup (Section 6). You can also copy it manually at any time with:
 > ```bash
-> cp file-templates/knowledge/git.md knowledge/git.md
+> cp templates/knowledge/git.md knowledge/git.md
 > ```
 
 ---
