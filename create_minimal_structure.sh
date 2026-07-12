@@ -559,7 +559,11 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
 
   # --- SECTION 4: Tech Stack ---
   echo "--- SECTION 4: Tech Stack ---"
-  echo "Note: You can always add, modify, or extend your tech stack rules later by editing 'ai/rules/coding.md'."
+  echo "WARNING: Select ONLY the technologies you will actually use. Adding unnecessary"
+  echo "technologies clutters the AI's memory, leading to inefficient token usage and costs."
+  echo "Since a project grows over time, adding new technologies or rules incrementally"
+  echo "(by editing 'ai/rules/coding.md') is the recommended approach."
+  echo ""
   echo "4.1) Select Tech Stack / Framework option:"
   echo "  [1] Decide later / General [Default]"
   echo "      - Universal layout. Adapts to any language or framework automatically."

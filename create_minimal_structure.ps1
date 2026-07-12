@@ -503,7 +503,11 @@ if (-not $NonInteractive) {
 
     # --- SECTION 4: Tech Stack ---
     Write-Host "--- SECTION 4: Tech Stack ---" -ForegroundColor Yellow
-    Write-Host "Note: You can always add, modify, or extend your tech stack rules later by editing 'ai/rules/coding.md'."
+    Write-Host "WARNING: Select ONLY the technologies you will actually use. Adding unnecessary" -ForegroundColor Red
+    Write-Host "technologies clutters the AI's memory, leading to inefficient token usage and costs." -ForegroundColor Red
+    Write-Host "Since a project grows over time, adding new technologies or rules incrementally"
+    Write-Host "(by editing 'ai/rules/coding.md') is the recommended approach."
+    Write-Host ""
     Write-Host "4.1) Select Tech Stack / Framework option:"
     Write-Host "  [1] Decide later / General [Default]"
     Write-Host "      - Universal layout. Adapts to any language or framework automatically."

@@ -56,6 +56,8 @@ The wizard guides you through:
 - **Section 2 – Coding & Refactoring:** Refactoring policy, linting, task granularity, and communication style.
 - **Section 3 – Testing Strategy:** Coverage goals, TDD vs. Post-implementation, and test execution scope.
 - **Section 4 – Tech Stack:** Multi-select language/framework-specific rules (Node.js/TypeScript, Python, Go, React/Next.js, Rust, Java/Spring Boot, C#/.NET, PHP/Laravel, or General).
+  > [!TIP]
+  > Select **only** the technologies you will actually use. Adding unused tech rules clutters the AI's memory and wastes tokens. Since a project is a living entity, adding new technologies or rules incrementally (by editing `ai/rules/coding.md`) is the recommended approach.
 - **Section 5 – AI IDE Pointer Files:** Optionally generate thin pointer files for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody.
 - **Section 6 – Git Version Control:** Optionally initialize a Git repository (`git init`), copy the `knowledge/git.md` reference guide, and stage all initial project files (`git add .`). Default: skip (no Git).
 
