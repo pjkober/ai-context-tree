@@ -32,7 +32,45 @@ if ([string]::IsNullOrWhiteSpace($DefaultProjectName)) {
 }
 $ProjectName = $DefaultProjectName
 
+function Get-ValidatedChoice {
+    param (
+        [string]$PromptText,
+        [int]$DefaultVal,
+        [int]$MaxVal
+    )
+    while ($true) {
+        $opt = Read-Host "$PromptText [Default: $DefaultVal]"
+        if ([string]::IsNullOrWhiteSpace($opt)) {
+            return $DefaultVal
+        }
+        if ($opt -match '^\d+$') {
+            $val = [int]$opt
+            if ($val -ge 1 -and $val -le $MaxVal) {
+                return $val
+            }
+        }
+        Write-Host "Invalid selection. Please choose a number between 1 and $MaxVal." -ForegroundColor Red
+    }
+}
 
+function Get-ValidatedYN {
+    param (
+        [string]$PromptText,
+        [string]$DefaultVal # 'y' or 'n'
+    )
+    $displayDefault = if ($DefaultVal.ToLower() -eq 'y') { "Y/n" } else { "y/N" }
+    while ($true) {
+        $choice = Read-Host "$PromptText [$displayDefault] [Default: $DefaultVal]"
+        if ([string]::IsNullOrWhiteSpace($choice)) {
+            return $DefaultVal.ToLower()
+        }
+        $choice = $choice.Trim().ToLower()
+        if ($choice -eq 'y' -or $choice -eq 'n') {
+            return $choice
+        }
+        Write-Host "Invalid selection. Please enter y or n." -ForegroundColor Red
+    }
+}
 
 # Helper to create a directory if it does not exist
 function New-DirectoryIfNotExists {
@@ -171,8 +209,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: High control. You review a formal design document before any code is written."
     Write-Host "      - Cons: Adds an extra review step for all tasks, including minor ones."
     Write-Host "      - Consequence: AI must write and get approval for an implementation plan first."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $AutonomyModeVal = "- **Autonomous Mode:** If you encounter ambiguity, decide what is best based on your senior expertise, implement it, and explain your choice in the summary. Ask only when blocked."
@@ -192,8 +229,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Seamless development. AI handles package installations on its own."
     Write-Host "      - Cons: Risk of installing unneeded, heavy, or poorly-licensed libraries."
     Write-Host "      - Consequence: AI may add standard, safe packages without prompting."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $DependencyPolicyVal = "- **Proactive Dependency Policy:** You can install standard, widely-used packages if they are necessary for the implementation, but inform the user in the summary."
@@ -215,8 +251,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: AI can completely redesign structures and libraries for optimal efficiency."
     Write-Host "      - Cons: High risk of structure fragmentation and incompatible design patterns."
     Write-Host "      - Consequence: AI has full control over files, directories, databases, and schemas."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $ArchitecturePolicyVal = "- **Flexible Architecture Scope:** You may suggest and implement minor architectural improvements or helper utilities if they simplify the implementation, but document them in the task summary."
@@ -241,8 +276,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Maximum access to any library on npm/pip/go package registries."
     Write-Host "      - Cons: High risk of legal violations or open-sourcing proprietary code."
     Write-Host "      - Consequence: AI will not verify licenses when adding dependencies."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $LicensePolicyVal = "- **License Constraints:** You are allowed to introduce dependencies under permissive licenses (MIT, Apache 2.0, BSD, Public Domain) and weak-copyleft licenses (LGPL, MPL). Refer to the knowledge/licenses.md file for details."
@@ -267,8 +301,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Completely isolates AI work from main development branch."
     Write-Host "      - Cons: Requires managing, reviewing, and merging additional git branches."
     Write-Host "      - Consequence: AI creates a dedicated task branch to commit its changes."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $GitPolicyVal = "- **Git Autonomy:** You are allowed to stage and commit your changes on the current branch. Use Conventional Commits formatting (e.g., `"feat(ui): add button`") for commit messages."
@@ -288,8 +321,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Fast cleanups of project history and deprecated components."
     Write-Host "      - Cons: Risk of executing commands that permanently destroy data."
     Write-Host "      - Consequence: AI is allowed to delete files or run cleanup commands independently."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $SafetyPolicyVal = "- **Critical Operations Policy:** You can perform cleanup actions (like removing obsolete prototype files or database tables) if it is directly required to complete the task."
@@ -305,8 +337,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Automatic and seamless local environment configuration."
     Write-Host "      - Cons: High risk of accidental credential leaks to Git."
     Write-Host "      - Consequence: AI is allowed to write mock/test credentials to local config files."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $SecretsPolicyVal = "- **Secrets & Security:** You may generate or update local configuration and .env files with test or dummy credentials for local execution, but never commit them to Git."
@@ -324,8 +355,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Deeper understanding of full codebase dependencies, safer refactoring."
     Write-Host "      - Cons: Extremely high token consumption, high costs, risks context window saturation."
     Write-Host "      - Consequence: AI reads entire files and directories before making modifications."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $ContextManagementPolicyVal = "- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
@@ -345,8 +375,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Continuous code health improvements, fixes types/formatting in passing."
     Write-Host "      - Cons: Larger diffs, slight risk of regression in surrounding code."
     Write-Host "      - Consequence: AI will format and clean up adjacent code smells in modified files."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $RefactoringPolicyVal = "- **Boy Scout Rule:** Proactively clean up minor code smells, formatting issues, or type safety gaps in files you are already modifying, as long as it does not expand the scope excessively."
@@ -363,8 +392,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Maximum iteration speed, zero tool execution overhead."
     Write-Host "      - Cons: Risk of committing unformatted or style-violating code if developer forgets."
     Write-Host "      - Consequence: AI relies entirely on manual compliance and will not auto-run tools."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $LintingPolicyVal = "- **Linting & Formatting:** Do not run formatting or linting commands automatically unless explicitly requested. Focus on functional correctness, adhering to the surrounding code style manually."
@@ -380,8 +408,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Rapid implementation of wide features, fewer prompts."
     Write-Host "      - Cons: Harder to debug, larger PRs, high risk of breaking unrelated systems."
     Write-Host "      - Consequence: AI will implement multi-file refactors in a single pass."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TaskManagementPolicyVal = "- **Task Boundaries:** You have flexible scope. If a feature requires modifying several files or modules, implement them in a single stream, but document the full list of files affected in the summary."
@@ -397,8 +424,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: High educational value, explains design patterns and choices."
     Write-Host "      - Cons: Large token consumption, slower responses, potential context bloat."
     Write-Host "      - Consequence: Good for learning a new stack, but increases costs and latency."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $CommunicationPolicyVal = "- **Communication Style:** Provide detailed, step-by-step explanations of your implementation decisions, design patterns, and potential alternatives. Focus on educational value."
@@ -423,8 +449,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Maximum stability, code correctness verified automatically."
     Write-Host "      - Cons: Much slower implementation times due to writing extensive test cases."
     Write-Host "      - Consequence: AI will write thorough unit/integration tests for all paths."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestingCoverageVal = "- **Testing Coverage:** No tests are required for this project. Focus entirely on speed and coding."
@@ -444,8 +469,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Ensures clean API design, forces implementation of requirements."
     Write-Host "      - Cons: Higher startup overhead; requires mock setups before code is written."
     Write-Host "      - Consequence: AI writes failing tests first, then implements code to pass."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestingApproachVal = "- **Testing Approach:** Follow Test-Driven Development (TDD) principles. Write failing tests before writing the implementation."
@@ -468,8 +492,7 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: 100% certainty that no regressions exist anywhere in the codebase."
     Write-Host "      - Cons: Very slow developer loop if the test suite is large."
     Write-Host "      - Consequence: AI runs the entire repository test suite on every change."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $TestExecutionScopeVal = "- **Test Execution Scope:** Run unit and module integration tests for the current feature scope during iterations."
@@ -480,42 +503,66 @@ if (-not $NonInteractive) {
 
     # --- SECTION 4: Tech Stack ---
     Write-Host "--- SECTION 4: Tech Stack ---" -ForegroundColor Yellow
-    Write-Host "4.1) Select Tech Stack / Framework:"
-    Write-Host "  [1] Node.js / TypeScript"
-    Write-Host "      - Pros: Strict types, modern async/await patterns, standard backend runtime."
-    Write-Host "      - Cons: Requires package.json, npm/yarn setup, and tsconfig compilation."
-    Write-Host "      - Consequence: Presets rules for strict TypeScript types and async patterns."
-    Write-Host "  [2] Python"
-    Write-Host "      - Pros: Clean, highly readable, standard for scripting, tooling, and data."
-    Write-Host "      - Cons: Environment/dependency management can sometimes conflict."
-    Write-Host "      - Consequence: Presets rules for PEP 8 compliance and type hints."
-    Write-Host "  [3] Go"
-    Write-Host "      - Pros: High performance, simple language design, fast compilation."
-    Write-Host "      - Cons: Strict conventions, verbose error handling."
-    Write-Host "      - Consequence: Presets rules for standard Go patterns and error handling."
-    Write-Host "  [4] React / Next.js"
-    Write-Host "      - Pros: Structured framework conventions for full-stack web development."
-    Write-Host "      - Cons: High build complexity, client vs. server component management."
-    Write-Host "      - Consequence: Presets rules for React hooks, functional components, and routing."
-    Write-Host "  [5] Decide later / General [Default]"
-    Write-Host "      - Pros: Universal layout. Adapts to any language or framework automatically."
-    Write-Host "      - Cons: No language-specific coding rules generated at bootstrap."
-    Write-Host "      - Consequence: Default general coding rules are applied."
-    $opt = Read-Host "Select option [1-5] [Default: 5]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "5" }
+    Write-Host "Note: You can always add, modify, or extend your tech stack rules later by editing 'ai/rules/coding.md'."
+    Write-Host "4.1) Select Tech Stack / Framework option:"
+    Write-Host "  [1] Decide later / General [Default]"
+    Write-Host "      - Universal layout. Adapts to any language or framework automatically."
+    Write-Host "  [2] Custom Selection / Choose multiple"
+    Write-Host "      - Choose specific technologies from a list of popular options."
+    
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
-    switch ($opt) {
-        "1" {
-            $TechStackVal = "- Stack: Node.js / TypeScript.`n- Use strict TypeScript configurations.`n- Prefer async/await over raw Promises.`n- Avoid using ``any`` type annotations; define interfaces or types."
+
+    if ($opt -eq 1) {
+        $TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
+    } else {
+        $chosenStacks = @()
+        
+        $choice = Get-ValidatedYN -PromptText "Include Node.js / TypeScript?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: Node.js / TypeScript.`n- Use strict TypeScript configurations.`n- Prefer async/await over raw Promises.`n- Avoid using ``any`` type annotations; define interfaces or types."
         }
-        "2" {
-            $TechStackVal = "- Stack: Python.`n- Adhere to PEP 8 standards.`n- Use type hints for all public function signatures.`n- Prefer list comprehensions and generator expressions where readable."
+        
+        $choice = Get-ValidatedYN -PromptText "Include Python?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: Python.`n- Adhere to PEP 8 standards.`n- Use type hints for all public function signatures.`n- Prefer list comprehensions and generator expressions where readable."
         }
-        "3" {
-            $TechStackVal = "- Stack: Go.`n- Use standard Go conventions (``gofmt``, ``go lint``).`n- Explicitly handle all errors; do not ignore them.`n- Keep packages cohesive and API surfaces clean."
+        
+        $choice = Get-ValidatedYN -PromptText "Include Go?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: Go.`n- Use standard Go conventions (``gofmt``, ``go lint``).`n- Explicitly handle all errors; do not ignore them.`n- Keep packages cohesive and API surfaces clean."
         }
-        "4" {
-            $TechStackVal = "- Stack: React / Next.js.`n- Use functional components with hooks.`n- Keep components small, reusable, and state localized.`n- Follow Next.js directory and routing conventions."
+        
+        $choice = Get-ValidatedYN -PromptText "Include React / Next.js?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: React / Next.js.`n- Use functional components with hooks.`n- Keep components small, reusable, and state localized.`n- Follow Next.js directory and routing conventions."
+        }
+        
+        $choice = Get-ValidatedYN -PromptText "Include Rust?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: Rust.`n- Follow Cargo and standard Clippy lints.`n- Handle results/errors explicitly; avoid ``.unwrap()`` in production code.`n- Adhere to ownership and borrowing rules without unnecessary cloning."
+        }
+        
+        $choice = Get-ValidatedYN -PromptText "Include Java / Spring Boot?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: Java / Spring Boot.`n- Follow standard Java CamelCase naming conventions.`n- Use constructor-based dependency injection.`n- Utilize standard Spring Boot annotations correctly and keep controllers thin."
+        }
+        
+        $choice = Get-ValidatedYN -PromptText "Include C# / .NET?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: C# / .NET.`n- Follow Microsoft C# coding conventions and naming guidelines (PascalCase).`n- Use modern C# language features and expression-bodied members.`n- Implement async/await correctly for all I/O bound operations."
+        }
+        
+        $choice = Get-ValidatedYN -PromptText "Include PHP / Laravel?" -DefaultVal "n"
+        if ($choice -eq "y") {
+            $chosenStacks += "- Stack: PHP / Laravel.`n- Adhere to PSR-12 coding standard.`n- Declare strict types (``declare(strict_types=1);``).`n- Leverage Eloquent ORM correctly and avoid raw SQL where possible."
+        }
+
+        if ($chosenStacks.Count -eq 0) {
+            Write-Host "No technologies selected. Defaulting to General."
+            $TechStackVal = "- Stack: General / To be defined later.`n- Adhere to the existing coding style of any file you edit."
+        } else {
+            $TechStackVal = $chosenStacks -join "`n`n"
         }
     }
     Write-Host ""
@@ -538,11 +585,10 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Complete workspace readiness. Any team developer's IDE will pick up the rules."
     Write-Host "      - Cons: Creates minor clutter by adding 10 pointer files in the root."
     Write-Host "      - Consequence: Pointers for Claude Code, Cursor, Cline, Windsurf, Copilot, etc., are all created."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
     Write-Host "Selected: $opt"
 
-    if ($opt -eq "3") {
+    if ($opt -eq 3) {
         $GenClaude = $true
         $GenCursor = $true
         $GenCline = $true
@@ -552,73 +598,73 @@ if (-not $NonInteractive) {
         $GenAider = $true
         $GenTabnine = $true
         $GenCody = $true
-    } elseif ($opt -eq "2") {
-        $choice = Read-Host "Generate Claude Code pointer (CLAUDE.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+    } elseif ($opt -eq 2) {
+        $choice = Get-ValidatedYN -PromptText "Generate Claude Code pointer (CLAUDE.md)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenClaude = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Cursor pointer (.cursorrules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Cursor pointer (.cursorrules)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenCursor = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Cline/Roo Code pointer (.clinerules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Cline/Roo Code pointer (.clinerules)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenCline = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Windsurf pointer (.windsurfrules)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Windsurf pointer (.windsurfrules)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenWindsurf = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate GitHub Copilot pointer (.github/copilot-instructions.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate GitHub Copilot pointer (.github/copilot-instructions.md)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenCopilot = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate JetBrains AI Assistant pointer (.aiassistant/rules/main.md)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenJetbrains = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Aider pointer (CONVENTIONS.md & .aider.conf.yml)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenAider = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Tabnine pointer (.tabnine/guidelines/main.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Tabnine pointer (.tabnine/guidelines/main.md)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenTabnine = $true
             Write-Host "Selected: Yes"
         } else {
             Write-Host "Selected: No"
         }
 
-        $choice = Read-Host "Generate Sourcegraph Cody pointer (.cody/rules.md)? [y/N] [Default: N]"
-        if ($choice -match "^[yY](es)?$") {
+        $choice = Get-ValidatedYN -PromptText "Generate Sourcegraph Cody pointer (.cody/rules.md)?" -DefaultVal "n"
+        if ($choice -eq "y") {
             $GenCody = $true
             Write-Host "Selected: Yes"
         } else {
@@ -639,14 +685,12 @@ if (-not $NonInteractive) {
     Write-Host "      - Pros: Instant tracking, easy to review changes, standard professional setup."
     Write-Host "      - Cons: Adds the '.git' directory to the workspace root."
     Write-Host "      - Consequence: Initializes Git repo, copies 'knowledge/git.md' template, and stages initial files."
-    $opt = Read-Host "Select option [1-2] [Default: 1]"
-    if ([string]::IsNullOrWhiteSpace($opt)) { $opt = "1" }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $InitGit = $true
     }
     Write-Host ""
-}
 }
 
 # Helper to generate file with user preferences replaced
@@ -843,8 +887,8 @@ if (-not $NonInteractive) {
     Write-Host "  [3] Keep everything as-is (do not delete or cleanup anything)"
     Write-Host "      - Pros: Leaves all setup files and templates completely untouched."
     Write-Host "      - Cons: Clutters the root directory with unused setup scripts."
-    $opt = Read-Host "Select option [1-3] [Default: 1]"
-    if (-not [string]::IsNullOrWhiteSpace($opt)) { $CleanupOption = $opt }
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-3]" -DefaultVal 1 -MaxVal 3
+    $CleanupOption = "$opt"
     Write-Host "Selected: $CleanupOption"
 } else {
     Write-Host "Non-interactive run: Cleaning up setup scripts and one-time templates..."

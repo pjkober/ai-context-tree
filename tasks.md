@@ -82,3 +82,4 @@ depends_on:
 
 ---
 - [task-058](tasks/task-058-add-file-templates-to-manifest.md) — Add file-templates/ to MANIFEST.md and handle dynamic cleanup removal (done)
+- [task-059](tasks/task-059-multi-select-tech-stack-and-input-validation.md) — Multi-select Tech Stack and CLI input validation (in_progress)
