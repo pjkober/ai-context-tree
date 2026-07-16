@@ -162,7 +162,7 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-064](tasks/task-064-remove-duplicate-mermaid-diagram.md) — Remove Duplicate Mermaid Diagram (SSOT Violation) (done)
 - [task-065](tasks/task-065-fix-incomplete-task-index.md) — Fix Incomplete Task Index in `tasks.md` (done)
 - [task-066](tasks/task-066-remove-emoji-from-docs-navigation.md) — Remove Remaining Emoji from Navigation Breadcrumbs in `docs/` (done)
-- [task-067](tasks/task-067-fix-broken-wiki-link-gitignore.md) — Fix Broken Obsidian Wiki-Link in `knowledge/gitignore.md` (todo)
+- [task-067](tasks/task-067-fix-broken-wiki-link-gitignore.md) — Fix Broken Obsidian Wiki-Link in `knowledge/gitignore.md` (done)
 - [task-068](tasks/task-068-add-comments-to-rule-template-placeholders.md) — Add Instructive Comments to Rule Template Placeholders (todo)
 - [task-069](tasks/task-069-cleanup-tmp-directory.md) — Clean Up `tmp/` Directory and Add `.gitkeep` (todo)
 - [task-070](tasks/task-070-add-missing-ai-context-templates.md) — Add Missing `ai/context/` Companion Templates (todo)
