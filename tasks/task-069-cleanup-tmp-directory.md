@@ -2,7 +2,7 @@
 id: task-069
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: chore
 owner: pjk
@@ -54,6 +54,13 @@ The presence of these files could confuse new users examining the project struct
 
 ## Verification
 
-- `ls tmp/` shows only `.gitkeep`.
-- `git status` shows no untracked/modified files in `tmp/` (except `.gitkeep` if newly added).
-- `cat .gitignore | grep tmp` confirms `tmp/*` is excluded and `!tmp/.gitkeep` is tracked.
+- `tmp/` is verified to be clean on disk (leftover artifacts were not committed or were removed during checkout).
+- `.gitignore` was updated to exclude `tmp/*` but whitelist `!tmp/.gitkeep`.
+- Created an empty `tmp/.gitkeep` and confirmed it is properly tracked by Git (`git status` shows it as staged/tracked).
+
+### Walkthrough of Changes
+1. Examined `tmp/` and verified no leftover test artifacts were present on disk.
+2. Updated `.gitignore` file to replace `tmp/` ignore rule with `tmp/*` and `!tmp/.gitkeep`.
+3. Created an empty `.gitkeep` file inside the `tmp/` folder.
+4. Verified using `git status` that `.gitkeep` is tracked and other files created inside `tmp/` are ignored.
+5. Staged and committed the changes.
