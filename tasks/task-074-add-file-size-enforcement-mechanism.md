@@ -1,7 +1,7 @@
 ---
 id: task-074
 tags:
-  - tasks
+- tasks
 status: todo
 priority: medium
 type: feature
@@ -9,15 +9,17 @@ owner: pjk
 created: 2026-07-16
 updated: 2026-07-16
 depends_on:
-  - task-063
+- task-063
 ---
 
 # Task-074: Add File Size Rule Enforcement Mechanism
 
 ## Source
+
 Report section 5.4 (Ambiguity).
 
 ## Location
+
 - `file-templates/ai/workflows/new-feature.md` -- add a Definition of Done check step
 - `file-templates/ai/rules/coding.md` -- reinforce the 300-line rule
 - `scripts/` (new file) -- `check-file-sizes.sh`
@@ -70,6 +72,7 @@ Make the script executable and add it to the `scripts/` directory.
 ### 2. Add a Definition of Done step to `file-templates/ai/workflows/new-feature.md`
 
 Add a final step:
+
 ```markdown
 7. Verify file sizes: Run `./scripts/check-file-sizes.sh` and confirm no modified files exceed 300 lines. If a file exceeds the limit, split it following the single-responsibility principle before marking the task as done.
 ```
@@ -77,6 +80,7 @@ Add a final step:
 ### 3. Reinforce the rule in `file-templates/ai/rules/coding.md`
 
 Under "General Guidelines", replace or augment the existing line:
+
 ```markdown
 - Keep files under 300 lines. If a file exceeds this limit, split it into focused sub-files following the single-responsibility principle. Run `./scripts/check-file-sizes.sh` to detect violations.
 ```
