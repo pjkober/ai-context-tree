@@ -2,7 +2,7 @@
 id: task-065
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: docs
 owner: pjk
@@ -67,3 +67,11 @@ Explicitly document that the index shows only the last N tasks and provide a she
 
 - `tasks.md` either contains all task entries or explicitly documents the partial-index convention.
 - Any reader opening `tasks.md` can understand how to find older tasks without guessing.
+
+### Walkthrough of Changes
+1. Added completeness rule (item 4) under the `Completed Task Lifecycle Rule` section in `tasks.md`:
+   `4. The index must be kept complete. Add every new task as a line entry when it is created.`
+2. Created a script `tmp/update_tasks_index.py` to recursively scan all 92 task files, parse their titles and statuses, format the list, and write it to the `Task Index` section in `tasks.md`.
+3. Executed the script and verified that all 92 tasks (001-092) are now indexed in `tasks.md` with their correct status.
+4. Cleaned up the temporary script `tmp/update_tasks_index.py`.
+5. Staged and committed changes.
