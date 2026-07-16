@@ -5,3 +5,4 @@
 3. Implement according to `ai/rules/coding.md`.
 4. Add tests in `tests/`.
 5. Update `CHANGELOG.md`.
+6. Update `MANIFEST.md` if any new directories or key files were created during this task.

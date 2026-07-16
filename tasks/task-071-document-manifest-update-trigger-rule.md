@@ -2,7 +2,7 @@
 id: task-071
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -64,3 +64,9 @@ After the step for adding tests, add:
 - `templates/AGENTS.md` contains an explicit MANIFEST update rule.
 - `docs/structure/root-files.md` contains a "When to Update" subsection for MANIFEST.md with trigger conditions.
 - `templates/ai/workflows/new-feature.md` contains a MANIFEST update step.
+
+### Walkthrough of Changes
+1. Updated `templates/AGENTS.md` to add `MANIFEST.md Update Rule` entry in the "Follow (Rules & Guidelines)" section.
+2. Expanded the `MANIFEST.md` documentation block in `docs/structure/root-files.md` to add the "When to Update" subsection outlining trigger requirements.
+3. Added step 6 to `templates/ai/workflows/new-feature.md` requesting updates to `MANIFEST.md` when directories or key files are created.
+4. Staged and committed changes.

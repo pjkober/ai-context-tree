@@ -27,6 +27,18 @@ The map of the entire repository.
 - **Rule:** Contains only paths and links — no textual descriptions or summaries.
 - **Template:** [templates/MANIFEST.md](../../templates/MANIFEST.md)
 
+### When to Update
+
+Update `MANIFEST.md` immediately (in the same commit) whenever:
+- A new top-level directory is created.
+- A key file (e.g., `AGENTS.md`, `README.md`, contract files, major docs) is added, renamed, or deleted.
+- A directory is deleted or archived.
+
+Do NOT update `MANIFEST.md` for:
+- Files inside `tmp/` (excluded from git).
+- Temporary or scratch files.
+- Files added during testing that will be reverted.
+
 ---
 
 ## README.md
