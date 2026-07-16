@@ -1,4 +1,4 @@
-[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+[Previous: AI Agent Rules and Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: Implementation Files ->](implementation.md)
 
 ---
 
@@ -69,5 +69,5 @@ System technical and architectural documentation.
 - **Template (module-architecture.md):** [templates/docs/architecture/module-architecture.md](../../templates/docs/architecture/module-architecture.md)
 
 ---
-[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+[Previous: AI Agent Rules and Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: Implementation Files ->](implementation.md)
 

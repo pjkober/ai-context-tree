@@ -1,4 +1,4 @@
-[← Previous: 📂 Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: 📘 Business Specifications & Contracts →](business-knowledge.md)
+[Previous: Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: Business Specifications and Contracts ->](business-knowledge.md)
 
 ---
 
@@ -112,7 +112,7 @@ Reusable agent execution scripts.
 - **Template:** [templates/ai/runs/run-001-example-automation.sh](../../templates/ai/runs/run-001-example-automation.sh)
 
 ---
-[← Previous: 📂 Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: 📘 Business Specifications & Contracts →](business-knowledge.md)
+[Previous: Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: Business Specifications and Contracts ->](business-knowledge.md)
 
 
 

@@ -1,4 +1,4 @@
-[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+[Home (README)](../../README.md) | [Next: AI Agent Rules and Workflows ->](ai-agents.md)
 
 ---
 
@@ -95,5 +95,5 @@ GitHub-specific automation configuration.
 - **Rule:** Workflows must not contain raw business or architecture explanations; refer to scripts in `scripts/` or rules in `ai/workflows/`.
 
 ---
-[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+[Home (README)](../../README.md) | [Next: AI Agent Rules and Workflows ->](ai-agents.md)
 

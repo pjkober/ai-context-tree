@@ -1,4 +1,4 @@
-[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+[Previous: Implementation Files](implementation.md) | [Home (README)](../../README.md)
 
 ---
 
@@ -70,5 +70,5 @@ Temporary working directory.
 - **Rule:** Created at project start containing a `.gitkeep` file. All contents are ignored via `.gitignore` (`tmp/*`), but the directory itself is tracked. Must be excluded from CI/CD pipeline steps.
 
 ---
-[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+[Previous: Implementation Files](implementation.md) | [Home (README)](../../README.md)
 

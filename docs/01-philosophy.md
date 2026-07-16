@@ -1,4 +1,4 @@
-[Home (README)](../README.md) | [Next: 🛠️ Core Principles →](02-core-principles.md)
+[Home (README)](../README.md) | [Next: Core Principles ->](02-core-principles.md)
 
 ---
 
@@ -35,5 +35,5 @@ To minimize guesswork by AI agents and optimize human readability, a project str
 - **One knowledge category = one directory; one topic = one file.** This prevents cross-contamination of contexts.
 
 ---
-[Home (README)](../README.md) | [Next: 🛠️ Core Principles →](02-core-principles.md)
+[Home (README)](../README.md) | [Next: Core Principles ->](02-core-principles.md)
 

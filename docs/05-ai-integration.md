@@ -1,4 +1,4 @@
-[← Previous: 🏷️ Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: 🚀 Initialization Guide →](06-initialization-guide.md)
+[Previous: Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: Initialization Guide ->](06-initialization-guide.md)
 
 ---
 
@@ -129,5 +129,5 @@ flowchart TD
 ```
 
 ---
-[← Previous: 🏷️ Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: 🚀 Initialization Guide →](06-initialization-guide.md)
+[Previous: Terminology Management](04-terminology-management.md) | [Home (README)](../README.md) | [Next: Initialization Guide ->](06-initialization-guide.md)
 
