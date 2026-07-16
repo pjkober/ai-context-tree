@@ -15,6 +15,9 @@ Project description and stack entry points.
 - **Role:** High-level project context files, including `project.md`, `stack.md`, `modules.md`, `glossary.md`, and `structure-map.md`.
 - **Rule:** These files are entry points and must contain *only* high-level descriptions and links to actual detailed guides in `docs/`, `config/`, or `decisions/`. No duplication of technical details is allowed.
 - **Template (project.md):** [templates/ai/context/project.md](../../templates/ai/context/project.md)
+- **Template (stack.md):** [templates/ai/context/stack.md](../../templates/ai/context/stack.md)
+- **Template (modules.md):** [templates/ai/context/modules.md](../../templates/ai/context/modules.md)
+- **Template (glossary.md):** [templates/ai/context/glossary.md](../../templates/ai/context/glossary.md)
 
 ### structure-map.md
 A crucial file that supports the incremental growth principle.

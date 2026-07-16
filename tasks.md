@@ -165,7 +165,7 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-067](tasks/task-067-fix-broken-wiki-link-gitignore.md) — Fix Broken Obsidian Wiki-Link in `knowledge/gitignore.md` (done)
 - [task-068](tasks/task-068-add-comments-to-rule-template-placeholders.md) — Add Instructive Comments to Rule Template Placeholders (done)
 - [task-069](tasks/task-069-cleanup-tmp-directory.md) — Clean Up `tmp/` Directory and Add `.gitkeep` (done)
-- [task-070](tasks/task-070-add-missing-ai-context-templates.md) — Add Missing `ai/context/` Companion Templates (todo)
+- [task-070](tasks/task-070-add-missing-ai-context-templates.md) — Add Missing `ai/context/` Companion Templates (done)
 - [task-071](tasks/task-071-document-manifest-update-trigger-rule.md) — Document MANIFEST.md Update Trigger Rule (todo)
 - [task-072](tasks/task-072-clarify-history-vs-memory-distinction.md) — Clarify Distinction Between `ai/history/` and `ai/memory/` (todo)
 - [task-073](tasks/task-073-define-plans-vs-specs-boundary.md) — Define Clear Boundary Between `plans/` and `specs/` (todo)

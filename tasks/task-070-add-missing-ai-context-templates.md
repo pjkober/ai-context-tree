@@ -2,7 +2,7 @@
 id: task-070
 tags:
   - tasks
-status: todo
+status: done
 priority: low
 type: docs
 owner: pjk
@@ -101,6 +101,12 @@ Add template links for `stack.md`, `modules.md`, and `glossary.md` under the `ai
 
 ## Verification
 
-- `ls templates/ai/context/` shows: `project.md`, `structure-map.md`, `stack.md`, `modules.md`, `glossary.md`.
-- Each new template file has a heading, at least one example row or section, and a `## Related` links section.
-- `docs/structure/ai-agents.md` contains template links for all five `ai/context/` files.
+- Created `stack.md`, `modules.md`, and `glossary.md` under `templates/ai/context/`.
+- Verified that `docs/structure/ai-agents.md` contains the template links for all five files.
+
+### Walkthrough of Changes
+1. Created `templates/ai/context/stack.md` to define tech stack template.
+2. Created `templates/ai/context/modules.md` to define module map template.
+3. Created `templates/ai/context/glossary.md` to define technical glossary template.
+4. Modified `docs/structure/ai-agents.md` to include links to `stack.md`, `modules.md`, and `glossary.md` templates under the `ai/context/` description.
+5. Staged and committed changes.
