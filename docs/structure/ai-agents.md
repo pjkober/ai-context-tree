@@ -70,12 +70,15 @@ Code scaffolding templates.
 
 ---
 
-## ai/memory/
+## ai/lessons/
 
-Project historical memory.
+Role: Extracted knowledge -- what was learned from past mistakes or decisions.
 
-- **Role:** Tracks historical lessons, post-mortems, known issues, and technical debt (e.g. `known-problems.md`).
+- **Role:** Tracks historical lessons, post-mortems, known issues, and technical debt.
 - **Rule:** Must only be used for historical knowledge. Active items and backlogs belong in `tasks.md`.
+- **Question it answers:** "What should future agents know to avoid this mistake?"
+- **Example:** `lesson-001-never-use-orm-transactions-with-queue.md` (e.g. detailed lesson learned from a webhook parsing issue).
+- **Template:** [templates/ai/lessons/lesson-001-example.md](../../templates/ai/lessons/lesson-001-example.md)
 
 ---
 
@@ -92,9 +95,11 @@ Project-specific local agent skills.
 
 ## ai/history/
 
-Project conversation memory.
+Role: Raw session logs -- what was said between the developer and the AI agent.
 
 - **Role:** Stores transcript logs, session reviews, or conversation summaries between developers and AI agents (e.g. `conver-NNN-description.md`).
+- **Question it answers:** "What was discussed in this session?"
+- **Example:** `conver-001-setup-payments-api.md` (transcript/chat log of the session that designed the payments module).
 - **Core Rules:**
   - **Descriptive Naming:** Files must be sequentially numbered and descriptively named (e.g. `conver-001-setup-payments-api.md`).
   - **Cleanliness (No Secrets Rule):** Absolutely zero hardcoded API keys, passwords, or secrets.

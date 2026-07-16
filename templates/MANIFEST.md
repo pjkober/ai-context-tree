@@ -3,6 +3,7 @@
 
 ├── [ai/context/](ai/context/)           # Project goals, tech stack, and directory structure map (read by AI first)
 ├── [ai/history/](ai/history/)           # Conversation memory logs (conver-NNN-desc.md)
+├── [ai/lessons/](ai/lessons/)           # Extracted post-mortems, lessons learned, and known issues
 ├── [ai/rules/](ai/rules/)               # Coding, testing, security, and git conventions for the AI agent
 ├── [ai/runs/](ai/runs/)                 # Reusable automation script logs (run-NNN-desc.sh/.ps1)
 ├── [ai/skills/](ai/skills/)             # Project-specific agent skills and reusable prompt templates

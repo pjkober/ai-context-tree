@@ -18,4 +18,5 @@ Execute using (Workflows & Skills):
 
 Log history & runs (No Secrets!):
 ├── ai/history/                    # Conversation memory logs (conver-NNN-desc.md)
+├── ai/lessons/                    # Extracted post-mortems, lessons learned, and known issues (lesson-NNN-desc.md)
 └── ai/runs/                       # Reusable script logs (run-NNN-desc.sh/.ps1)

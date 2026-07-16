@@ -167,7 +167,7 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-069](tasks/task-069-cleanup-tmp-directory.md) — Clean Up `tmp/` Directory and Add `.gitkeep` (done)
 - [task-070](tasks/task-070-add-missing-ai-context-templates.md) — Add Missing `ai/context/` Companion Templates (done)
 - [task-071](tasks/task-071-document-manifest-update-trigger-rule.md) — Document MANIFEST.md Update Trigger Rule (done)
-- [task-072](tasks/task-072-clarify-history-vs-memory-distinction.md) — Clarify Distinction Between `ai/history/` and `ai/memory/` (todo)
+- [task-072](tasks/task-072-clarify-history-vs-memory-distinction.md) — Clarify Distinction Between `ai/history/` and `ai/memory/` (done)
 - [task-073](tasks/task-073-define-plans-vs-specs-boundary.md) — Define Clear Boundary Between `plans/` and `specs/` (todo)
 - [task-074](tasks/task-074-add-file-size-enforcement-mechanism.md) — Add File Size Rule Enforcement Mechanism (todo)
 - [task-075](tasks/task-075-document-manifest-multi-agent-conflict-strategy.md) — Document MANIFEST.md Conflict Resolution for Multi-Agent Scenarios (todo)

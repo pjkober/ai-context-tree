@@ -89,8 +89,8 @@ project/
 │   ├── templates/      # Code scaffolding templates
 │   ├── skills/         # Project-specific agent skills
 │   ├── history/        # Conversation memory logs
-│   ├── runs/           # Reusable execution scripts
-│   └── memory/         # Lessons learned & technical debt records
+│   ├── lessons/        # Lessons learned & technical debt records
+│   └── runs/           # Reusable execution scripts
 ├── specs/              # Business specs & acceptance criteria
 ├── contracts/          # API contracts (OpenAPI, Protobuf, GraphQL)
 ├── docs/               # System & technical architecture documentation

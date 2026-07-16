@@ -2,7 +2,7 @@
 id: task-072
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -59,6 +59,13 @@ If renaming is not desired, add a clear disambiguation note to `docs/structure/a
 
 ## Verification
 
-- `docs/structure/ai-agents.md` contains a disambiguation note under both directory sections.
-- Each section contains at least one concrete file name example.
-- A new developer reading the two sections can immediately determine which directory to use for any given content.
+- `docs/structure/ai-agents.md` contains a disambiguation note under both sections (`ai/history/` and `ai/lessons/`).
+- Each section contains a concrete example.
+- A new example template file `templates/ai/lessons/lesson-001-example.md` is present on disk.
+
+### Walkthrough of Changes
+1. Renamed directory reference from `ai/memory/` to `ai/lessons/` across all documentation and template maps (including `README.md`, `docs/structure/root-files.md`, `docs/structure/ai-agents.md`, `templates/AGENTS.md`, `templates/MANIFEST.md`, `templates/ai/context/structure-map.md`, and future task files like `tasks/task-089-create-rollback-workflow.md`).
+2. Created a concrete lesson template: `templates/ai/lessons/lesson-001-example.md`.
+3. Updated the bootstrap script `create_minimal_structure.sh` to copy `templates/ai/lessons/lesson-001-example.md` on project initialization.
+4. Added clear, specific role, question-answering descriptions, and examples to both `ai/history/` and `ai/lessons/` sections in `docs/structure/ai-agents.md`.
+5. Staged and committed changes.

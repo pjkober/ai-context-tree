@@ -87,7 +87,7 @@ After rolling back:
 ## Step 5: Prevent Recurrence
 
 1. Create a new task in `tasks/` describing what went wrong and what the correct behavior should be.
-2. Add a note to `ai/memory/` or `ai/lessons/` explaining the root cause of the agent mistake.
+2. Add a note to `ai/lessons/` explaining the root cause of the agent mistake.
 3. If the mistake was caused by an ambiguous rule, update `ai/rules/coding.md` to prevent it in future.
 4. If the mistake was caused by a missing specification, add the missing spec to `specs/` before retrying.
 
