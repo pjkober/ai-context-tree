@@ -36,19 +36,7 @@
 
 To keep the workspace clean and avoid polluting the LLM's context, information flows through a clear hierarchy. IDE-specific configuration files act as thin pointers to `AGENTS.md`, which serves as the central hub:
 
-```mermaid
-flowchart TD
-    CONFIG["AI Client Config<br/>(CLAUDE.md / .cursorrules / .clinerules / ...)"]
-    AGENTS["AGENTS.md<br/>(Central Hub / Entry Point)"]
-    CONTEXT["ai/context/<br/>(High-level Project Context)"]
-    SPECS["specs/<br/>(Business Requirements)"]
-    DOCS["docs/<br/>(Technical Documentation)"]
-
-    CONFIG -->|Read AGENTS.md| AGENTS
-    AGENTS --> CONTEXT
-    CONTEXT --> SPECS
-    SPECS --> DOCS
-```
+For a detailed diagram of the context flow, see the [Context Flow section](docs/05-ai-integration.md#context-flow) in the AI Client Integration Guide.
 
 ---
 

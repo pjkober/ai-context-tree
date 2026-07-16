@@ -2,7 +2,7 @@
 id: task-064
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: docs
 owner: pjk
@@ -40,3 +40,9 @@ The identical Mermaid `flowchart TD` context-flow diagram appears verbatim in bo
 - `README.md` contains no Mermaid code block.
 - `docs/05-ai-integration.md` still contains the full diagram.
 - The link from `README.md` to `docs/05-ai-integration.md#context-flow` resolves correctly in a Markdown renderer.
+
+### Walkthrough of Changes
+1. Removed the duplicate Mermaid diagram block from `README.md`.
+2. Replaced the diagram block in `README.md` with a link directly pointing to the canonical `Context Flow` section in `docs/05-ai-integration.md#context-flow`.
+3. Verified that `docs/05-ai-integration.md` contains the canonical `Context Flow` heading and diagram.
+4. Staged and committed the changes.

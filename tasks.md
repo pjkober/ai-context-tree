@@ -101,7 +101,7 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-061](tasks/task-061-rename-file-templates-to-templates.md) — Rename templates to templates (done)
 - [task-062](tasks/task-062-proofread-english-text-for-consistency-and-clarity.md) — Proofread English text for consistency and clarity (done)
 - [task-063](tasks/task-063-rename-file-templates-to-templates.md) — [CRITICAL] Rename `file-templates/` directory to `templates/` (done)
-- [task-064](tasks/task-064-remove-duplicate-mermaid-diagram.md) — [HIGH] Remove duplicate Mermaid diagram from README.md (SSOT violation) (todo)
+- [task-064](tasks/task-064-remove-duplicate-mermaid-diagram.md) — [HIGH] Remove duplicate Mermaid diagram from README.md (SSOT violation) (done)
 - [task-065](tasks/task-065-fix-incomplete-task-index.md) — [HIGH] Fix incomplete task index in tasks.md (todo)
 - [task-066](tasks/task-066-remove-emoji-from-docs-navigation.md) — [MEDIUM] Remove remaining emoji from navigation breadcrumbs in docs/ (todo)
 - [task-067](tasks/task-067-fix-broken-wiki-link-gitignore.md) — [MEDIUM] Fix broken Obsidian wiki-link in knowledge/gitignore.md (todo)
