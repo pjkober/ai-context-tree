@@ -2,7 +2,7 @@
 id: task-068
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -77,7 +77,7 @@ __COMMUNICATION_POLICY__
 __LINTING_POLICY__
 ```
 
-### `security.md` -- add comments above each of its 8 placeholders following the same pattern.
+### `security.md` -- add comments above each of its 9 placeholders following the same pattern.
 
 ### `testing.md` -- add comments above each of its 3 placeholders following the same pattern.
 
@@ -89,3 +89,10 @@ __LINTING_POLICY__
   ```bash
   bash -n create_minimal_structure.sh
   ```
+
+### Walkthrough of Changes
+1. Added detailed, descriptive HTML comments explaining the expected values and providing examples above all 4 placeholders in `templates/ai/rules/coding.md`.
+2. Added detailed, descriptive HTML comments explaining the expected values and providing examples above all 9 placeholders in `templates/ai/rules/security.md`.
+3. Added detailed, descriptive HTML comments explaining the expected values and providing examples above all 3 placeholders in `templates/ai/rules/testing.md`.
+4. Verified that the `create_minimal_structure.sh` script is syntactically correct (`bash -n` exited with 0).
+5. Staged and committed changes.
