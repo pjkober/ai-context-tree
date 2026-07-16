@@ -18,17 +18,17 @@ depends_on:
 Report section 6.8 (Improvement).
 
 ## Location
-- `file-templates/ai/prompts/` (new directory with example files)
-- `file-templates/ai/templates/` (new directory with example files)
+- `templates/ai/prompts/` (new directory with example files)
+- `templates/ai/templates/` (new directory with example files)
 - `docs/structure/ai-agents.md` -- update `ai/prompts/` and `ai/templates/` sections with template links
 
 ## Description
 
-`docs/structure/ai-agents.md` describes both `ai/prompts/` and `ai/templates/` in detail, with role definitions and rules. However, neither directory has any corresponding templates in `file-templates/ai/`. This creates a gap between documented structure and scaffolded reality: a developer following the documentation expects template files to exist, but they do not.
+`docs/structure/ai-agents.md` describes both `ai/prompts/` and `ai/templates/` in detail, with role definitions and rules. However, neither directory has any corresponding templates in `templates/ai/`. This creates a gap between documented structure and scaffolded reality: a developer following the documentation expects template files to exist, but they do not.
 
 ## What to Do
 
-### Create `file-templates/ai/prompts/review.md`
+### Create `templates/ai/prompts/review.md`
 
 ```markdown
 # Prompt: Code Review
@@ -50,7 +50,7 @@ For each file, report:
 Output a bullet list of findings, grouped by file. If there are no findings, state "No issues found."
 ```
 
-### Create `file-templates/ai/prompts/debug.md`
+### Create `templates/ai/prompts/debug.md`
 
 ```markdown
 # Prompt: Debug Failing Test
@@ -72,7 +72,7 @@ Error output:
 4. Explain your reasoning before making any changes.
 ```
 
-### Create `file-templates/ai/templates/service/typescript.md`
+### Create `templates/ai/templates/service/typescript.md`
 
 ```markdown
 # Code Template: Service (TypeScript)
@@ -114,7 +114,7 @@ In the `ai/templates/` section, add:
 
 ## Verification
 
-- `file-templates/ai/prompts/review.md` exists with a usable prompt structure.
-- `file-templates/ai/prompts/debug.md` exists with a usable prompt structure.
-- `file-templates/ai/templates/service/typescript.md` exists.
+- `templates/ai/prompts/review.md` exists with a usable prompt structure.
+- `templates/ai/prompts/debug.md` exists with a usable prompt structure.
+- `templates/ai/templates/service/typescript.md` exists.
 - `docs/structure/ai-agents.md` contains template links for all three new files.

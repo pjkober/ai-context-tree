@@ -20,7 +20,7 @@ depends_on:
 Report section 6.6 (Improvement).
 
 ## Location
-- `file-templates/ai/workflows/new-feature.md`
+- `templates/ai/workflows/new-feature.md`
 
 ## Description
 
@@ -74,6 +74,6 @@ Follow these steps sequentially. Do not skip steps or reorder them.
 
 ## Verification
 
-- `file-templates/ai/workflows/new-feature.md` contains at least 12 steps.
+- `templates/ai/workflows/new-feature.md` contains at least 12 steps.
 - The workflow references: `ai/context/project.md`, `structure-map.md`, `specs/`, `contracts/`, `ai/rules/coding.md`, `ai/rules/testing.md`, `MANIFEST.md`, `CHANGELOG.md`, `Definition of Done.md`.
 - The workflow includes the "Completed Task Lifecycle Rule" step (appending verification to the task file).

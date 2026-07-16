@@ -19,7 +19,7 @@ depends_on:
 Report section 7.4 (Missing element).
 
 ## Location
-- `file-templates/docs/onboarding.md` (new file)
+- `templates/docs/onboarding.md` (new file)
 - `docs/structure/business-knowledge.md` or `docs/structure/implementation.md` -- add mention of onboarding.md
 
 ## Description
@@ -34,7 +34,7 @@ Currently there is no template for this onboarding document, despite `docs/` bei
 
 ## What to Do
 
-### Create `file-templates/docs/onboarding.md`
+### Create `templates/docs/onboarding.md`
 
 ```markdown
 # Developer Onboarding Guide
@@ -98,7 +98,7 @@ Add a mention of the onboarding template under the `docs/` section:
 
 ## Verification
 
-- `file-templates/docs/onboarding.md` exists.
+- `templates/docs/onboarding.md` exists.
 - File covers: AI configuration model, reading order, task creation, and AI agent working conventions.
 - File includes a placeholder section for project-specific notes.
 - A new developer could follow the guide without reading any other file first.

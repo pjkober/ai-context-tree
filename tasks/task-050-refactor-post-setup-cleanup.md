@@ -17,8 +17,8 @@ depends_on: []
 1. Update `create_minimal_structure.sh` and `create_minimal_structure.ps1`.
 2. Modify the post-setup cleanup menu to:
    - Always delete the setup scripts (`create_minimal_structure.sh` and `create_minimal_structure.ps1`).
-   - Offer an option to clean up one-time templates in `file-templates/` (deleting `README.md`, `AGENTS.md`, `MANIFEST.md`, `.gitignore`, `ai/` folder) while keeping the remaining templates (e.g. `specs/`, `decisions/`, etc.) in `file-templates/` for future project growth.
-   - Offer an option to permanently delete the entire `file-templates/` directory.
+   - Offer an option to clean up one-time templates in `templates/` (deleting `README.md`, `AGENTS.md`, `MANIFEST.md`, `.gitignore`, `ai/` folder) while keeping the remaining templates (e.g. `specs/`, `decisions/`, etc.) in `templates/` for future project growth.
+   - Offer an option to permanently delete the entire `templates/` directory.
    - Offer an option to keep everything untouched.
 3. Automatically perform the default cleanup (Option 1) in non-interactive mode.
 4. Update `docs/06-initialization-guide.md` with the new cleanup process.

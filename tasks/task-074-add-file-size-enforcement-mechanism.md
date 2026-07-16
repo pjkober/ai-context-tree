@@ -20,8 +20,8 @@ Report section 5.4 (Ambiguity).
 
 ## Location
 
-- `file-templates/ai/workflows/new-feature.md` -- add a Definition of Done check step
-- `file-templates/ai/rules/coding.md` -- reinforce the 300-line rule
+- `templates/ai/workflows/new-feature.md` -- add a Definition of Done check step
+- `templates/ai/rules/coding.md` -- reinforce the 300-line rule
 - `scripts/` (new file) -- `check-file-sizes.sh`
 
 ## Description
@@ -69,7 +69,7 @@ fi
 
 Make the script executable and add it to the `scripts/` directory.
 
-### 2. Add a Definition of Done step to `file-templates/ai/workflows/new-feature.md`
+### 2. Add a Definition of Done step to `templates/ai/workflows/new-feature.md`
 
 Add a final step:
 
@@ -77,7 +77,7 @@ Add a final step:
 7. Verify file sizes: Run `./scripts/check-file-sizes.sh` and confirm no modified files exceed 300 lines. If a file exceeds the limit, split it following the single-responsibility principle before marking the task as done.
 ```
 
-### 3. Reinforce the rule in `file-templates/ai/rules/coding.md`
+### 3. Reinforce the rule in `templates/ai/rules/coding.md`
 
 Under "General Guidelines", replace or augment the existing line:
 
@@ -88,5 +88,5 @@ Under "General Guidelines", replace or augment the existing line:
 ## Verification
 
 - `scripts/check-file-sizes.sh` exists, is executable, exits 0 when no files exceed 300 lines, exits 1 when violations are found.
-- `file-templates/ai/workflows/new-feature.md` contains a file-size check step.
-- `file-templates/ai/rules/coding.md` references the script.
+- `templates/ai/workflows/new-feature.md` contains a file-size check step.
+- `templates/ai/rules/coding.md` references the script.

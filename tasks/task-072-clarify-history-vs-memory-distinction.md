@@ -18,8 +18,8 @@ Report section 5.2 (Ambiguity).
 
 ## Location
 - `docs/structure/ai-agents.md` -- sections for `ai/history/` and `ai/memory/`
-- `file-templates/ai/history/conver-001-example-transcript.md` -- existing template (good example)
-- `file-templates/ai/memory/` -- needs a concrete example file
+- `templates/ai/history/conver-001-example-transcript.md` -- existing template (good example)
+- `templates/ai/memory/` -- needs a concrete example file
 
 ## Description
 
@@ -36,8 +36,8 @@ The renaming of `ai/memory/` to `ai/lessons/` or `ai/retrospectives/` is conside
 ### Option A (Recommended): Rename `ai/memory/` to `ai/lessons/`
 
 1. Update `docs/structure/ai-agents.md` to rename the section from `ai/memory/` to `ai/lessons/`.
-2. Update `file-templates/ai/context/structure-map.md` if `ai/memory/` is listed there.
-3. Update `file-templates/AGENTS.md` if it references `ai/memory/`.
+2. Update `templates/ai/context/structure-map.md` if `ai/memory/` is listed there.
+3. Update `templates/AGENTS.md` if it references `ai/memory/`.
 4. Add a disambiguation note in both the `ai/history/` and `ai/lessons/` sections:
    ```markdown
    ## ai/history/

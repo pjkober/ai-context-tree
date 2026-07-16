@@ -19,8 +19,8 @@ depends_on:
 Report section 6.7 (Improvement).
 
 ## Location
-- `file-templates/ai/workflows/bugfix.md` (new file)
-- `file-templates/ai/workflows/release.md` (new file)
+- `templates/ai/workflows/bugfix.md` (new file)
+- `templates/ai/workflows/release.md` (new file)
 - `docs/structure/ai-agents.md` -- update `ai/workflows/` section to mention these templates
 
 ## Description
@@ -29,7 +29,7 @@ The `ai/workflows/` directory contains only `new-feature.md`. Bugfix and release
 
 ## What to Do
 
-### Create `file-templates/ai/workflows/bugfix.md`
+### Create `templates/ai/workflows/bugfix.md`
 
 ```markdown
 # Workflow: Bug Fix
@@ -63,7 +63,7 @@ Follow these steps sequentially.
 10. **Update `tasks.md` index** if required by the project convention.
 ```
 
-### Create `file-templates/ai/workflows/release.md`
+### Create `templates/ai/workflows/release.md`
 
 ```markdown
 # Workflow: Release
@@ -107,6 +107,6 @@ In the `ai/workflows/` section, add template links for both new files:
 
 ## Verification
 
-- `file-templates/ai/workflows/bugfix.md` exists with at least 8 steps covering diagnose, fix, and close phases.
-- `file-templates/ai/workflows/release.md` exists with at least 8 steps covering pre-release, documentation, and publish phases.
+- `templates/ai/workflows/bugfix.md` exists with at least 8 steps covering diagnose, fix, and close phases.
+- `templates/ai/workflows/release.md` exists with at least 8 steps covering pre-release, documentation, and publish phases.
 - `docs/structure/ai-agents.md` contains template links for both new files.

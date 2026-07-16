@@ -14,10 +14,10 @@ depends_on:
 
 # Task-019: Update Initialization Scripts and Templates with ai/skills/
 
-**Location:** `create_minimal_structure.sh`, `create_minimal_structure.ps1`, and `file-templates/`
+**Location:** `create_minimal_structure.sh`, `create_minimal_structure.ps1`, and `templates/`
 
 **Description:**
-1. Create a template folder `file-templates/ai/skills/` and put an example template `example-skill.md` inside it.
+1. Create a template folder `templates/ai/skills/` and put an example template `example-skill.md` inside it.
 2. Update the shell script `create_minimal_structure.sh` to:
    - Create `ai/skills/` directory.
    - Copy `ai/skills/example-skill.md` from the template directory.

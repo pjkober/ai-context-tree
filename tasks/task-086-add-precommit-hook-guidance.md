@@ -20,7 +20,7 @@ Report section 7.3 (Missing element).
 
 ## Location
 - `knowledge/git.md` -- add a pre-commit hooks section
-- Optional: `file-templates/ai/rules/git.md` (new file) -- git-specific agent rules
+- Optional: `templates/ai/rules/git.md` (new file) -- git-specific agent rules
 
 ## Description
 
@@ -104,7 +104,7 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 
 ### 2. Add `.pre-commit-config.yaml` template
 
-Create `file-templates/.pre-commit-config.yaml` with the content from step 2 above, so adopters can copy it to their projects during setup.
+Create `templates/.pre-commit-config.yaml` with the content from step 2 above, so adopters can copy it to their projects during setup.
 
 ### 3. Optionally: mention in the bootstrap wizard
 
@@ -116,5 +116,5 @@ In `create_minimal_structure.sh`, add an optional prompt at the end of Section 6
 ## Verification
 
 - `knowledge/git.md` contains a "Pre-commit Hooks" section with setup instructions for both the framework and the manual approach.
-- `file-templates/.pre-commit-config.yaml` exists.
+- `templates/.pre-commit-config.yaml` exists.
 - The pre-commit config correctly catches a test emoji when run manually.

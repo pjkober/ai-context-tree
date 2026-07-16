@@ -13,10 +13,10 @@ depends_on: []
 
 # Task-037: Implement Git Autonomy Policy in creative_minimal_structure Scripts
 
-**Location:** `create_minimal_structure.sh`, `create_minimal_structure.ps1`, and `file-templates/ai/rules/security.md`
+**Location:** `create_minimal_structure.sh`, `create_minimal_structure.ps1`, and `templates/ai/rules/security.md`
 
 **Description:**
-1. Update `file-templates/ai/rules/security.md` to add `## Git & Version Control Autonomy` with `__GIT_POLICY__` placeholder.
+1. Update `templates/ai/rules/security.md` to add `## Git & Version Control Autonomy` with `__GIT_POLICY__` placeholder.
 2. Update the interactive configuration wizards in both `create_minimal_structure.sh` and `create_minimal_structure.ps1` to:
    - Prompt the user with Section 1.5: Choose Git Autonomy Mode:
      - `[1] None (AI only modifies files; human commits) [Default]`
@@ -31,7 +31,7 @@ Defines Git/commit boundaries for AI agents operating on the project.
 ## Verification Walkthrough
 
 1. **Updated Templates:**
-   - Modified `file-templates/ai/rules/security.md` to contain `## Git & Version Control Autonomy` and `__GIT_POLICY__` placeholder.
+   - Modified `templates/ai/rules/security.md` to contain `## Git & Version Control Autonomy` and `__GIT_POLICY__` placeholder.
 2. **Updated Scripts:**
    - Added Option `1.5` to the interactive prompt wizard in both `create_minimal_structure.sh` and `create_minimal_structure.ps1`.
    - Replaced `__GIT_POLICY__` with the corresponding configuration values in both scripts.

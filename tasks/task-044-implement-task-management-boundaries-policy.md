@@ -17,7 +17,7 @@ depends_on: []
 1. Define default value and interactive prompt for "Task Boundaries & Granularity" in `create_minimal_structure.sh` and `create_minimal_structure.ps1`.
 2. Detail the pros, cons, and consequences of each option (Strict Boundaries & Micro-tasks vs. Flexible / Broad Scope) in the wizard.
 3. Recommend "Strict Boundaries & Micro-tasks" as the default.
-4. Add placeholder `__TASK_MANAGEMENT_POLICY__` in `file-templates/ai/rules/security.md`.
+4. Add placeholder `__TASK_MANAGEMENT_POLICY__` in `templates/ai/rules/security.md`.
 5. Update scripts to replace the placeholder dynamically.
 6. Verify and document.
 

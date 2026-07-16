@@ -26,7 +26,7 @@ depends_on:
    - `README.md`
    - `docs/*.md`
    - `docs/structure/*.md`
-   - `file-templates/**/*.md` (if applicable)
+   - `templates/**/*.md` (if applicable)
    Make sure all links point to existing files relative to their directories and are not broken.
 
 **Justification:**

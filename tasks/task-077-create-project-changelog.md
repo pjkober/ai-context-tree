@@ -17,11 +17,11 @@ depends_on: []
 Report section 6.1 (Improvement).
 
 ## Location
-- Root directory: `CHANGELOG.md` (does not currently exist at the project root -- only in `file-templates/`)
+- Root directory: `CHANGELOG.md` (does not currently exist at the project root -- only in `templates/`)
 
 ## Description
 
-The `file-templates/CHANGELOG.md` template exists for target projects, but the `ai-context-tree` project itself does not have a `CHANGELOG.md` in its root. For an open-source standard that has gone through 62+ tracked tasks and multiple structural refactors, the absence of a changelog:
+The `templates/CHANGELOG.md` template exists for target projects, but the `ai-context-tree` project itself does not have a `CHANGELOG.md` in its root. For an open-source standard that has gone through 62+ tracked tasks and multiple structural refactors, the absence of a changelog:
 - Makes it impossible for adopters to know what changed between versions.
 - Creates uncertainty about whether the project is actively maintained.
 - Prevents consumers from doing a quick "what's new" scan before adopting a new version.
@@ -55,12 +55,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - AI IDE pointer files generation in bootstrap wizard (Section 5).
 - Git initialization option in bootstrap wizard (Section 6).
 - Multi-select tech stack configuration in wizard (task-059).
-- `file-templates/` directory with one-time and reusable templates (task-012, task-058).
+- `templates/` directory with one-time and reusable templates (task-012, task-058).
 - Knowledge files: `Autonomy Mode.md`, `Boy Scout Rule.md`, `Context Management.md`, etc.
 
 ### Changed
 - Bootstrap wizard expanded with autonomy, dependency, git, safety, and security policies.
-- Renamed `file-templates/` to `templates/` in all documentation (task-061, pending execution).
+- Renamed `templates/` to `templates/` in all documentation (task-061, pending execution).
 
 ### Fixed
 - Removed Polish language from all files (task-055).

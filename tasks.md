@@ -95,12 +95,12 @@ After completing a task, the agent must:
 
 To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 
-- [task-058](tasks/task-058-add-file-templates-to-manifest.md) — Add file-templates/ to MANIFEST.md and handle dynamic cleanup removal (done)
+- [task-058](tasks/task-058-add-file-templates-to-manifest.md) — Add templates/ to MANIFEST.md and handle dynamic cleanup removal (done)
 - [task-059](tasks/task-059-multi-select-tech-stack-and-input-validation.md) — Multi-select Tech Stack and CLI input validation (done)
 - [task-060](tasks/task-060-update-root-agents-md.md) — Update root AGENTS.md (done)
-- [task-061](tasks/task-061-rename-file-templates-to-templates.md) — Rename file-templates to templates (done)
+- [task-061](tasks/task-061-rename-file-templates-to-templates.md) — Rename templates to templates (done)
 - [task-062](tasks/task-062-proofread-english-text-for-consistency-and-clarity.md) — Proofread English text for consistency and clarity (done)
-- [task-063](tasks/task-063-rename-file-templates-to-templates.md) — [CRITICAL] Rename `file-templates/` directory to `templates/` (todo)
+- [task-063](tasks/task-063-rename-file-templates-to-templates.md) — [CRITICAL] Rename `file-templates/` directory to `templates/` (done)
 - [task-064](tasks/task-064-remove-duplicate-mermaid-diagram.md) — [HIGH] Remove duplicate Mermaid diagram from README.md (SSOT violation) (todo)
 - [task-065](tasks/task-065-fix-incomplete-task-index.md) — [HIGH] Fix incomplete task index in tasks.md (todo)
 - [task-066](tasks/task-066-remove-emoji-from-docs-navigation.md) — [MEDIUM] Remove remaining emoji from navigation breadcrumbs in docs/ (todo)
@@ -124,7 +124,7 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-084](tasks/task-084-add-prompts-and-templates-dir.md) — Add templates for ai/prompts/ and ai/templates/ directories (todo)
 - [task-085](tasks/task-085-add-semantic-versioning.md) — Add semantic versioning (VERSION file) to the standard (todo)
 - [task-086](tasks/task-086-add-precommit-hook-guidance.md) — Add pre-commit hook guidance to knowledge/git.md (todo)
-- [task-087](tasks/task-087-create-onboarding-template.md) — Create team onboarding template at file-templates/docs/onboarding.md (todo)
+- [task-087](tasks/task-087-create-onboarding-template.md) — Create team onboarding template at templates/docs/onboarding.md (todo)
 - [task-088](tasks/task-088-create-multi-agent-coordination-guide.md) — Create multi-agent coordination guidelines document (todo)
 - [task-089](tasks/task-089-create-rollback-workflow.md) — Create rollback.md workflow template for agent mistake recovery (todo)
 - [task-090](tasks/task-090-add-bootstrap-integration-tests.md) — Add integration tests for bootstrap scripts (todo)

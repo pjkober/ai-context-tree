@@ -17,9 +17,9 @@ depends_on: []
 Report section 5.1 (Ambiguity).
 
 ## Location
-- `file-templates/AGENTS.md` -- add the trigger rule
+- `templates/AGENTS.md` -- add the trigger rule
 - `docs/structure/root-files.md` -- expand the MANIFEST.md section
-- `file-templates/ai/workflows/new-feature.md` -- add MANIFEST update step
+- `templates/ai/workflows/new-feature.md` -- add MANIFEST update step
 
 ## Description
 
@@ -27,7 +27,7 @@ The `MANIFEST.md` is defined as a "living index" that must be kept up to date as
 
 ## What to Do
 
-### 1. Add trigger rule to `file-templates/AGENTS.md`
+### 1. Add trigger rule to `templates/AGENTS.md`
 
 In the "Follow (Rules & Guidelines)" section, add a new bullet:
 ```markdown
@@ -52,7 +52,7 @@ Do NOT update `MANIFEST.md` for:
 - Files added during testing that will be reverted.
 ```
 
-### 3. Add a step to `file-templates/ai/workflows/new-feature.md`
+### 3. Add a step to `templates/ai/workflows/new-feature.md`
 
 After the step for adding tests, add:
 ```markdown
@@ -61,6 +61,6 @@ After the step for adding tests, add:
 
 ## Verification
 
-- `file-templates/AGENTS.md` contains an explicit MANIFEST update rule.
+- `templates/AGENTS.md` contains an explicit MANIFEST update rule.
 - `docs/structure/root-files.md` contains a "When to Update" subsection for MANIFEST.md with trigger conditions.
-- `file-templates/ai/workflows/new-feature.md` contains a MANIFEST update step.
+- `templates/ai/workflows/new-feature.md` contains a MANIFEST update step.

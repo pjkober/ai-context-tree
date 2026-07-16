@@ -16,8 +16,8 @@ depends_on: []
 **Location:**
 - `create_minimal_structure.sh`
 - `create_minimal_structure.ps1`
-- `file-templates/ai/rules/coding.md`
-- `file-templates/ai/rules/security.md`
+- `templates/ai/rules/coding.md`
+- `templates/ai/rules/security.md`
 - `docs/05-ai-integration.md` (or a new guide describing configuration options)
 
 **Description:**
@@ -47,7 +47,7 @@ Provides developers with a customized, AI-native setup experience, ensuring imme
 
 ## Verification Walkthrough
 
-1. **Rule Templates Updated:** Updated `coding.md` and added `security.md` templates under `file-templates/ai/rules/` to contain custom preference placeholders.
+1. **Rule Templates Updated:** Updated `coding.md` and added `security.md` templates under `templates/ai/rules/` to contain custom preference placeholders.
 2. **Bash Setup Script Extended:** Modified `create_minimal_structure.sh` to prompt the user with interactive choice menus for all four categories. Implemented `--non-interactive` flag checks to default to consultative/strict/decide later modes.
 3. **PowerShell Setup Script Extended:** Modified `create_minimal_structure.ps1` with equivalent interactive prompts using `Read-Host` and headless mode using `-NonInteractive` flag.
 4. **Placeholder Substitution Verified:** Tested placeholder replacement via Python inline parser scripts and confirmed the correct markdown snippets are generated.

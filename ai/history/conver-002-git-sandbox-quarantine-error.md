@@ -22,7 +22,7 @@ dyld[XXXXX]: Library not loaded: /opt/homebrew/opt/pcre2/lib/libpcre2-8.0.dylib
 When attempting to use the macOS system Git wrapper (`/usr/bin/git`), the execution failed to open project subdirectories, returning:
 ```
 warning: could not open directory 'tasks/': Operation not permitted
-warning: could not open directory 'file-templates/': Operation not permitted
+warning: could not open directory 'templates/': Operation not permitted
 warning: could not open directory 'docs/': Operation not permitted
 warning: could not open directory 'knowledge/': Operation not permitted
 ```

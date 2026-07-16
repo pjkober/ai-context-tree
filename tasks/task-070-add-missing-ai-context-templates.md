@@ -18,7 +18,7 @@ depends_on:
 Report section 4.8 (LOW).
 
 ## Location
-- `file-templates/ai/context/` (after rename from task-063)
+- `templates/ai/context/` (after rename from task-063)
 
 ## Description
 
@@ -33,7 +33,7 @@ A developer following the documentation expects to find templates for all listed
 
 ## What to Do
 
-### Create `file-templates/ai/context/stack.md`
+### Create `templates/ai/context/stack.md`
 
 ```markdown
 # Tech Stack
@@ -57,7 +57,7 @@ A developer following the documentation expects to find templates for all listed
 - [decisions/](../../decisions/)
 ```
 
-### Create `file-templates/ai/context/modules.md`
+### Create `templates/ai/context/modules.md`
 
 ```markdown
 # Module Map
@@ -78,7 +78,7 @@ A high-level overview of the main logical modules and their responsibilities.
 - [contracts/](../../contracts/)
 ```
 
-### Create `file-templates/ai/context/glossary.md`
+### Create `templates/ai/context/glossary.md`
 
 ```markdown
 # Technical Glossary
@@ -101,6 +101,6 @@ Add template links for `stack.md`, `modules.md`, and `glossary.md` under the `ai
 
 ## Verification
 
-- `ls file-templates/ai/context/` shows: `project.md`, `structure-map.md`, `stack.md`, `modules.md`, `glossary.md`.
+- `ls templates/ai/context/` shows: `project.md`, `structure-map.md`, `stack.md`, `modules.md`, `glossary.md`.
 - Each new template file has a heading, at least one example row or section, and a `## Related` links section.
 - `docs/structure/ai-agents.md` contains template links for all five `ai/context/` files.

@@ -19,7 +19,7 @@ Report section 5.6 (Ambiguity).
 
 ## Location
 - `docs/structure/ai-agents.md` -- `ai/runs/` section
-- `file-templates/ai/runs/run-001-example-automation.sh` -- example template
+- `templates/ai/runs/run-001-example-automation.sh` -- example template
 
 ## Description
 
@@ -58,12 +58,12 @@ Every run script must begin with a metadata comment block immediately after the 
 - `reusable: false` -- After successful execution, move the script to `archive/` or delete it. Do not leave one-time scripts accumulating in `ai/runs/`.
 ```
 
-### 2. Update the example template `file-templates/ai/runs/run-001-example-automation.sh`
+### 2. Update the example template `templates/ai/runs/run-001-example-automation.sh`
 
 Add the metadata comment block at the top of the file following the convention above.
 
 ## Verification
 
 - `docs/structure/ai-agents.md` contains the script header convention in the `ai/runs/` section.
-- `file-templates/ai/runs/run-001-example-automation.sh` begins with the metadata comment block.
+- `templates/ai/runs/run-001-example-automation.sh` begins with the metadata comment block.
 - The lifecycle rule for reusable vs. one-time scripts is documented.

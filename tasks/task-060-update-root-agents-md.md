@@ -19,10 +19,10 @@ Update the root `AGENTS.md` file to reflect the actual directory structure and p
 ## Proposed Changes
 - [x] Create workspace task-060 file.
 - [x] Add task-060 to `tasks.md`.
-- [x] Modify the root `AGENTS.md` to map this repository's layout (`docs/`, `knowledge/`, `file-templates/`, `tasks/`, `tasks.md`, `create_minimal_structure.*`).
+- [x] Modify the root `AGENTS.md` to map this repository's layout (`docs/`, `knowledge/`, `templates/`, `tasks/`, `tasks.md`, `create_minimal_structure.*`).
 - [x] Add standard AI guidelines section to the root `AGENTS.md` containing the requested rules.
 
 ## Verification
-- Verified visually that all directories (`docs/`, `knowledge/`, `file-templates/`, `tasks/`, etc.) match the repository structure of `ai-context-tree`.
+- Verified visually that all directories (`docs/`, `knowledge/`, `templates/`, `tasks/`, etc.) match the repository structure of `ai-context-tree`.
 - Confirmed that the requested rules (English docs, no emoji, strict scope compliance, and task-driven execution) are correctly incorporated into the guidelines section of `AGENTS.md`.
 

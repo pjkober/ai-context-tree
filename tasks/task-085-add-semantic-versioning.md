@@ -18,8 +18,8 @@ Report section 7.1 (Missing element).
 
 ## Location
 - `VERSION` (new file at root)
-- `file-templates/AGENTS.md` -- add a version field
-- `file-templates/MANIFEST.md` -- add a version reference
+- `templates/AGENTS.md` -- add a version field
+- `templates/MANIFEST.md` -- add a version reference
 - `README.md` -- add version badge and section
 
 ## Description
@@ -60,7 +60,7 @@ This standard follows [Semantic Versioning](https://semver.org). The current ver
 - PATCH versions fix typos or documentation errors.
 ```
 
-### 3. Add version to `file-templates/AGENTS.md`
+### 3. Add version to `templates/AGENTS.md`
 
 Add a comment line at the top:
 ```markdown

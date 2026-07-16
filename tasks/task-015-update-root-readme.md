@@ -26,7 +26,7 @@ Modify `README.md` to serve as the master index / navigation hub for the reposit
   - Incremental Growth -> links to `docs/03-incremental-growth.md`
   - Terminology -> links to `docs/04-terminology-management.md`
   - AI Integrations -> links to `docs/05-ai-integration.md`
-  - Replicated templates -> link to `file-templates/`
+  - Replicated templates -> link to `templates/`
 - Provide visual tables/links pointing to:
   - Root Files -> `docs/structure/root-files.md`
   - AI Directory -> `docs/structure/ai-agents.md`

@@ -27,7 +27,7 @@ Ensures complete alignment and consistency across all documentation snapshots of
 1. **Verified `ai/skills/` Inclusion:**
    - **Minimal Structure Setup:** Verified that the initialization scripts copy `ai/skills/example-skill.md` template file using `copy_template_file`, meaning it is bootstrapped at start.
    - **README.md Snapshot:** Verified `ai/skills/` is listed in the `README.md` minimal structure tree.
-   - **Documentation Descriptions:** Verified that `docs/structure/ai-agents.md` contains a dedicated section detailing `ai/skills/` (role, rules, template). `docs/03-incremental-growth.md` lists `ai/skills/` in its Minimal Structure snapshot. `docs/05-ai-integration.md` covers workspace-scoped skill pointing. `file-templates/ai/context/structure-map.md` maps `ai/skills/` as created at project start.
+   - **Documentation Descriptions:** Verified that `docs/structure/ai-agents.md` contains a dedicated section detailing `ai/skills/` (role, rules, template). `docs/03-incremental-growth.md` lists `ai/skills/` in its Minimal Structure snapshot. `docs/05-ai-integration.md` covers workspace-scoped skill pointing. `templates/ai/context/structure-map.md` maps `ai/skills/` as created at project start.
    - **Conclusion:** `ai/skills/` is fully covered in both minimal setup and all documentation resources.
 
 2. **Aligned `ai/workflows/` Snapshot:**

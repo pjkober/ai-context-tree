@@ -21,7 +21,7 @@ Report section 7.5 (Missing element).
 ## Location
 - `docs/multi-agent-coordination.md` (new file)
 - `README.md` -- add a link to the new guide
-- `file-templates/AGENTS.md` -- add a reference
+- `templates/AGENTS.md` -- add a reference
 
 ## Description
 

@@ -28,7 +28,7 @@ Create dedicated documentation files explaining the directory structure and spec
 Each file must explain:
 1. What the directory/file is.
 2. The rules/prohibitions associated with it.
-3. Link directly to its template in `file-templates/`.
+3. Link directly to its template in `templates/`.
 
 **Justification:**
 Consolidates the directory-level documentation into small, logically grouped files in a sub-folder to avoid cluttering the parent `docs/` folder, while retaining high LLM utility and human searchability.

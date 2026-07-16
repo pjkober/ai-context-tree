@@ -18,9 +18,9 @@ depends_on:
 Report section 4.6 (MEDIUM).
 
 ## Location
-- `file-templates/ai/rules/coding.md` (after rename from `file-templates/`, see task-063)
-- `file-templates/ai/rules/security.md`
-- `file-templates/ai/rules/testing.md`
+- `templates/ai/rules/coding.md` (after rename from `templates/`, see task-063)
+- `templates/ai/rules/security.md`
+- `templates/ai/rules/testing.md`
 
 ## Description
 

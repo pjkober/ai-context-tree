@@ -26,7 +26,7 @@
 
 The project has matured significantly (62+ tracked tasks, English-only enforcement, emoji removal, bootstrap wizard with 60+ configurable options). However, several areas need attention before this can be considered a stable, production-grade standard:
 
-- The directory naming inconsistency between `file-templates/` and `templates/` is an active self-contradiction with the project's own principles.
+- The directory naming inconsistency between `templates/` and `templates/` is an active self-contradiction with the project's own principles.
 - Template depth is uneven: some areas (rules) have only placeholder stubs while others (knowledge) are detailed and polished.
 - There is no test coverage of any kind for the bootstrap scripts, which are the primary user-facing artifact.
 - The Mermaid context flow diagram appears verbatim in two separate files, violating the project's own SSOT rule.
@@ -92,17 +92,17 @@ The prohibition on abbreviations (`config/` not `cfg/`, `infrastructure/` not `i
 
 ## 4. Issues and Inconsistencies Found
 
-### 4.1 CRITICAL: Directory Named `file-templates/` Instead of `templates/`
+### 4.1 CRITICAL: Directory Named `templates/` Instead of `templates/`
 
 Files affected: `README.md`, `docs/06-initialization-guide.md`, multiple `docs/structure/*.md` files, the bootstrap scripts, `MANIFEST.md` template.
 
-Issue: The project's own Principle 1 (SSOT) and the philosophy document prohibit ambiguous naming and aliases. Yet the actual directory on disk is named `file-templates/` while all documentation, all template links, and the `MANIFEST.md` template refer to it as `templates/`. The `README.md` states explicitly: "The scripts require the `templates/` directory to run."
+Issue: The project's own Principle 1 (SSOT) and the philosophy document prohibit ambiguous naming and aliases. Yet the actual directory on disk is named `templates/` while all documentation, all template links, and the `MANIFEST.md` template refer to it as `templates/`. The `README.md` states explicitly: "The scripts require the `templates/` directory to run."
 
-Running the scripts from the current repo root would fail because the directory is named `file-templates/`, not `templates/`. Task `task-061` is marked `status: done`, but the directory rename did not complete -- `file-templates/` still exists on disk.
+Running the scripts from the current repo root would fail because the directory is named `templates/`, not `templates/`. Task `task-061` is marked `status: done`, but the directory rename did not complete -- `templates/` still exists on disk.
 
 Severity: Critical. This is a direct self-contradiction with the project's core identity and will break the onboarding experience for every new user who clones the repo.
 
-Fix: Rename `file-templates/` to `templates/` to match all existing documentation.
+Fix: Rename `templates/` to `templates/` to match all existing documentation.
 
 ---
 
@@ -148,7 +148,7 @@ Fix: Replace with standard Markdown: `[Git](git.md)`.
 
 ### 4.6 MEDIUM: Rule Templates Are Uninstructive Stubs for Manual Authors
 
-Files affected: `file-templates/ai/rules/coding.md`, `file-templates/ai/rules/security.md`, `file-templates/ai/rules/testing.md`.
+Files affected: `templates/ai/rules/coding.md`, `templates/ai/rules/security.md`, `templates/ai/rules/testing.md`.
 
 Issue: The rule templates use `__PLACEHOLDER__` tokens replaced by the bootstrap script. However, the templates contain no examples, no fallback text, and no inline comments. A developer who manually creates these files has no guidance on what valid content looks like.
 
@@ -168,11 +168,11 @@ Fix: Clean up `tmp/` contents. Add a `.gitkeep` file as documented in `docs/stru
 
 ### 4.8 LOW: `ai/context/` Is Missing Key Companion Templates
 
-Files affected: `file-templates/ai/context/` directory.
+Files affected: `templates/ai/context/` directory.
 
 Issue: `docs/structure/ai-agents.md` explicitly mentions expected files `stack.md`, `modules.md`, and `glossary.md` in `ai/context/`, but none of these have corresponding templates. Only `project.md` and `structure-map.md` exist.
 
-Fix: Add templates for `stack.md`, `modules.md`, and `glossary.md` in `file-templates/ai/context/`.
+Fix: Add templates for `stack.md`, `modules.md`, and `glossary.md` in `templates/ai/context/`.
 
 ---
 
@@ -230,7 +230,7 @@ Recommendation: Add a frontmatter convention for run scripts (as a commented hea
 
 ### 6.1 Add a Populated CHANGELOG.md to the Project Itself
 
-The `file-templates/CHANGELOG.md` template exists, but the project itself does not have a populated `CHANGELOG.md`. For an open-source standard with 62+ tracked changes, a changelog is essential for communicating evolution to adopters.
+The `templates/CHANGELOG.md` template exists, but the project itself does not have a populated `CHANGELOG.md`. For an open-source standard with 62+ tracked changes, a changelog is essential for communicating evolution to adopters.
 
 ### 6.2 Add a `CONTRIBUTING.md` File
 
@@ -264,7 +264,7 @@ The `ai/workflows/` directory contains only `new-feature.md`. Bugfix and release
 
 ### 6.8 Add Templates for `ai/prompts/` and `ai/templates/`
 
-`docs/structure/ai-agents.md` describes these directories with role definitions and rules. Neither has a corresponding template in `file-templates/ai/`.
+`docs/structure/ai-agents.md` describes these directories with role definitions and rules. Neither has a corresponding template in `templates/ai/`.
 
 ---
 
@@ -308,7 +308,7 @@ Adding a `SECURITY.md` at the root describing responsible disclosure and securit
 
 | Risk | Probability | Impact | Mitigation |
 |---|---|---|---|
-| New user clones repo, script fails because `file-templates/` != `templates/` | High | High | Complete the task-061 rename |
+| New user clones repo, script fails because `templates/` != `templates/` | High | High | Complete the task-061 rename |
 | Teams violate SSOT rule without noticing (emoji, diagram duplication) | High | Medium | Add CI lint checks enforcing project rules |
 | AI agent creates unauthorized directory without consulting `structure-map.md` | Medium | Medium | Add explicit check step to `new-feature.md` workflow |
 | Knowledge base becomes stale as AI landscape evolves rapidly | High | Low | Add dated "last reviewed" frontmatter to each knowledge file |
@@ -323,7 +323,7 @@ Adding a `SECURITY.md` at the root describing responsible disclosure and securit
 |---|---|---|
 | Core Concept / Philosophy | 9/10 | Solid, well-reasoned, addresses a real problem |
 | Documentation Quality | 7/10 | Good depth, emoji violations remain, sparse templates |
-| Internal Consistency (SSOT) | 6/10 | Diagram duplication, `file-templates/` naming, emoji in docs |
+| Internal Consistency (SSOT) | 6/10 | Diagram duplication, `templates/` naming, emoji in docs |
 | Bootstrap Wizard / Tooling | 8/10 | Impressive scope, zero integration tests |
 | Knowledge Base | 8/10 | Well-structured, one broken link syntax |
 | Task Management System | 9/10 | Excellent YAML schema and lifecycle rules |
@@ -339,7 +339,7 @@ Adding a `SECURITY.md` at the root describing responsible disclosure and securit
 
 Priority improvements in recommended order:
 
-1. Resolve the `file-templates/` vs. `templates/` naming discrepancy (Critical).
+1. Resolve the `templates/` vs. `templates/` naming discrepancy (Critical).
 2. Remove remaining emoji from navigation links and section headings (High -- active rule violation).
 3. Eliminate the SSOT violation by removing the duplicate Mermaid diagram from `README.md` (High).
 4. Add a CI pipeline that enforces the project's own documented rules against itself (High).

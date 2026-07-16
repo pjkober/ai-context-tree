@@ -59,7 +59,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Scan for emoji in documentation
         run: |
-          if grep -rP "[\x{1F300}-\x{1FFFF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]" docs/ knowledge/ file-templates/ --include="*.md"; then
+          if grep -rP "[\x{1F300}-\x{1FFFF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]" docs/ knowledge/ templates/ --include="*.md"; then
             echo "ERROR: Emoji found in documentation. Rule 2 prohibits emoji."
             exit 1
           fi

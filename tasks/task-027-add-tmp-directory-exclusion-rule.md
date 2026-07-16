@@ -27,7 +27,7 @@ Prevents AI agents from wasting context window and tokens on reading temporary, 
 
 ## Verification
 
-1. **Rule added to templates:** Added rule to `file-templates/ai/rules/security.md` (which gets generated as `ai/rules/security.md` on project setup):
+1. **Rule added to templates:** Added rule to `templates/ai/rules/security.md` (which gets generated as `ai/rules/security.md` on project setup):
    `- Ensure all temporary logs and debug outputs are stored in tmp/ and excluded from Git.`
 2. **Exclusion mapped in structures:** Confirmed that `tmp/` is ignored by default in the standard `.gitignore` template file.
 

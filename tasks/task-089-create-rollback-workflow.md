@@ -19,7 +19,7 @@ depends_on:
 Report section 7.6 (Missing element).
 
 ## Location
-- `file-templates/ai/workflows/rollback.md` (new file)
+- `templates/ai/workflows/rollback.md` (new file)
 - `docs/structure/ai-agents.md` -- add template link in `ai/workflows/` section
 
 ## Description
@@ -30,7 +30,7 @@ This workflow is especially critical for teams using Autonomy Mode (full autonom
 
 ## What to Do
 
-### Create `file-templates/ai/workflows/rollback.md`
+### Create `templates/ai/workflows/rollback.md`
 
 ```markdown
 # Workflow: Rollback and Recovery
@@ -125,7 +125,7 @@ In the `ai/workflows/` section, add:
 
 ## Verification
 
-- `file-templates/ai/workflows/rollback.md` exists.
+- `templates/ai/workflows/rollback.md` exists.
 - File covers: damage assessment, recovery strategy table, file-level restore, verification, and recurrence prevention.
 - `docs/structure/ai-agents.md` contains a template link for `rollback.md`.
 - A developer can execute a complete rollback using only this document and `git` commands.
