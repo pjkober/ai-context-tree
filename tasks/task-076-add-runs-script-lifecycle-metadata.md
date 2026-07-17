@@ -2,7 +2,7 @@
 id: task-076
 tags:
   - tasks
-status: todo
+status: done
 priority: low
 type: docs
 owner: pjk
@@ -67,3 +67,9 @@ Add the metadata comment block at the top of the file following the convention a
 - `docs/structure/ai-agents.md` contains the script header convention in the `ai/runs/` section.
 - `templates/ai/runs/run-001-example-automation.sh` begins with the metadata comment block.
 - The lifecycle rule for reusable vs. one-time scripts is documented.
+
+## Walkthrough
+
+- Modified `docs/structure/ai-agents.md` to define the Script Header Convention and lifecycle rules (based on reusable vs. one-time script status) in the `ai/runs/` section.
+- Modified `templates/ai/runs/run-001-example-automation.sh` to apply the script header convention.
+- Verified that all modified sections render correctly and follow formatting guidelines.

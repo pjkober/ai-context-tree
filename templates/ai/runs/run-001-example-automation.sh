@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
+# ---
+# id: run-001
+# description: Seed the local development database with test users representing different personas.
+# created: 2026-07-16
+# last-run: 2026-07-16
+# reusable: true
+# idempotent: true
+# author: pjk
+# ---
 set -euo pipefail
-
-# Run NNN: run-001-seed-test-users
-# Purpose: Seed the local development database with test users representing different personas.
-# Triggered by: AI agent or developer before running integration tests.
-# ------------------------------------------------------------------------------------------
 
 # Load environment variables (Cleanliness - No Secrets Rule)
 if [ -f .env ]; then

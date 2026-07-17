@@ -119,6 +119,27 @@ Reusable agent execution scripts.
   - **Only Reusable Scripts:** Only store reusable scripts with automation value. Do not save logs of one-off throwaway commands.
 - **Template:** [templates/ai/runs/run-001-example-automation.sh](../../templates/ai/runs/run-001-example-automation.sh)
 
+### Script Header Convention
+
+Every run script must begin with a metadata comment block immediately after the shebang line:
+
+```bash
+#!/usr/bin/env bash
+# ---
+# id: run-NNN
+# description: [One sentence describing what this script does]
+# created: YYYY-MM-DD
+# last-run: YYYY-MM-DD
+# reusable: true|false   # true = safe to run again; false = one-time-use, archive after use
+# idempotent: true|false # true = running multiple times has the same effect as once
+# author: [agent name or developer name]
+# ---
+```
+
+**Lifecycle rules based on `reusable` field:**
+- `reusable: true` -- Keep the script in `ai/runs/`. Update `last-run` date after each execution.
+- `reusable: false` -- After successful execution, move the script to `archive/` or delete it. Do not leave one-time scripts accumulating in `ai/runs/`.
+
 ---
 [Previous: Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: Business Specifications and Contracts ->](business-knowledge.md)
 
