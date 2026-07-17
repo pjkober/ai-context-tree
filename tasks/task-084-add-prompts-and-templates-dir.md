@@ -2,7 +2,7 @@
 id: task-084
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -118,3 +118,11 @@ In the `ai/templates/` section, add:
 - `templates/ai/prompts/debug.md` exists with a usable prompt structure.
 - `templates/ai/templates/service/typescript.md` exists.
 - `docs/structure/ai-agents.md` contains template links for all three new files.
+
+## Walkthrough
+
+- Created `templates/ai/prompts/review.md` defining a generic code review prompt structure.
+- Created `templates/ai/prompts/debug.md` defining a test-debugging prompt template.
+- Created `templates/ai/templates/service/typescript.md` outlining a standard TypeScript service scaffold.
+- Updated `docs/structure/ai-agents.md` to link these files.
+- Confirmed no emojis are present.

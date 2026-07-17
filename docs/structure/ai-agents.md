@@ -60,6 +60,8 @@ Ready-to-use prompts for manual triggering.
 - **Role:** Generic prompts (like `create-api.md`, `review.md`) that developers can feed to their AI assistant.
 - **Rule:** Must not contain rules (e.g. "always", "never"). Rules belong in `rules/`.
 - **Template (create-api.md):** [templates/ai/prompts/create-api.md](../../templates/ai/prompts/create-api.md)
+- **Template (review.md):** [templates/ai/prompts/review.md](../../templates/ai/prompts/review.md)
+- **Template (debug.md):** [templates/ai/prompts/debug.md](../../templates/ai/prompts/debug.md)
 
 ---
 
@@ -69,6 +71,7 @@ Code scaffolding templates.
 
 - **Role:** Standard design pattern code skeletons organized by architectural role (e.g. `service/`, `controller/`) as folders and technologies as files (e.g. `typescript.md`, `python.md`).
 - **Rule:** Subdirectories represent patterns, files represent languages or frameworks.
+- **Template (service/typescript.md):** [templates/ai/templates/service/typescript.md](../../templates/ai/templates/service/typescript.md)
 
 ---
 
