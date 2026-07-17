@@ -2,7 +2,7 @@
 id: task-090
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: feature
 owner: pjk
@@ -151,3 +151,12 @@ chmod +x scripts/test-bootstrap.sh
 - After deleting a required file from `templates/`, the test exits with code 1.
 - After introducing a `__TEST_PLACEHOLDER__` that is not substituted, the test exits with code 1.
 - `bash -n scripts/test-bootstrap.sh` exits with code 0 (valid Bash syntax).
+
+## Walkthrough
+
+- Created `templates/tasks.md` to establish the standard task index template for target repositories.
+- Updated `create_minimal_structure.sh` and `create_minimal_structure.ps1` to copy `tasks.md` and `tasks/task-001-example.md` during bootstrapping.
+- Created `scripts/test-bootstrap.sh` and `scripts/test-bootstrap.ps1` integration test scripts.
+- Configured the test scripts to run locally inside the workspace's `tmp/` folder to prevent macOS Sandbox violations.
+- Added test execution jobs to `.github/workflows/lint.yml`.
+- Verified that all created files contain no emojis.

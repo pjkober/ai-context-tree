@@ -57,3 +57,19 @@ jobs:
             yamllint -d relaxed /tmp/frontmatter.yml || { echo "Invalid YAML in $f"; exit 1; }
           done
           echo "All task frontmatter is valid YAML."
+
+  bootstrap-test-bash:
+    name: Bootstrap Script Integration Test (Bash)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bootstrap integration test
+        run: bash scripts/test-bootstrap.sh
+
+  bootstrap-test-powershell:
+    name: Bootstrap Script Integration Test (PowerShell)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bootstrap integration test
+        run: pwsh scripts/test-bootstrap.ps1
