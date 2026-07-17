@@ -1,0 +1,40 @@
+name: Bump version
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'VERSION'   # to avoid looping (commit VERSION does not trigger another bump)
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump patch version
+        run: |
+          current=$(cat VERSION)
+          major=$(echo $current | cut -d. -f1)
+          minor=$(echo $current | cut -d. -f2)
+          patch=$(echo $current | cut -d. -f3)
+          new="$major.$minor.$((patch + 1))"
+          echo "Nowa wersja: $new"
+          echo "$new" > VERSION
+
+      - name: Commit i push nowej wersji
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add VERSION
+          git commit -m "chore: bump version to $(cat VERSION) [skip ci]"
+          git push origin HEAD:main
+
+      - name: Utwórz tag
+        run: |
+          git tag "v$(cat VERSION)"
+          git push origin "v$(cat VERSION)"
