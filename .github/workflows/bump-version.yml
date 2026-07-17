@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, dev]
     paths-ignore:
-      - 'VERSION'   # to avoid looping (commit VERSION does not trigger another bump)
+      - 'VERSION'  # to avoid looping (commit VERSION does not trigger another bump)
 
 jobs:
   bump:
