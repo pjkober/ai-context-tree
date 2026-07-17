@@ -2,7 +2,7 @@
 id: task-082
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: docs
 owner: pjk
@@ -77,3 +77,9 @@ Follow these steps sequentially. Do not skip steps or reorder them.
 - `templates/ai/workflows/new-feature.md` contains at least 12 steps.
 - The workflow references: `ai/context/project.md`, `structure-map.md`, `specs/`, `contracts/`, `ai/rules/coding.md`, `ai/rules/testing.md`, `MANIFEST.md`, `CHANGELOG.md`, `Definition of Done.md`.
 - The workflow includes the "Completed Task Lifecycle Rule" step (appending verification to the task file).
+
+## Walkthrough
+
+- Modified `templates/ai/workflows/new-feature.md` to replace the minimal template with the comprehensive 15-step workflow.
+- Verified that all steps cover pre-implementation (planning), implementation, and post-implementation quality gates (file sizes, manifest, changelog, DoD, and task verification).
+- Confirmed that no emojis are present in the new workflow template.
