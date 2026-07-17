@@ -1,42 +1,3 @@
----
-id: task-087
-tags:
-  - tasks
-status: done
-priority: medium
-type: docs
-owner: pjk
-created: 2026-07-16
-updated: 2026-07-16
-depends_on:
-  - task-063
-  - task-082
----
-
-# Task-087: Create Team Onboarding Template
-
-## Source
-Report section 7.4 (Missing element).
-
-## Location
-- `templates/docs/onboarding.md` (new file)
-- `docs/structure/business-knowledge.md` or `docs/structure/implementation.md` -- add mention of onboarding.md
-
-## Description
-
-When a new developer joins a project that uses `ai-context-tree`, they need to quickly understand:
-- How AI agents are configured and what rules they follow.
-- What to read first.
-- How to create a task.
-- How to use the bootstrap wizard if setting up a new sub-project.
-
-Currently there is no template for this onboarding document, despite `docs/` being intended for exactly this type of documentation.
-
-## What to Do
-
-### Create `templates/docs/onboarding.md`
-
-```markdown
 # Developer Onboarding Guide
 
 Welcome to this project. This guide explains how the project is structured and how to work effectively with AI coding assistants.
@@ -87,24 +48,3 @@ All work is tracked via task files in `tasks/`. Before starting any code change:
 ## Project-Specific Notes
 
 [Add project-specific notes here: deployment commands, local setup steps, key contacts, etc.]
-```
-
-### Update `docs/structure/implementation.md` or `docs/structure/business-knowledge.md`
-
-Add a mention of the onboarding template under the `docs/` section:
-```markdown
-- **Onboarding Guide:** A recommended template for `docs/onboarding.md` is available at [templates/docs/onboarding.md](../../templates/docs/onboarding.md).
-```
-
-## Verification
-
-- `templates/docs/onboarding.md` exists.
-- File covers: AI configuration model, reading order, task creation, and AI agent working conventions.
-- File includes a placeholder section for project-specific notes.
-- A new developer could follow the guide without reading any other file first.
-
-## Walkthrough
-
-- Created `templates/docs/onboarding.md` defining the developer onboarding template.
-- Updated `docs/structure/business-knowledge.md` to document the new template file in the `docs/` section.
-- Confirmed no emojis are present in any of the created or modified files.

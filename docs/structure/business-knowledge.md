@@ -85,6 +85,7 @@ System technical and architectural documentation.
 - **Role:** High-level guides on how code modules interact, deployment flows, database schemas, and developer setup.
 - **Rule:** Focuses on the *why* and *how* of the codebase. Code examples, templates, and configurations belong in `examples/`, `ai/templates/`, or `config/`.
 - **Template (module-architecture.md):** [templates/docs/architecture/module-architecture.md](../../templates/docs/architecture/module-architecture.md)
+- **Template (onboarding.md):** [templates/docs/onboarding.md](../../templates/docs/onboarding.md)
 
 ---
 [Previous: AI Agent Rules and Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: Implementation Files ->](implementation.md)
