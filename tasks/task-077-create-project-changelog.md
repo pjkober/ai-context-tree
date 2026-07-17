@@ -2,7 +2,7 @@
 id: task-077
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -89,3 +89,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - File follows Keep a Changelog format.
 - At least 3 past milestones are documented with grouped entries.
 - `MANIFEST.md` includes `CHANGELOG.md`.
+
+## Walkthrough
+
+- Created `CHANGELOG.md` at the project root following the Keep a Changelog standard format.
+- Documented past milestones (milestones 0.4.0, 0.5.0) and unreleased tasks.
+- Created `MANIFEST.md` at the project root to map the repository and registered `CHANGELOG.md` within it.
+- Verified that no emojis are present in `CHANGELOG.md` or `MANIFEST.md`.
