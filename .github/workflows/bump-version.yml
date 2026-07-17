@@ -2,13 +2,15 @@ name: Bump version
 
 on:
   push:
-    branches: [main]
+    branches: [master, dev]
     paths-ignore:
       - 'VERSION'   # to avoid looping (commit VERSION does not trigger another bump)
 
 jobs:
   bump:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
