@@ -882,6 +882,16 @@ Always read AGENTS.md in the root directory for project-specific rules, tech sta
 if ($InitGit) {
     New-DirectoryIfNotExists (Join-Path $BaseDir "knowledge")
     Copy-TemplateFile "knowledge/git.md"
+
+    # Option to copy pre-commit hooks configuration template
+    $CopyPrecommit = "n"
+    if (-not $NonInteractive) {
+        $CopyPrecommit = Get-ValidatedYN -PromptText "Do you want to copy the .pre-commit-config.yaml template to enable pre-commit hooks?" -DefaultVal "n"
+    }
+
+    if ($CopyPrecommit -eq "y") {
+        Copy-TemplateFile ".pre-commit-config.yaml"
+    }
 }
 
 Write-Host "Minimal project structure created successfully."

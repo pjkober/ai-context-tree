@@ -2,7 +2,7 @@
 id: task-086
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -118,3 +118,10 @@ In `create_minimal_structure.sh`, add an optional prompt at the end of Section 6
 - `knowledge/git.md` contains a "Pre-commit Hooks" section with setup instructions for both the framework and the manual approach.
 - `templates/.pre-commit-config.yaml` exists.
 - The pre-commit config correctly catches a test emoji when run manually.
+
+## Walkthrough
+
+- Appended a comprehensive "Pre-commit Hooks" section to `knowledge/git.md` describing framework integration and manual git hooks.
+- Created `templates/.pre-commit-config.yaml` layout template.
+- Updated `create_minimal_structure.sh` and `create_minimal_structure.ps1` to prompt users to optionally copy the pre-commit configuration file when Git is enabled.
+- Confirmed no emojis are present in any files.

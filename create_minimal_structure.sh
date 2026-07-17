@@ -982,6 +982,16 @@ fi
 if [ "$INIT_GIT" = true ]; then
   mkdir_if_not_exists "$BASE_DIR/knowledge"
   copy_template_file "knowledge/git.md"
+
+  # Option to copy pre-commit hooks configuration template
+  COPY_PRECOMMIT="n"
+  if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
+    COPY_PRECOMMIT=$(get_validated_yn "Do you want to copy the .pre-commit-config.yaml template to enable pre-commit hooks?" "n")
+  fi
+
+  if [ "$COPY_PRECOMMIT" = "y" ]; then
+    copy_template_file ".pre-commit-config.yaml"
+  fi
 fi
 
 echo "Minimal project structure created successfully."
