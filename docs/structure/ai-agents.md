@@ -50,6 +50,7 @@ Atomic, step-by-step procedures executed by both humans and AI.
 - **Template (new-feature.md):** [templates/ai/workflows/new-feature.md](../../templates/ai/workflows/new-feature.md)
 - **Template (bugfix.md):** [templates/ai/workflows/bugfix.md](../../templates/ai/workflows/bugfix.md)
 - **Template (release.md):** [templates/ai/workflows/release.md](../../templates/ai/workflows/release.md)
+- **Template (rollback.md):** [templates/ai/workflows/rollback.md](../../templates/ai/workflows/rollback.md)
 
 ---
 

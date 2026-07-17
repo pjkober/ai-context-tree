@@ -1,38 +1,3 @@
----
-id: task-089
-tags:
-  - tasks
-status: done
-priority: medium
-type: docs
-owner: pjk
-created: 2026-07-16
-updated: 2026-07-16
-depends_on:
-  - task-063
-  - task-083
----
-
-# Task-089: Create `rollback.md` Workflow Template
-
-## Source
-Report section 7.6 (Missing element).
-
-## Location
-- `templates/ai/workflows/rollback.md` (new file)
-- `docs/structure/ai-agents.md` -- add template link in `ai/workflows/` section
-
-## Description
-
-There is no guidance on what to do when an AI agent makes an irreversible or damaging mistake: accidentally deletes a required file, breaks an API contract, introduces a regression, or overwrites important content. Rollback and recovery is a standard workflow for teams using autonomous agents but is entirely absent from the project.
-
-This workflow is especially critical for teams using Autonomy Mode (full autonomy), where agent mistakes may not be caught until after multiple subsequent changes have been made.
-
-## What to Do
-
-### Create `templates/ai/workflows/rollback.md`
-
-```markdown
 # Workflow: Rollback and Recovery
 
 Use this workflow when an AI agent has made a change that needs to be fully or partially reverted.
@@ -114,24 +79,3 @@ git show HEAD
 # Create a revert commit (safe for shared branches):
 git revert HEAD
 ```
-```
-
-### Update `docs/structure/ai-agents.md`
-
-In the `ai/workflows/` section, add:
-```markdown
-- **Template (rollback.md):** [templates/ai/workflows/rollback.md](../../templates/ai/workflows/rollback.md)
-```
-
-## Verification
-
-- `templates/ai/workflows/rollback.md` exists.
-- File covers: damage assessment, recovery strategy table, file-level restore, verification, and recurrence prevention.
-- `docs/structure/ai-agents.md` contains a template link for `rollback.md`.
-- A developer can execute a complete rollback using only this document and `git` commands.
-
-## Walkthrough
-
-- Created `templates/ai/workflows/rollback.md` covering damage assessment, Git recovery tables, restoring files, verification, and post-rollback recurrence prevention.
-- Updated `docs/structure/ai-agents.md` to list and link the rollback workflow.
-- Confirmed no emojis are present in any of the created or modified files.
