@@ -12,4 +12,5 @@ This file is a living index. Update it as new directories and files are added to
 ├── [CHANGELOG.md](CHANGELOG.md)         # Project changelog
 ├── [CONTRIBUTING.md](CONTRIBUTING.md)   # Contributor guidelines
 ├── [VERSION](VERSION)                 # Semantic version file
+├── [SECURITY.md](SECURITY.md)           # Security policy
 └── [README.md](README.md)               # Project README
