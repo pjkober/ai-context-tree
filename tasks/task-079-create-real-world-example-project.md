@@ -2,7 +2,7 @@
 id: task-079
 tags:
   - tasks
-status: todo
+status: done
 priority: low
 type: feature
 owner: pjk
@@ -76,3 +76,10 @@ A top-level README explaining:
 - Every file in the example is populated with realistic (non-placeholder) content.
 - `examples/README.md` explains the purpose and how to use the examples.
 - A reader can follow the information flow from `AGENTS.md` to `ai/context/project.md` to `specs/` to `tasks/` without encountering any stub content.
+
+## Walkthrough
+
+- Created `examples/README.md` to introduce the examples and guide the developer/agent on how to read the directory.
+- Created `examples/minimal-nodejs-api/` skeleton containing fully populated, realistic files conforming to the standard (`AGENTS.md`, `MANIFEST.md`, contexts, rules, workflows, specs, tasks, and docs).
+- Confirmed that no placeholder strings or stubs are present.
+- Confirmed that all files are free of emojis.
