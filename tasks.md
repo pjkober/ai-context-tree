@@ -185,6 +185,6 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-087](tasks/task-087-create-onboarding-template.md) — Create Team Onboarding Template (done)
 - [task-088](tasks/task-088-create-multi-agent-coordination-guide.md) — Create Multi-Agent Coordination Guidelines (done)
 - [task-089](tasks/task-089-create-rollback-workflow.md) — Create `rollback.md` Workflow Template (done)
-- [task-090](tasks/task-090-add-bootstrap-integration-tests.md) — Add Integration Tests for Bootstrap Scripts (todo)
-- [task-091](tasks/task-091-create-security-md.md) — Create `SECURITY.md` at the Project Root (todo)
+- [task-090](tasks/task-090-add-bootstrap-integration-tests.md) — Add Integration Tests for Bootstrap Scripts (done)
+- [task-091](tasks/task-091-create-security-md.md) — Create `SECURITY.md` at the Project Root (done)
 - [task-092](tasks/task-092-update-tasks-index-with-analysis-tasks.md) — Update `tasks.md` Index with All 30 Tasks from Analysis Report (done)
