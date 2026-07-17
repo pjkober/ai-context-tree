@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, dev]
     paths-ignore:
-      - 'VERSION'  # to avoid looping (commit VERSION does not trigger another bump)
+      - 'VERSION'  # prevents infinite loop (a VERSION-only commit does not trigger another bump)
 
 jobs:
   bump:
@@ -20,23 +20,26 @@ jobs:
 
       - name: Bump patch version
         run: |
+          # Read current version from VERSION file
           current=$(cat VERSION)
-          major=$(echo $current | cut -d. -f1)
-          minor=$(echo $current | cut -d. -f2)
-          patch=$(echo $current | cut -d. -f3)
+          major=$(echo "$current" | cut -d. -f1)
+          minor=$(echo "$current" | cut -d. -f2)
+          patch=$(echo "$current" | cut -d. -f3)
           new="$major.$minor.$((patch + 1))"
-          echo "Nowa wersja: $new"
+          echo "New version: $new"
           echo "$new" > VERSION
 
-      - name: Commit i push nowej wersji
+      - name: Commit and push new version
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add VERSION
           git commit -m "chore: bump version to $(cat VERSION) [skip ci]"
-          git push origin HEAD:main
+          # Push back to whichever branch triggered this workflow (master or dev)
+          git push origin HEAD:${{ github.ref_name }}
 
-      - name: Utwórz tag
+      - name: Create tag
         run: |
           git tag "v$(cat VERSION)"
           git push origin "v$(cat VERSION)"
+          
