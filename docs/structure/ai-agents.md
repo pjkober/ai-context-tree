@@ -48,6 +48,8 @@ Atomic, step-by-step procedures executed by both humans and AI.
 - **Role:** Procedural steps for repeatable tasks like implementing features, fixing bugs, or running releases (e.g. `new-feature.md`, `bugfix.md`).
 - **Rule:** Workflows must be deterministic and executed sequentially.
 - **Template (new-feature.md):** [templates/ai/workflows/new-feature.md](../../templates/ai/workflows/new-feature.md)
+- **Template (bugfix.md):** [templates/ai/workflows/bugfix.md](../../templates/ai/workflows/bugfix.md)
+- **Template (release.md):** [templates/ai/workflows/release.md](../../templates/ai/workflows/release.md)
 
 ---
 

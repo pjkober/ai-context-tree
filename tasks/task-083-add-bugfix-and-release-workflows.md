@@ -2,7 +2,7 @@
 id: task-083
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: docs
 owner: pjk
@@ -110,3 +110,10 @@ In the `ai/workflows/` section, add template links for both new files:
 - `templates/ai/workflows/bugfix.md` exists with at least 8 steps covering diagnose, fix, and close phases.
 - `templates/ai/workflows/release.md` exists with at least 8 steps covering pre-release, documentation, and publish phases.
 - `docs/structure/ai-agents.md` contains template links for both new files.
+
+## Walkthrough
+
+- Created `templates/ai/workflows/bugfix.md` containing a detailed 10-step workflow covering reproduction, applying a minimal fix, verifying tests, and task closing.
+- Created `templates/ai/workflows/release.md` containing a detailed 10-step workflow covering pre-release validation, updating documentation, and publish tag routines.
+- Updated `docs/structure/ai-agents.md` to list and link the new workflow templates in the `ai/workflows/` directory.
+- Confirmed that no emojis are present in the new workflows and documentation files.
