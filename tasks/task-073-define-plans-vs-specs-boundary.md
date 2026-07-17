@@ -2,7 +2,7 @@
 id: task-073
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -66,3 +66,9 @@ Cross-link between related plan and spec files using Markdown links.
 - `docs/structure/business-knowledge.md` contains the decision rule table under the `specs/` or `plans/` section.
 - At least two concrete "good examples" and one "bad example" are provided.
 - A developer reading only this section can make the decision for a new document without consulting other files.
+
+## Walkthrough
+
+- Modified `docs/structure/business-knowledge.md` by inserting a Decision Rule table under the `specs/` section, detailing when to use `specs/` vs `plans/` with good and bad examples.
+- Modified `docs/structure/supporting.md` by inserting a disambiguation note under the `plans/` section.
+- Verified that all paths and links in the modified documentation are correct.

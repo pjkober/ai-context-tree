@@ -18,6 +18,24 @@ Business specifications.
   - [templates/specs/requirements.md](../../templates/specs/requirements.md)
   - [templates/specs/acceptance.md](../../templates/specs/acceptance.md)
 
+### Decision Rule: specs/ vs. plans/
+
+Use this rule to determine where a document belongs:
+
+| Question | Answer | Use |
+|---|---|---|
+| Does the document describe *what the system must do* (requirements, acceptance criteria, user stories)? | Yes | `specs/` |
+| Does the document describe *how the change will be executed* (steps, migration strategy, refactoring approach)? | Yes | `plans/` |
+| Does the document mix both? | Yes | Split it: requirements go in `specs/`, execution steps go in `plans/`. Link between them. |
+
+**Good examples:**
+- `specs/payment-checkout/requirements.md` -- describes what checkout must do (user story, acceptance criteria).
+- `specs/payment-checkout/acceptance.md` -- the test criteria for the checkout feature.
+- `plans/payment-checkout-migration.md` -- describes HOW to migrate from legacy checkout to the new flow (step-by-step plan with rollback strategy).
+
+**Bad example:**
+- `specs/payment-checkout/implementation-plan.md` -- mixing requirements with implementation steps. Split this file.
+
 ---
 
 ## knowledge/

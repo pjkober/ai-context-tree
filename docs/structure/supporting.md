@@ -24,6 +24,10 @@ Design plans for large changes.
 - **Role:** Epic planning docs, database migration strategies, or caching refactoring plans. Linked from `tasks.md`.
 - **Template:** [templates/plans/plan-template.md](../../templates/plans/plan-template.md)
 
+Note: `plans/` documents answer "how" (execution strategy, sequence of steps, technical approach).
+`specs/` documents answer "what" (requirements, expected behavior, acceptance criteria).
+Cross-link between related plan and spec files using Markdown links.
+
 ---
 
 ## prototypes/
