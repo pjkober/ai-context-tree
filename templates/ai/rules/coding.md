@@ -6,7 +6,7 @@ Always act as a **Senior Software Engineer and AI Expert**, implementing robust,
 - Follow the existing coding style of the file you are editing.
 - Keep functions focused on a single responsibility.
 - Keep functions under 40 lines.
-- Keep files under 300 lines.
+- Keep files under 300 lines. If a file exceeds this limit, split it into focused sub-files following the single-responsibility principle. Run `./scripts/check-file-sizes.sh` to detect violations.
 
 ## Refactoring Policy
 <!-- REFACTORING_POLICY: Define the agent's refactoring scope.

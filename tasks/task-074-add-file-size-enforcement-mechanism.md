@@ -2,7 +2,7 @@
 id: task-074
 tags:
 - tasks
-status: todo
+status: done
 priority: medium
 type: feature
 owner: pjk
@@ -90,3 +90,11 @@ Under "General Guidelines", replace or augment the existing line:
 - `scripts/check-file-sizes.sh` exists, is executable, exits 0 when no files exceed 300 lines, exits 1 when violations are found.
 - `templates/ai/workflows/new-feature.md` contains a file-size check step.
 - `templates/ai/rules/coding.md` references the script.
+
+## Walkthrough
+
+- Created `scripts/check-file-sizes.sh` with logic to inspect files and find any exceeding the 300-line limit.
+- Made the script executable.
+- Updated `templates/ai/workflows/new-feature.md` to add Step 7: Verify file sizes.
+- Updated `templates/ai/rules/coding.md` to reinforce the 300-line rule and reference the validation script.
+- Verified execution of script logic in the workspace.
