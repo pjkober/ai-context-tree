@@ -39,6 +39,22 @@ Do NOT update `MANIFEST.md` for:
 - Temporary or scratch files.
 - Files added during testing that will be reverted.
 
+### Multi-Agent Conflict Strategy
+
+When multiple AI agents work in parallel on different tasks:
+
+1. **Atomic updates:** Each agent must update `MANIFEST.md` in the same commit as the file creation it documents. Never defer MANIFEST updates to a separate commit.
+
+2. **Rebase preferred over merge:** When integrating a branch that modified `MANIFEST.md`, always rebase (`git rebase main`) rather than merge. This preserves a linear history and makes MANIFEST conflicts easier to resolve.
+
+3. **Conflict resolution rule:** If two agents create conflicting MANIFEST entries:
+   - Both entries are correct -- they simply need to be combined.
+   - Keep both new lines from both versions.
+   - Sort the combined list alphabetically by directory name.
+   - Do not delete any entry from either version.
+
+4. **Agent coordination tip:** If a project uses a task queue, assign MANIFEST ownership to a single "integration agent" whose sole responsibility is merging outputs and updating MANIFEST after each parallel batch of work.
+
 ---
 
 ## README.md

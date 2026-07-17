@@ -2,7 +2,7 @@
 id: task-075
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: docs
 owner: pjk
@@ -51,3 +51,8 @@ When multiple AI agents work in parallel on different tasks:
 
 - `docs/structure/root-files.md` contains a "Multi-Agent Conflict Strategy" subsection under the MANIFEST.md section.
 - The subsection covers: atomic update timing, rebase over merge preference, conflict resolution rule, and optional agent coordination tip.
+
+## Walkthrough
+
+- Modified `docs/structure/root-files.md` by inserting a "Multi-Agent Conflict Strategy" subsection under the `MANIFEST.md` section.
+- Verified that all paths and links in the modified section are correct and follow style guidelines.
