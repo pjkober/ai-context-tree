@@ -4,6 +4,9 @@ aliases:
   - gitignore policy
 tags:
   - knowledge
+  - git
+  - configuration
+  - version-control
 type: docs
 ---
 

@@ -2,7 +2,7 @@
 id: task-081
 tags:
   - tasks
-status: todo
+status: done
 priority: low
 type: refactor
 owner: pjk
@@ -72,3 +72,9 @@ Suggested tag assignments:
 - Every file in `knowledge/` has at least 2 tags (the base `knowledge` tag plus at least 1 specific tag).
 - `grep -l "tags:" knowledge/*.md | wc -l` equals 16 (all files have a tags field).
 - Tags use lowercase, hyphen-separated naming consistently.
+
+## Walkthrough
+
+- Modified the frontmatter of all 16 files in the `knowledge/` directory to add 1-3 specific, lowercase, hyphen-separated tags.
+- Created and formatted the frontmatter block for `git.md`.
+- Verified that all 16 files are successfully found by `grep -l "tags:"` and that they contain no emojis.

@@ -4,6 +4,9 @@ aliases:
   - task completion criteria
 tags:
   - knowledge
+  - workflow
+  - task-lifecycle
+  - quality
 type: docs
 ---
 

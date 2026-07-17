@@ -4,6 +4,9 @@ aliases:
   - full test coverage
 tags:
   - knowledge
+  - testing
+  - coverage
+  - strategy
 type: docs
 ---
 

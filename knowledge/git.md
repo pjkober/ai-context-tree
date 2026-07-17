@@ -1,3 +1,10 @@
+---
+tags:
+  - knowledge
+  - git
+  - version-control
+---
+
 # Git - Version Control System
 
 Git is a distributed version control system that tracks the history of changes in project files, enables collaboration between multiple developers on the same codebase, and allows easy rollback to previous versions when issues occur. Since history is stored locally, most operations execute instantly, and the branching mechanism allows safe testing of new features without affecting the stable version of the code.

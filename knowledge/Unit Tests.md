@@ -4,6 +4,9 @@ aliases:
   - testy jednostkowe
 tags:
   - knowledge
+  - testing
+  - unit-tests
+  - strategy
 type: docs
 ---
 

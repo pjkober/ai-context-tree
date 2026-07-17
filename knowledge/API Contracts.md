@@ -2,6 +2,9 @@
 aliases: []
 tags:
   - knowledge
+  - contracts
+  - specs
+  - ssot
 type: docs
 ---
 

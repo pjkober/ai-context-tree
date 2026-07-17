@@ -3,6 +3,9 @@ aliases:
   - TDD
 tags:
   - knowledge
+  - tdd
+  - testing
+  - methodology
 type: docs
 ---
 

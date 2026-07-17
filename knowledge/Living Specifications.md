@@ -2,6 +2,9 @@
 aliases: []
 tags:
   - knowledge
+  - specs
+  - sdd
+  - documentation
 type: docs
 ---
 

@@ -4,6 +4,9 @@ aliases:
   - critical path
 tags:
   - knowledge
+  - testing
+  - coverage
+  - strategy
 type: docs
 ---
 

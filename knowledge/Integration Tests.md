@@ -4,6 +4,9 @@ aliases:
   - testy integracyjne
 tags:
   - knowledge
+  - testing
+  - integration
+  - strategy
 type: docs
 ---
 

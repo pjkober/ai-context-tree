@@ -4,6 +4,9 @@ aliases:
   - software licenses
 tags:
   - knowledge
+  - licensing
+  - legal
+  - dependencies
 type: docs
 ---
 

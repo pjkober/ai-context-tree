@@ -4,6 +4,8 @@ aliases:
 tags:
   - knowledge
   - sdd
+  - methodology
+  - specs
 type: docs
 ---
 

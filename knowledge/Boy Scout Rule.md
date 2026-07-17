@@ -2,6 +2,9 @@
 aliases: []
 tags:
   - knowledge
+  - refactoring
+  - coding-standards
+  - agent-behavior
 type: docs
 ---
 
