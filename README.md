@@ -22,6 +22,7 @@
   - [AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
   - [Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
   - [Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
+  - [Multi-Agent Coordination Guide](docs/multi-agent-coordination.md) — How multiple agents collaborate and coordinate in parallel.
 
 - **File Templates:**
   - [Replicated Structure Templates](templates/) — Standard code/doc templates for every directory.
