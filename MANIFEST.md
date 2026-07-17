@@ -10,4 +10,5 @@ This file is a living index. Update it as new directories and files are added to
 ├── [tmp/](tmp/)                         # Temporary files and scratch space (excluded from git/CI)
 ├── [AGENTS.md](AGENTS.md)               # AI agent entry point
 ├── [CHANGELOG.md](CHANGELOG.md)         # Project changelog
+├── [CONTRIBUTING.md](CONTRIBUTING.md)   # Contributor guidelines
 └── [README.md](README.md)               # Project README

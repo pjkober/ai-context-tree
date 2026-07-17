@@ -3,7 +3,7 @@
 > **Universal Project Structure for AI-First Development & Multi-Agent Collaboration**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/your-username/ai-context-tree/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![AI-First](https://img.shields.io/badge/AI--First-Compatible-blueviolet.svg)](docs/01-philosophy.md)
 
 `ai-context-tree` is a language-agnostic, framework-agnostic project layout designed specifically to optimize **Context Management** in LLM-assisted development. It works seamlessly and concurrently with multiple AI clients—including **Claude Code, Cursor, Cline, Roo Code, Windsurf, Antigravity, Gemini CLI**, and others—without requiring repo-level refactoring when switching tools.

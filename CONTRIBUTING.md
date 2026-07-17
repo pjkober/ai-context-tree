@@ -1,39 +1,3 @@
----
-id: task-078
-tags:
-  - tasks
-status: done
-priority: medium
-type: docs
-owner: pjk
-created: 2026-07-16
-updated: 2026-07-16
-depends_on: []
----
-
-# Task-078: Create `CONTRIBUTING.md`
-
-## Source
-Report section 6.2 (Improvement).
-
-## Location
-- Root directory: `CONTRIBUTING.md` (new file)
-
-## Description
-
-The `README.md` displays a "PRs Welcome" badge but the repository has no `CONTRIBUTING.md` file. Without it, potential contributors have no guidance on:
-- How to report bugs or suggest improvements.
-- How to structure a contribution (task-driven development).
-- The English-only and no-emoji rules that apply to all contributions.
-- How to run and test the bootstrap scripts locally.
-
-This is a significant barrier to community adoption of the standard.
-
-## What to Do
-
-Create `CONTRIBUTING.md` at the project root with the following content structure:
-
-```markdown
 # Contributing to ai-context-tree
 
 Thank you for your interest in contributing. This document explains the process for submitting improvements, bug fixes, and new features.
@@ -83,20 +47,3 @@ Follow the convention in `tasks.md`:
 ## Project Structure
 
 See `README.md` and `AGENTS.md` for an overview of the repository structure.
-```
-
-Add `CONTRIBUTING.md` to the project's `MANIFEST.md`.
-
-## Verification
-
-- `CONTRIBUTING.md` exists at the project root.
-- File covers: language rule, issue reporting, task creation, change process, and verification steps.
-- `MANIFEST.md` includes `CONTRIBUTING.md`.
-- The `README.md` badge area can optionally be updated to link to `CONTRIBUTING.md`.
-
-## Walkthrough
-
-- Created `CONTRIBUTING.md` at the project root defining developer guidelines, language rule (English-only, no emojis), issue reporting, and the task-driven contribution flow.
-- Added `CONTRIBUTING.md` to `MANIFEST.md`.
-- Updated the "PRs Welcome" badge in `README.md` to point to `CONTRIBUTING.md`.
-- Verified that all modified sections contain no emojis.
