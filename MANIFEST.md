@@ -11,4 +11,5 @@ This file is a living index. Update it as new directories and files are added to
 ├── [AGENTS.md](AGENTS.md)               # AI agent entry point
 ├── [CHANGELOG.md](CHANGELOG.md)         # Project changelog
 ├── [CONTRIBUTING.md](CONTRIBUTING.md)   # Contributor guidelines
+├── [VERSION](VERSION)                 # Semantic version file
 └── [README.md](README.md)               # Project README

@@ -2,7 +2,7 @@
 id: task-085
 tags:
   - tasks
-status: todo
+status: done
 priority: medium
 type: feature
 owner: pjk
@@ -85,3 +85,12 @@ Add `├── [VERSION](VERSION)` to the manifest listing.
 - `README.md` contains a "Versioning" section.
 - The bootstrap script substitutes the version into generated `AGENTS.md` files.
 - `cat VERSION` returns a valid semver string (e.g., `0.6.0`).
+
+## Walkthrough
+
+- Created `VERSION` file at project root containing version `0.6.0`.
+- Added the Versioning section and version badge to `README.md`.
+- Added `VERSION` file mapping to `MANIFEST.md`.
+- Updated `templates/AGENTS.md` to reference `v__VERSION__`.
+- Updated `create_minimal_structure.sh` and `create_minimal_structure.ps1` to read the version from `VERSION` and substitute `__VERSION__` during copying of `AGENTS.md`, and also copy the `VERSION` file.
+- Confirmed no emojis are present.

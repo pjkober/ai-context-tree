@@ -7,6 +7,14 @@ set -e
 # Determine the directory where this script lives – treat it as the project root
 BASE_DIR="."
 TEMPLATES_DIR="$BASE_DIR/templates"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Read version from VERSION file, fallback if missing
+if [ -f "$SCRIPT_DIR/VERSION" ]; then
+  VERSION=$(cat "$SCRIPT_DIR/VERSION" | tr -d '\r\n')
+else
+  VERSION="0.6.0"
+fi
 
 # Check if templates directory is present
 if [ ! -d "$TEMPLATES_DIR" ]; then
@@ -98,6 +106,11 @@ copy_template_file() {
   local src_file="$TEMPLATES_DIR/$rel_path"
   local dest_file="$BASE_DIR/$rel_path"
 
+  # Special case for VERSION which is in the same folder as the script
+  if [ "$rel_path" = "VERSION" ]; then
+    src_file="$SCRIPT_DIR/VERSION"
+  fi
+
   # Ensure destination directory exists
   mkdir_if_not_exists "$(dirname "$dest_file")"
 
@@ -107,6 +120,10 @@ copy_template_file() {
         # Replace '# Project Name' with '# $PROJECT_NAME'
         sed "s/# Project Name/# $PROJECT_NAME/g" "$src_file" > "$dest_file"
         echo "Generated custom $rel_path for project: $PROJECT_NAME"
+      elif [ "$rel_path" = "AGENTS.md" ]; then
+        # Substitute __VERSION__ with the version number
+        sed "s/__VERSION__/$VERSION/g" "$src_file" > "$dest_file"
+        echo "Copied template to: $dest_file (with version $VERSION)"
       else
         cp "$src_file" "$dest_file"
         echo "Copied template to: $dest_file"
@@ -868,6 +885,7 @@ copy_template_file "AGENTS.md"
 copy_template_file "README.md"
 copy_template_file ".gitignore"
 copy_template_file "MANIFEST.md"
+copy_template_file "VERSION"
 copy_template_file "ai/context/project.md"
 copy_template_file "ai/context/structure-map.md"
 copy_template_file "ai/workflows/new-feature.md"

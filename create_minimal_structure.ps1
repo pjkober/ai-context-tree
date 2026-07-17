@@ -12,6 +12,14 @@ $BaseDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 if (-not $BaseDir) { $BaseDir = Get-Location }
 $TemplatesDir = Join-Path $BaseDir "templates"
 
+# Read version from VERSION file, fallback if missing
+$VersionFile = Join-Path $BaseDir "VERSION"
+if (Test-Path $VersionFile -PathType Leaf) {
+    $Version = (Get-Content -Path $VersionFile -Raw).Trim()
+} else {
+    $Version = "0.6.0"
+}
+
 # Check if templates directory is present
 if (-not (Test-Path $TemplatesDir -PathType Container)) {
     Write-Error "Error: 'templates/' directory not found at $TemplatesDir."
@@ -87,6 +95,9 @@ function New-DirectoryIfNotExists {
 function Copy-TemplateFile {
     param([string]$RelPath)
     $SrcFile = Join-Path $TemplatesDir $RelPath
+    if ($RelPath -eq "VERSION") {
+        $SrcFile = Join-Path $BaseDir "VERSION"
+    }
     $DestFile = Join-Path $BaseDir $RelPath
 
     # Ensure destination directory exists
@@ -100,6 +111,11 @@ function Copy-TemplateFile {
                 $Content = $Content -replace '# Project Name', "# $ProjectName"
                 Set-Content -Path $DestFile -Value $Content
                 Write-Host "Generated custom $RelPath for project: $ProjectName"
+            } elseif ($RelPath -eq "AGENTS.md") {
+                $Content = Get-Content -Path $SrcFile -Raw
+                $Content = $Content -replace '__VERSION__', $Version
+                Set-Content -Path $DestFile -Value $Content
+                Write-Host "Copied template to: $DestFile (with version $Version)"
             } else {
                 Copy-Item -Path $SrcFile -Destination $DestFile -Force
                 Write-Host "Copied template to: $DestFile"
@@ -755,6 +771,7 @@ Copy-TemplateFile "AGENTS.md"
 Copy-TemplateFile "README.md"
 Copy-TemplateFile ".gitignore"
 Copy-TemplateFile "MANIFEST.md"
+Copy-TemplateFile "VERSION"
 Copy-TemplateFile "ai/context/project.md"
 Copy-TemplateFile "ai/context/structure-map.md"
 Copy-TemplateFile "ai/workflows/new-feature.md"

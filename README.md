@@ -6,6 +6,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![AI-First](https://img.shields.io/badge/AI--First-Compatible-blueviolet.svg)](docs/01-philosophy.md)
 [![CI](https://github.com/pjkober/ai-context-tree/actions/workflows/lint.yml/badge.svg)](https://github.com/pjkober/ai-context-tree/actions/workflows/lint.yml)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)](VERSION)
 
 `ai-context-tree` is a language-agnostic, framework-agnostic project layout designed specifically to optimize **Context Management** in LLM-assisted development. It works seamlessly and concurrently with multiple AI clients—including **Claude Code, Cursor, Cline, Roo Code, Windsurf, Antigravity, Gemini CLI**, and others—without requiring repo-level refactoring when switching tools.
 
@@ -137,6 +138,16 @@ chmod +x ./create_minimal_structure.sh
 Keep your IDE/AI config files clean. Point them directly to `AGENTS.md` with a 2–3 line instruction.
 
 For detailed pointer files for Cursor, Claude Code, Cline, Roo Code, and Windsurf, see the [AI Client Integration Guide](docs/05-ai-integration.md).
+
+---
+
+## Versioning
+
+This standard follows [Semantic Versioning](https://semver.org). The current version is in the [VERSION](VERSION) file.
+
+- MAJOR versions introduce breaking changes to directory structure or AGENTS.md format.
+- MINOR versions add new templates or guides (backward-compatible).
+- PATCH versions fix typos or documentation errors.
 
 ---
 
