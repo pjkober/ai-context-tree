@@ -156,6 +156,7 @@ $GenJetbrains = $false
 $GenAider = $false
 $GenTabnine = $false
 $GenCody = $false
+$GenSecurityMd = $true
 $InitGit = $false
 
 # Check if interactive
@@ -375,6 +376,19 @@ if (-not $NonInteractive) {
     Write-Host "Selected: $opt"
     if ($opt -eq "2") {
         $ContextManagementPolicyVal = "- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
+    }
+    Write-Host ""
+
+    Write-Host "1.9) Generate SECURITY.md (vulnerability reporting policy)?"
+    Write-Host "  [1] Yes -- generate SECURITY.md from template [Default]"
+    Write-Host "      - Pros: GitHub-standard security policy, ready for open-source."
+    Write-Host "      - Consequence: Creates SECURITY.md in the project root."
+    Write-Host "  [2] No -- skip SECURITY.md"
+    Write-Host "      - Consequence: No security disclosure policy file. Add manually if needed later."
+    $opt = Get-ValidatedChoice -PromptText "Select option [1-2]" -DefaultVal 1 -MaxVal 2
+    Write-Host "Selected: $opt"
+    if ($opt -eq "2") {
+        $GenSecurityMd = $false
     }
     Write-Host ""
 
@@ -774,6 +788,11 @@ Copy-TemplateFile "MANIFEST.md"
 Copy-TemplateFile "VERSION"
 Copy-TemplateFile "tasks.md"
 Copy-TemplateFile "tasks/task-001-example.md"
+
+if ($GenSecurityMd) {
+    Copy-TemplateFile "SECURITY.md"
+}
+
 Copy-TemplateFile "ai/context/project.md"
 Copy-TemplateFile "ai/context/structure-map.md"
 Copy-TemplateFile "ai/workflows/new-feature.md"

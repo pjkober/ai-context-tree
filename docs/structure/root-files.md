@@ -97,6 +97,17 @@ The single source of truth for the active task queue.
 
 ---
 
+## SECURITY.md
+
+The vulnerability reporting and security disclosure policy for the project.
+
+- **Role:** Defines which versions are supported with security updates, how to report vulnerabilities privately, and what is within the security scope of this repository. Follows the GitHub Security Advisory standard.
+- **Rule:** Must not contain inline code, architecture details, or rules for AI agents. It is a human-facing governance document.
+- **When to update:** Whenever supported versions change, maintainer contact details change, or the scope of the project changes significantly.
+- **Template:** [templates/SECURITY.md](../../templates/SECURITY.md)
+
+---
+
 ## LICENSE
 
 The project license.

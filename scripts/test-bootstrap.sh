@@ -39,6 +39,7 @@ echo "[3/4] Checking required files and directories..."
 REQUIRED=(
   "AGENTS.md"
   "MANIFEST.md"
+  "SECURITY.md"
   "VERSION"
   "ai/context/project.md"
   "ai/context/structure-map.md"

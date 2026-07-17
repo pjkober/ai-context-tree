@@ -43,6 +43,7 @@ Write-Host "[3/4] Checking required files and directories..."
 $Required = @(
     "AGENTS.md",
     "MANIFEST.md",
+    "SECURITY.md",
     "VERSION",
     "ai/context/project.md",
     "ai/context/structure-map.md",

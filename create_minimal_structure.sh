@@ -167,6 +167,7 @@ GEN_JETBRAINS=false
 GEN_AIDER=false
 GEN_TABNINE=false
 GEN_CODY=false
+GEN_SECURITY_MD=true
 INIT_GIT=false
 
 
@@ -415,6 +416,21 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   case "$opt" in
     2)
       CONTEXT_MANAGEMENT_POLICY_VAL="- **Context Management:** Read files in full to fully understand the module structure and dependencies before making any changes."
+      ;;
+  esac
+  echo ""
+
+  echo "1.9) Generate SECURITY.md (vulnerability reporting policy)?"
+  echo "  [1] Yes — generate SECURITY.md from template [Default]"
+  echo "      - Pros: GitHub-standard security policy, ready for open-source."
+  echo "      - Consequence: Creates SECURITY.md in the project root."
+  echo "  [2] No — skip SECURITY.md"
+  echo "      - Consequence: No security disclosure policy file. Add manually if needed later."
+  opt=$(get_validated_choice "Select option [1-2]" 1 2)
+  echo "Selected: $opt"
+  case "$opt" in
+    2)
+      GEN_SECURITY_MD=false
       ;;
   esac
   echo ""
@@ -888,6 +904,11 @@ copy_template_file "MANIFEST.md"
 copy_template_file "VERSION"
 copy_template_file "tasks.md"
 copy_template_file "tasks/task-001-example.md"
+
+if [ "$GEN_SECURITY_MD" = true ]; then
+  copy_template_file "SECURITY.md"
+fi
+
 copy_template_file "ai/context/project.md"
 copy_template_file "ai/context/structure-map.md"
 copy_template_file "ai/workflows/new-feature.md"
