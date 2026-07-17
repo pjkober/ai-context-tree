@@ -1,0 +1,7 @@
+tasks/** merge=ours
+ai/** merge=ours
+CHANGELOG.md merge=ours
+MANIFEST.md merge=ours
+tasks.md merge=ours
+
+
