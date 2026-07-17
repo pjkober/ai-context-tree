@@ -1,0 +1,59 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  markdown-links:
+    name: Check Markdown Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: "yes"
+          config-file: ".github/markdown-link-check.json"
+
+  emoji-check:
+    name: Check for Emoji
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for emoji in documentation
+        run: |
+          if grep -rP "[\x{1F300}-\x{1FFFF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]" docs/ knowledge/ templates/ --include="*.md"; then
+            echo "ERROR: Emoji found in documentation. Rule 2 prohibits emoji."
+            exit 1
+          fi
+          echo "No emoji found."
+
+  shell-syntax:
+    name: Validate Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Bash syntax
+        run: bash -n create_minimal_structure.sh
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: "."
+          severity: error
+
+  yaml-frontmatter:
+    name: Validate Task Frontmatter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install yamllint
+        run: sudo apt-get update && sudo apt-get install -y yamllint
+      - name: Extract and validate YAML frontmatter
+        run: |
+          for f in tasks/task-*.md; do
+            awk '/^---$/{found++} found==1{print} found==2{exit}' "$f" > /tmp/frontmatter.yml
+            yamllint -d relaxed /tmp/frontmatter.yml || { echo "Invalid YAML in $f"; exit 1; }
+          done
+          echo "All task frontmatter is valid YAML."

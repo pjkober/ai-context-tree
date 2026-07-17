@@ -2,7 +2,7 @@
 id: task-080
 tags:
   - tasks
-status: todo
+status: done
 priority: high
 type: feature
 owner: pjk
@@ -120,3 +120,11 @@ Add a CI badge next to the existing badges:
 - `.github/markdown-link-check.json` exists.
 - The workflow runs successfully on the current codebase (after fixing issues 4.4 and 4.5 via tasks 066, 067).
 - Intentionally introducing an emoji into a doc file causes the pipeline to fail.
+
+## Walkthrough
+
+- Created `.github/workflows/lint.yml` specifying Markdown link checks, emoji checks, shell script validations, and task frontmatter YAML linting.
+- Optimized the yamllint setup step to use `apt-get` directly, preventing PEP 668 environment errors.
+- Created `.github/markdown-link-check.json` config file with custom ignore patterns and timeouts.
+- Added a CI workflow badge to `README.md`.
+- Confirmed that no emojis are present in the new workflow configuration files.

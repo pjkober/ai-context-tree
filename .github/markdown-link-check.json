@@ -1,0 +1,8 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https://img.shields.io" },
+    { "pattern": "^https://github.com/your-username" }
+  ],
+  "timeout": "20s",
+  "retryOn429": true
+}
