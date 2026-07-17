@@ -8,7 +8,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-- 30 new tasks from project analysis report (task-063 through task-092).
+- `SECURITY.md` at project root — GitHub Advisory standard vulnerability disclosure policy (task-091).
+- 30 new task files (task-063 through task-092) derived from the comprehensive project analysis report (task-092).
+- `templates/SECURITY.md` — root-level SECURITY.md template for adopting projects (task-093).
+- Bootstrap wizard step 1.9: opt-in/out generation of `SECURITY.md` in new projects (task-093).
+- `SECURITY.md` section in `docs/structure/root-files.md` (task-093).
+- `SECURITY.md` to REQUIRED files list in bootstrap integration tests (task-093).
+- Missing `ai/history/` session files: conver-025 through conver-028 (implementation plans and walkthroughs for tasks 092-093).
+
+### Changed
+- `tasks.md` updated with Completed Task Lifecycle Rule section and full task index (task-092).
 
 ---
 

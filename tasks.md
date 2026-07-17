@@ -189,3 +189,5 @@ To search for tasks by status: `grep -l "status: todo" tasks/*.md`
 - [task-091](tasks/task-091-create-security-md.md) — Create `SECURITY.md` at the Project Root (done)
 - [task-092](tasks/task-092-update-tasks-index-with-analysis-tasks.md) — Update `tasks.md` Index with All 30 Tasks from Analysis Report (done)
 - [task-093](tasks/task-093-complete-security-md-coverage.md) — Complete SECURITY.md Coverage in Docs, Templates, and Create Scripts (done)
+- [task-094](tasks/task-094-fix-changelog-manifest-history-numbering.md) — Fix CHANGELOG, MANIFEST, and ai/history Numbering (done)
+- [task-095](tasks/task-095-release-1-0-0.md) — Release v1.0.0 (done)
