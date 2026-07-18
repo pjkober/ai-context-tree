@@ -5,3 +5,7 @@ tmp/** merge=ours
 CHANGELOG.md merge=ours
 MANIFEST.md merge=ours
 tasks.md merge=oursz
+
+create_minimal_structure.sh merge=ours
+create_minimal_structure.ps1 merge=ours
+
