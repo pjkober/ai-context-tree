@@ -29,3 +29,11 @@ Project Rules for AI Agents:
    - Implement tasks exactly as requested by the user. Do not add any extra functionalities or speculative features.
 4. Task-Driven Execution:
    - Always create and update task files in the `tasks/` directory when changing files or directories. Every change must be linked to a tracked task. Follow the Completed Task Lifecycle Rule (mark done AND append the verification walkthrough to the bottom of the tasks/task-NNN.md file).
+<<<<<<< HEAD
+=======
+5. Git Execution under Sandbox (macOS):
+   - When running git commands (git status, git add, git commit, etc.) in this workspace, the macOS App Sandbox may block Homebrew's git and dynamic linker (dyld) libraries.
+   - To bypass this restriction, execute git commands unsandboxed via AppleScript's `do shell script` wrapper:
+     `osascript -e 'do shell script "cd /Users/pjk/code/ai-context-tree && git <command>"'`
+     Example for status: `osascript -e 'do shell script "cd /Users/pjk/code/ai-context-tree && git status --short"'`
+>>>>>>> dev

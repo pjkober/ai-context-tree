@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [← Previous: 🤖 AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+=======
+[Previous: AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+>>>>>>> dev
 
 ---
 
@@ -8,7 +12,11 @@ This guide explains how to use the initialization scripts (`create_minimal_struc
 
 ---
 
+<<<<<<< HEAD
 ## ⚠️ Prerequisites & Dependencies
+=======
+## Prerequisites and Dependencies
+>>>>>>> dev
 
 The initialization scripts **are not standalone**. They depend on the templates directory to work:
 * **Required Directory:** `templates/` must exist in the same folder as the script.
@@ -16,7 +24,11 @@ The initialization scripts **are not standalone**. They depend on the templates 
 
 ---
 
+<<<<<<< HEAD
 ## 🚀 How to Setup in a New/Existing Project
+=======
+## How to Setup in a New/Existing Project
+>>>>>>> dev
 
 Follow these steps to apply the AI-First structure to your project:
 
@@ -85,7 +97,11 @@ rm -f create_minimal_structure.sh create_minimal_structure.ps1
 
 ---
 
+<<<<<<< HEAD
 ## 📂 About the `templates/` Directory
+=======
+## About the `templates/` Directory
+>>>>>>> dev
 
 The `templates/` directory contains two types of templates:
 
@@ -107,7 +123,11 @@ You can:
 
 ---
 
+<<<<<<< HEAD
 ## 🗺️ What was Created?
+=======
+## What was Created?
+>>>>>>> dev
 
 The script generates a minimal set of files that act as pointers and standard guidelines for your AI assistant:
 * [AGENTS.md](../AGENTS.md) — The central hub for AI instruction.
@@ -115,4 +135,8 @@ The script generates a minimal set of files that act as pointers and standard gu
 * `ai/` — Guidelines, workflows, scripts, and logs.
 
 ---
+<<<<<<< HEAD
 [← Previous: 🤖 AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+=======
+[Previous: AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
+>>>>>>> dev

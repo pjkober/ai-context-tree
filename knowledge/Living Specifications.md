@@ -2,6 +2,12 @@
 aliases: []
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
+  - specs
+  - sdd
+  - documentation
+>>>>>>> dev
 type: docs
 ---
 

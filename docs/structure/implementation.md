@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [← Previous: 📘 Business Specifications & Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: 📂 Supporting Directories →](supporting.md)
+=======
+[Previous: Business Specifications and Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: Supporting Directories ->](supporting.md)
+>>>>>>> dev
 
 ---
 
@@ -60,5 +64,9 @@ Local utility helpers.
 - **Role:** Custom generators, parser scripts, CLI utilities, and converters built specifically to support development on the project.
 
 ---
+<<<<<<< HEAD
 [← Previous: 📘 Business Specifications & Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: 📂 Supporting Directories →](supporting.md)
+=======
+[Previous: Business Specifications and Contracts](business-knowledge.md) | [Home (README)](../../README.md) | [Next: Supporting Directories ->](supporting.md)
+>>>>>>> dev
 

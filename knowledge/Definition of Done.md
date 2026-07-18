@@ -4,6 +4,12 @@ aliases:
   - task completion criteria
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
+  - workflow
+  - task-lifecycle
+  - quality
+>>>>>>> dev
 type: docs
 ---
 

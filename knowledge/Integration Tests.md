@@ -4,6 +4,12 @@ aliases:
   - testy integracyjne
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
+  - testing
+  - integration
+  - strategy
+>>>>>>> dev
 type: docs
 ---
 

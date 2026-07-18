@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [← Previous: 🌱 Incremental Growth](03-incremental-growth.md) | [Home (README)](../README.md) | [Next: 🤖 AI Client Integration →](05-ai-integration.md)
+=======
+[Previous: Incremental Growth](03-incremental-growth.md) | [Home (README)](../README.md) | [Next: AI Client Integration ->](05-ai-integration.md)
+>>>>>>> dev
 
 ---
 
@@ -28,5 +32,9 @@ The glossary starts simple and expands dynamically as the project grows:
    - Definitions in `ai/context/glossary.md` must always be kept to a single sentence.
 
 ---
+<<<<<<< HEAD
 [← Previous: 🌱 Incremental Growth](03-incremental-growth.md) | [Home (README)](../README.md) | [Next: 🤖 AI Client Integration →](05-ai-integration.md)
+=======
+[Previous: Incremental Growth](03-incremental-growth.md) | [Home (README)](../README.md) | [Next: AI Client Integration ->](05-ai-integration.md)
+>>>>>>> dev
 

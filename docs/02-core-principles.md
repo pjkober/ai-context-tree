@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [← Previous: 📖 Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: 🌱 Incremental Growth →](03-incremental-growth.md)
+=======
+[Previous: Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: Incremental Growth ->](03-incremental-growth.md)
+>>>>>>> dev
 
 ---
 
@@ -46,5 +50,9 @@ We must not rewrite our project documentation or conventions when we switch betw
 Configuration files for specific AI clients (e.g., `.cursor/rules/main.mdc`, `CLAUDE.md`, `.clinerules`, `.roo/rules.md`) must act as **thin pointers** containing at most 2–3 lines redirecting the model to [AGENTS.md](../AGENTS.md) in the project root. They must never contain inline rules, tech-stack descriptions, or code snippets.
 
 ---
+<<<<<<< HEAD
 [← Previous: 📖 Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: 🌱 Incremental Growth →](03-incremental-growth.md)
+=======
+[Previous: Philosophy](01-philosophy.md) | [Home (README)](../README.md) | [Next: Incremental Growth ->](03-incremental-growth.md)
+>>>>>>> dev
 

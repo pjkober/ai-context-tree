@@ -1,0 +1,22 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+        name: Validate YAML files
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: no-emoji
+        name: No emoji in documentation
+        language: system
+        entry: bash -c 'if grep -rP "[\x{1F300}-\x{1FFFF}]|[\x{2600}-\x{26FF}]" --include="*.md" .; then echo "ERROR: Emoji found."; exit 1; fi'
+        pass_filenames: false
+
+      - id: shell-syntax
+        name: Bash script syntax check
+        language: system
+        entry: bash -n
+        types: [shell]

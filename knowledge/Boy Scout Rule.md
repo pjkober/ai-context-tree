@@ -2,6 +2,12 @@
 aliases: []
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
+  - refactoring
+  - coding-standards
+  - agent-behavior
+>>>>>>> dev
 type: docs
 ---
 

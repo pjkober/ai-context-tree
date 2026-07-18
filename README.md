@@ -3,8 +3,15 @@
 > **Universal Project Structure for AI-First Development & Multi-Agent Collaboration**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<<<<<<< HEAD
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/your-username/ai-context-tree/pulls)
 [![AI-First](https://img.shields.io/badge/AI--First-Compatible-blueviolet.svg)](docs/01-philosophy.md)
+=======
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![AI-First](https://img.shields.io/badge/AI--First-Compatible-blueviolet.svg)](docs/01-philosophy.md)
+[![CI](https://github.com/pjkober/ai-context-tree/actions/workflows/lint.yml/badge.svg)](https://github.com/pjkober/ai-context-tree/actions/workflows/lint.yml)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)](VERSION)
+>>>>>>> dev
 
 `ai-context-tree` is a language-agnostic, framework-agnostic project layout designed specifically to optimize **Context Management** in LLM-assisted development. It works seamlessly and concurrently with multiple AI clients—including **Claude Code, Cursor, Cline, Roo Code, Windsurf, Antigravity, Gemini CLI**, and others—without requiring repo-level refactoring when switching tools.
 
@@ -20,6 +27,10 @@
   - [AI Client Integration Guide](docs/05-ai-integration.md) — Pointing Cursor, Claude, Cline, etc., to your rules.
   - [Spec-Driven Development (SDD)](knowledge/Spec-Driven%20Development.md) — How our layout supports living specs and prevents vibe coding.
   - [Repository Initialization Guide](docs/06-initialization-guide.md) — How to bootstrap the structure using scripts.
+<<<<<<< HEAD
+=======
+  - [Multi-Agent Coordination Guide](docs/multi-agent-coordination.md) — How multiple agents collaborate and coordinate in parallel.
+>>>>>>> dev
 
 - **File Templates:**
   - [Replicated Structure Templates](templates/) — Standard code/doc templates for every directory.
@@ -36,6 +47,7 @@
 
 To keep the workspace clean and avoid polluting the LLM's context, information flows through a clear hierarchy. IDE-specific configuration files act as thin pointers to `AGENTS.md`, which serves as the central hub:
 
+<<<<<<< HEAD
 ```mermaid
 flowchart TD
     CONFIG["AI Client Config<br/>(CLAUDE.md / .cursorrules / .clinerules / ...)"]
@@ -49,6 +61,9 @@ flowchart TD
     CONTEXT --> SPECS
     SPECS --> DOCS
 ```
+=======
+For a detailed diagram of the context flow, see the [Context Flow section](docs/05-ai-integration.md#context-flow) in the AI Client Integration Guide.
+>>>>>>> dev
 
 ---
 
@@ -101,8 +116,13 @@ project/
 │   ├── templates/      # Code scaffolding templates
 │   ├── skills/         # Project-specific agent skills
 │   ├── history/        # Conversation memory logs
+<<<<<<< HEAD
 │   ├── runs/           # Reusable execution scripts
 │   └── memory/         # Lessons learned & technical debt records
+=======
+│   ├── lessons/        # Lessons learned & technical debt records
+│   └── runs/           # Reusable execution scripts
+>>>>>>> dev
 ├── specs/              # Business specs & acceptance criteria
 ├── contracts/          # API contracts (OpenAPI, Protobuf, GraphQL)
 ├── docs/               # System & technical architecture documentation
@@ -151,6 +171,19 @@ For detailed pointer files for Cursor, Claude Code, Cline, Roo Code, and Windsur
 
 ---
 
+<<<<<<< HEAD
+=======
+## Versioning
+
+This standard follows [Semantic Versioning](https://semver.org). The current version is in the [VERSION](VERSION) file.
+
+- MAJOR versions introduce breaking changes to directory structure or AGENTS.md format.
+- MINOR versions add new templates or guides (backward-compatible).
+- PATCH versions fix typos or documentation errors.
+
+---
+
+>>>>>>> dev
 ## License
 
 This layout standard is open-source and available under the [MIT License](LICENSE).

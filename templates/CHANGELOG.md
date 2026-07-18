@@ -1,0 +1,7 @@
+# CHANGELOG
+
+## [Unreleased]
+
+## [1.0.0] - 2026-01-01
+### Added
+- First version of the project.
