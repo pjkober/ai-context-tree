@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+=======
 [Home (README)](../../README.md) | [Next: AI Agent Rules and Workflows ->](ai-agents.md)
+>>>>>>> dev
 
 ---
 
@@ -27,6 +31,8 @@ The map of the entire repository.
 - **Rule:** Contains only paths and links — no textual descriptions or summaries.
 - **Template:** [templates/MANIFEST.md](../../templates/MANIFEST.md)
 
+<<<<<<< HEAD
+=======
 ### When to Update
 
 Update `MANIFEST.md` immediately (in the same commit) whenever:
@@ -55,6 +61,7 @@ When multiple AI agents work in parallel on different tasks:
 
 4. **Agent coordination tip:** If a project uses a task queue, assign MANIFEST ownership to a single "integration agent" whose sole responsibility is merging outputs and updating MANIFEST after each parallel batch of work.
 
+>>>>>>> dev
 ---
 
 ## README.md
@@ -90,13 +97,19 @@ Development plan.
 The single source of truth for the active task queue.
 
 - **Role:** `tasks.md` serves as the index and convention reference for active tasks. The `tasks/` directory contains individual task files (e.g. `task-001-example.md`).
+<<<<<<< HEAD
+- **Rule:** Current tasks, bugs, and documentation changes must be tracked here, not in `ai/memory/` (which is strictly for historical lessons).
+=======
 - **Rule:** Current tasks, bugs, and documentation changes must be tracked here, not in `ai/lessons/` (which is strictly for historical lessons).
+>>>>>>> dev
 - **Completed Task Lifecycle Rule:** When a task is completed, you must do more than just change its status to `done` in the frontmatter. The developer or agent **must** append a `## Verification` or `## Walkthrough` section directly to the bottom of that specific task file (`tasks/task-NNN-description.md`), detailing the changes made, verification results, and any test logs. This turns the task file into a permanent, self-contained record of execution (Task as SSOT).
 - **Template:** [templates/tasks/task-001-example.md](../../templates/tasks/task-001-example.md)
 
 
 ---
 
+<<<<<<< HEAD
+=======
 ## SECURITY.md
 
 The vulnerability reporting and security disclosure policy for the project.
@@ -108,6 +121,7 @@ The vulnerability reporting and security disclosure policy for the project.
 
 ---
 
+>>>>>>> dev
 ## LICENSE
 
 The project license.
@@ -134,5 +148,9 @@ GitHub-specific automation configuration.
 - **Rule:** Workflows must not contain raw business or architecture explanations; refer to scripts in `scripts/` or rules in `ai/workflows/`.
 
 ---
+<<<<<<< HEAD
+[Home (README)](../../README.md) | [Next: 🤖 AI Agent Rules & Workflows →](ai-agents.md)
+=======
 [Home (README)](../../README.md) | [Next: AI Agent Rules and Workflows ->](ai-agents.md)
+>>>>>>> dev
 

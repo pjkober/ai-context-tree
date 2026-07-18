@@ -12,6 +12,8 @@ $BaseDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 if (-not $BaseDir) { $BaseDir = Get-Location }
 $TemplatesDir = Join-Path $BaseDir "templates"
 
+<<<<<<< HEAD
+=======
 # Read version from VERSION file, fallback if missing
 $VersionFile = Join-Path $BaseDir "VERSION"
 if (Test-Path $VersionFile -PathType Leaf) {
@@ -20,6 +22,7 @@ if (Test-Path $VersionFile -PathType Leaf) {
     $Version = "0.6.0"
 }
 
+>>>>>>> dev
 # Check if templates directory is present
 if (-not (Test-Path $TemplatesDir -PathType Container)) {
     Write-Error "Error: 'templates/' directory not found at $TemplatesDir."
@@ -95,9 +98,12 @@ function New-DirectoryIfNotExists {
 function Copy-TemplateFile {
     param([string]$RelPath)
     $SrcFile = Join-Path $TemplatesDir $RelPath
+<<<<<<< HEAD
+=======
     if ($RelPath -eq "VERSION") {
         $SrcFile = Join-Path $BaseDir "VERSION"
     }
+>>>>>>> dev
     $DestFile = Join-Path $BaseDir $RelPath
 
     # Ensure destination directory exists
@@ -111,11 +117,14 @@ function Copy-TemplateFile {
                 $Content = $Content -replace '# Project Name', "# $ProjectName"
                 Set-Content -Path $DestFile -Value $Content
                 Write-Host "Generated custom $RelPath for project: $ProjectName"
+<<<<<<< HEAD
+=======
             } elseif ($RelPath -eq "AGENTS.md") {
                 $Content = Get-Content -Path $SrcFile -Raw
                 $Content = $Content -replace '__VERSION__', $Version
                 Set-Content -Path $DestFile -Value $Content
                 Write-Host "Copied template to: $DestFile (with version $Version)"
+>>>>>>> dev
             } else {
                 Copy-Item -Path $SrcFile -Destination $DestFile -Force
                 Write-Host "Copied template to: $DestFile"
@@ -156,7 +165,10 @@ $GenJetbrains = $false
 $GenAider = $false
 $GenTabnine = $false
 $GenCody = $false
+<<<<<<< HEAD
+=======
 $GenSecurityMd = $true
+>>>>>>> dev
 $InitGit = $false
 
 # Check if interactive
@@ -379,6 +391,8 @@ if (-not $NonInteractive) {
     }
     Write-Host ""
 
+<<<<<<< HEAD
+=======
     Write-Host "1.9) Generate SECURITY.md (vulnerability reporting policy)?"
     Write-Host "  [1] Yes -- generate SECURITY.md from template [Default]"
     Write-Host "      - Pros: GitHub-standard security policy, ready for open-source."
@@ -392,6 +406,7 @@ if (-not $NonInteractive) {
     }
     Write-Host ""
 
+>>>>>>> dev
     # --- SECTION 2: Coding & Refactoring ---
     Write-Host "--- SECTION 2: Coding & Refactoring ---" -ForegroundColor Yellow
     Write-Host "2.1) Choose Refactoring Policy:"
@@ -785,6 +800,8 @@ Copy-TemplateFile "AGENTS.md"
 Copy-TemplateFile "README.md"
 Copy-TemplateFile ".gitignore"
 Copy-TemplateFile "MANIFEST.md"
+<<<<<<< HEAD
+=======
 Copy-TemplateFile "VERSION"
 Copy-TemplateFile "tasks.md"
 Copy-TemplateFile "tasks/task-001-example.md"
@@ -793,6 +810,7 @@ if ($GenSecurityMd) {
     Copy-TemplateFile "SECURITY.md"
 }
 
+>>>>>>> dev
 Copy-TemplateFile "ai/context/project.md"
 Copy-TemplateFile "ai/context/structure-map.md"
 Copy-TemplateFile "ai/workflows/new-feature.md"
@@ -903,6 +921,8 @@ Always read AGENTS.md in the root directory for project-specific rules, tech sta
 if ($InitGit) {
     New-DirectoryIfNotExists (Join-Path $BaseDir "knowledge")
     Copy-TemplateFile "knowledge/git.md"
+<<<<<<< HEAD
+=======
 
     # Option to copy pre-commit hooks configuration template
     $CopyPrecommit = "n"
@@ -913,6 +933,7 @@ if ($InitGit) {
     if ($CopyPrecommit -eq "y") {
         Copy-TemplateFile ".pre-commit-config.yaml"
     }
+>>>>>>> dev
 }
 
 Write-Host "Minimal project structure created successfully."

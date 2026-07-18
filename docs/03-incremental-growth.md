@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+[← Previous: 🛠️ Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: 🏷️ Terminology Management →](04-terminology-management.md)
+=======
 [Previous: Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: Terminology Management ->](04-terminology-management.md)
+>>>>>>> dev
 
 ---
 
@@ -58,5 +62,9 @@ This is governed by the [structure-map.md](../templates/ai/context/structure-map
 If a directory is no longer needed (for example, a prototype folder `prototypes/` after a sandbox experiment is finished), it should be deleted or moved to `archive/`. Keeping inactive, obsolete directories in the active workspace pollutes the AI's file-system search results and wastes context.
 
 ---
+<<<<<<< HEAD
+[← Previous: 🛠️ Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: 🏷️ Terminology Management →](04-terminology-management.md)
+=======
 [Previous: Core Principles](02-core-principles.md) | [Home (README)](../README.md) | [Next: Terminology Management ->](04-terminology-management.md)
+>>>>>>> dev
 

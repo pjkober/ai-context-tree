@@ -2,9 +2,12 @@
 aliases: []
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
   - autonomy
   - agent-behavior
   - configuration
+>>>>>>> dev
 type: docs
 ---
 

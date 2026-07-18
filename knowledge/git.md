@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 ---
 tags:
   - knowledge
@@ -5,6 +7,7 @@ tags:
   - version-control
 ---
 
+>>>>>>> dev
 # Git - Version Control System
 
 Git is a distributed version control system that tracks the history of changes in project files, enables collaboration between multiple developers on the same codebase, and allows easy rollback to previous versions when issues occur. Since history is stored locally, most operations execute instantly, and the branching mechanism allows safe testing of new features without affecting the stable version of the code.
@@ -27,6 +30,8 @@ Git is a distributed version control system that tracks the history of changes i
 
 ### Committing Changes
 * `git commit -m "description of changes"` — commits all staged changes and creates a new point in the project history with the provided description.
+<<<<<<< HEAD
+=======
 
 
 ## Pre-commit Hooks
@@ -95,3 +100,4 @@ done
 exit 0
 ```
 Make it executable: `chmod +x .git/hooks/pre-commit`
+>>>>>>> dev

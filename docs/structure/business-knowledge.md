@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+=======
 [Previous: AI Agent Rules and Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: Implementation Files ->](implementation.md)
+>>>>>>> dev
 
 ---
 
@@ -18,6 +22,8 @@ Business specifications.
   - [templates/specs/requirements.md](../../templates/specs/requirements.md)
   - [templates/specs/acceptance.md](../../templates/specs/acceptance.md)
 
+<<<<<<< HEAD
+=======
 ### Decision Rule: specs/ vs. plans/
 
 Use this rule to determine where a document belongs:
@@ -36,6 +42,7 @@ Use this rule to determine where a document belongs:
 **Bad example:**
 - `specs/payment-checkout/implementation-plan.md` -- mixing requirements with implementation steps. Split this file.
 
+>>>>>>> dev
 ---
 
 ## knowledge/
@@ -85,8 +92,14 @@ System technical and architectural documentation.
 - **Role:** High-level guides on how code modules interact, deployment flows, database schemas, and developer setup.
 - **Rule:** Focuses on the *why* and *how* of the codebase. Code examples, templates, and configurations belong in `examples/`, `ai/templates/`, or `config/`.
 - **Template (module-architecture.md):** [templates/docs/architecture/module-architecture.md](../../templates/docs/architecture/module-architecture.md)
+<<<<<<< HEAD
+
+---
+[← Previous: 🤖 AI Agent Rules & Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: 🛠️ Implementation Files →](implementation.md)
+=======
 - **Template (onboarding.md):** [templates/docs/onboarding.md](../../templates/docs/onboarding.md)
 
 ---
 [Previous: AI Agent Rules and Workflows](ai-agents.md) | [Home (README)](../../README.md) | [Next: Implementation Files ->](implementation.md)
+>>>>>>> dev
 

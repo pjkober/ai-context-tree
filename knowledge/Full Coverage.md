@@ -4,9 +4,12 @@ aliases:
   - full test coverage
 tags:
   - knowledge
+<<<<<<< HEAD
+=======
   - testing
   - coverage
   - strategy
+>>>>>>> dev
 type: docs
 ---
 

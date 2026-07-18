@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+=======
 [Previous: Implementation Files](implementation.md) | [Home (README)](../../README.md)
+>>>>>>> dev
 
 ---
 
@@ -24,10 +28,13 @@ Design plans for large changes.
 - **Role:** Epic planning docs, database migration strategies, or caching refactoring plans. Linked from `tasks.md`.
 - **Template:** [templates/plans/plan-template.md](../../templates/plans/plan-template.md)
 
+<<<<<<< HEAD
+=======
 Note: `plans/` documents answer "how" (execution strategy, sequence of steps, technical approach).
 `specs/` documents answer "what" (requirements, expected behavior, acceptance criteria).
 Cross-link between related plan and spec files using Markdown links.
 
+>>>>>>> dev
 ---
 
 ## prototypes/
@@ -74,5 +81,9 @@ Temporary working directory.
 - **Rule:** Created at project start containing a `.gitkeep` file. All contents are ignored via `.gitignore` (`tmp/*`), but the directory itself is tracked. Must be excluded from CI/CD pipeline steps.
 
 ---
+<<<<<<< HEAD
+[← Previous: 🛠️ Implementation Files](implementation.md) | [Home (README)](../../README.md)
+=======
 [Previous: Implementation Files](implementation.md) | [Home (README)](../../README.md)
+>>>>>>> dev
 
