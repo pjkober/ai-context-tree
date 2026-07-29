@@ -20,7 +20,7 @@ while IFS= read -r -d '' file; do
       VIOLATIONS=$((VIOLATIONS + 1))
     fi
   fi
-done < <(/usr/bin/git ls-files -z "$SEARCH_DIR" 2>/dev/null || find "$SEARCH_DIR" -type f -not -path '*/.*' -not -path '*/tmp/*' -print0)
+done < <(git ls-files -z "$SEARCH_DIR" 2>/dev/null || find "$SEARCH_DIR" -type f -not -path '*/.*' -not -path '*/tmp/*' -print0)
 
 echo "---"
 if [ "$VIOLATIONS" -gt 0 ]; then
