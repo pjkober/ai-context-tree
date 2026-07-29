@@ -2,7 +2,7 @@ name: Bump version
 
 on:
   push:
-    branches: [master, dev]
+    branches: [master, dev, main]
     paths-ignore:
       - 'VERSION'  # prevents infinite loop (a VERSION-only commit does not trigger another bump)
 

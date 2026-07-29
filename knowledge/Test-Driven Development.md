@@ -3,12 +3,9 @@ aliases:
   - TDD
 tags:
   - knowledge
-<<<<<<< HEAD
-=======
   - tdd
   - testing
   - methodology
->>>>>>> dev
 type: docs
 ---
 

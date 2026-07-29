@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-tmp/
-=======
 tmp/*
 !tmp/.gitkeep
->>>>>>> dev
 .cursor-tutor
 node_modules/
 .dist/

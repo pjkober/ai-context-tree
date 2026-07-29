@@ -2,12 +2,9 @@
 aliases: []
 tags:
   - knowledge
-<<<<<<< HEAD
-=======
   - methodology
   - agent-behavior
   - anti-pattern
->>>>>>> dev
 type: docs
 ---
 
