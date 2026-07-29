@@ -106,7 +106,7 @@ function Copy-TemplateFile {
 
     if (-not (Test-Path $DestFile -PathType Leaf)) {
         if (Test-Path $SrcFile -PathType Leaf) {
-            if ($RelPath -eq "README.md" -or $RelPath -eq "ai/context/project.md") {
+            if ($RelPath -eq "README.md" -or $RelPath -eq ".agents/context/project.md") {
                 $Content = Get-Content -Path $SrcFile -Raw
                 $Content = $Content -replace '# Project Name', "# $ProjectName"
                 Set-Content -Path $DestFile -Value $Content
@@ -535,7 +535,7 @@ if (-not $NonInteractive) {
     Write-Host "WARNING: Select ONLY the technologies you will actually use. Adding unnecessary" -ForegroundColor Red
     Write-Host "technologies clutters the AI's memory, leading to inefficient token usage and costs." -ForegroundColor Red
     Write-Host "Since a project grows over time, adding new technologies or rules incrementally"
-    Write-Host "(by editing 'ai/rules/coding.md') is the recommended approach."
+    Write-Host "(by editing '.agents/rules/coding.md') is the recommended approach."
     Write-Host ""
     Write-Host "4.1) Select Tech Stack / Framework option:"
     Write-Host "  [1] Decide later / General [Default]"
@@ -791,23 +791,23 @@ Copy-TemplateFile "tasks/task-001-example.md"
 if ($GenSecurityMd) {
     Copy-TemplateFile "SECURITY.md"
 }
-Copy-TemplateFile "ai/context/project.md"
-Copy-TemplateFile "ai/context/structure-map.md"
-Copy-TemplateFile "ai/workflows/new-feature.md"
-Copy-TemplateFile "ai/skills/example-skill.md"
-Copy-TemplateFile "ai/history/conver-001-example-transcript.md"
-Copy-TemplateFile "ai/runs/run-001-example-automation.sh"
+Copy-TemplateFile ".agents/context/project.md"
+Copy-TemplateFile ".agents/context/structure-map.md"
+Copy-TemplateFile ".agents/workflows/new-feature.md"
+Copy-TemplateFile ".agents/skills/example-skill.md"
+Copy-TemplateFile ".agents/history/conver-001-example-transcript.md"
+Copy-TemplateFile ".agents/runs/run-001-example-automation.sh"
 
 # Generate dynamically configured rules
-Generate-RulesFile "ai/rules/coding.md"
-Generate-RulesFile "ai/rules/security.md"
-Generate-RulesFile "ai/rules/testing.md"
+Generate-RulesFile ".agents/rules/coding.md"
+Generate-RulesFile ".agents/rules/security.md"
+Generate-RulesFile ".agents/rules/testing.md"
 
 # Generate AI IDE pointer files if requested
 if ($GenClaude) {
     $Content = @"
 Refer to AGENTS.md for coding guidelines, architecture, and workflows.
-Do not deviate from the workflows defined in ai/workflows/.
+Do not deviate from the workflows defined in .agents/workflows/.
 "@
     Set-Content -Path (Join-Path $BaseDir "CLAUDE.md") -Value $Content -Encoding utf8
     Write-Host "Generated Claude Code pointer: CLAUDE.md"
@@ -816,7 +816,7 @@ Do not deviate from the workflows defined in ai/workflows/.
 if ($GenCursor) {
     $Content = @"
 Always read AGENTS.md first to understand the project structure and rules.
-Follow the guidelines in ai/rules/coding.md for all code modifications.
+Follow the guidelines in .agents/rules/coding.md for all code modifications.
 "@
     Set-Content -Path (Join-Path $BaseDir ".cursorrules") -Value $Content -Encoding utf8
     Write-Host "Generated Cursor pointer: .cursorrules"
@@ -825,7 +825,7 @@ Follow the guidelines in ai/rules/coding.md for all code modifications.
 if ($GenCline) {
     $Content = @"
 Read AGENTS.md to understand the repository structure and context.
-Adhere strictly to the active guidelines in ai/rules/.
+Adhere strictly to the active guidelines in .agents/rules/.
 "@
     Set-Content -Path (Join-Path $BaseDir ".clinerules") -Value $Content -Encoding utf8
     Write-Host "Generated Cline/Roo Code pointer: .clinerules"
@@ -834,7 +834,7 @@ Adhere strictly to the active guidelines in ai/rules/.
 if ($GenWindsurf) {
     $Content = @"
 Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
-Follow the guidelines in ai/rules/coding.md for code modifications.
+Follow the guidelines in .agents/rules/coding.md for code modifications.
 "@
     Set-Content -Path (Join-Path $BaseDir ".windsurfrules") -Value $Content -Encoding utf8
     Write-Host "Generated Windsurf pointer: .windsurfrules"
@@ -956,7 +956,7 @@ if ($CleanupOption -eq "1") {
         if (Test-Path $FilePath -PathType Leaf) { Remove-Item -Path $FilePath -Force | Out-Null }
     }
     # Remove one-time template folder
-    $OneTimeFolder = Join-Path $TemplatesDir "ai"
+    $OneTimeFolder = Join-Path $TemplatesDir ".agents"
     if (Test-Path $OneTimeFolder -PathType Container) { Remove-Item -Path $OneTimeFolder -Recurse -Force | Out-Null }
     
     # Remove sibling setup script

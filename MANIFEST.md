@@ -2,7 +2,7 @@
 
 This file is a living index. Update it as new directories and files are added to the project.
 
-├── [ai/](ai/)                           # AI agent guidelines, history, rules, workflows, and skills
+├── [.agents/](.agents/)                 # AI agent guidelines, history, rules, workflows, and skills
 ├── [docs/](docs/)                       # System and technical architecture documentation
 ├── [examples/](examples/)               # Real-world example projects using this standard
 ├── [knowledge/](knowledge/)             # Domain knowledge base (terminology, FAQ, personas, guides)

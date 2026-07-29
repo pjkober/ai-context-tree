@@ -9,7 +9,7 @@ Read first (Project Scope & Core Docs):
 
 Structure Specification:
 ├── docs/structure/root-files.md       # Root configurations (AGENTS.md, MANIFEST.md, etc.)
-├── docs/structure/ai-agents.md       # Target project agent rules (ai/ directory)
+├── docs/structure/ai-agents.md       # Target project agent rules (.agents/ directory)
 └── docs/structure/supporting.md      # Other generated directory templates
 
 Implementation & Scaffolding:

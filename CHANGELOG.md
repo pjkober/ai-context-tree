@@ -7,6 +7,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Renamed the `ai/` directory structure to `.agents/` across the entire codebase, templates, scripts, and documentation (task-097).
+
 ---
 
 ## [1.0.0] - 2026-07-17

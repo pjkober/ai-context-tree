@@ -4,11 +4,11 @@ Follow these steps sequentially. Do not skip steps or reorder them.
 
 ## Pre-Implementation (Plan)
 
-1. **Read project context:** Open and read `ai/context/project.md` and `ai/context/stack.md` to understand project scope and technology constraints.
+1. **Read project context:** Open and read `.agents/context/project.md` and `.agents/context/stack.md` to understand project scope and technology constraints.
 
 2. **Read the task:** Open the corresponding task file in `tasks/task-NNN-description.md`. Confirm you understand the goal, location, and acceptance criteria.
 
-3. **Check the structure map:** Before creating any new directory, open `ai/context/structure-map.md` and confirm the directory you need is listed. If you need a directory not listed in the map, stop and raise a question to the developer before proceeding.
+3. **Check the structure map:** Before creating any new directory, open `.agents/context/structure-map.md` and confirm the directory you need is listed. If you need a directory not listed in the map, stop and raise a question to the developer before proceeding.
 
 4. **Read specifications:** Open `specs/<feature>/requirements.md` if it exists. If it does not exist, create it before writing any code (Spec-Driven Development principle).
 
@@ -16,13 +16,13 @@ Follow these steps sequentially. Do not skip steps or reorder them.
 
 ## Implementation
 
-6. **Follow coding rules:** Implement according to `ai/rules/coding.md`. Keep every function under 40 lines and every file under 300 lines.
+6. **Follow coding rules:** Implement according to `.agents/rules/coding.md`. Keep every function under 40 lines and every file under 300 lines.
 
-7. **Add tests first (if TDD):** If `ai/rules/testing.md` specifies TDD, write the tests in `tests/` before writing implementation code.
+7. **Add tests first (if TDD):** If `.agents/rules/testing.md` specifies TDD, write the tests in `tests/` before writing implementation code.
 
 8. **Implement the feature:** Write the production code in `src/`. Do not add any documentation or `.md` files inside `src/`.
 
-9. **Add or update tests:** If not using TDD, add tests in `tests/` after implementation. Follow the structure of `ai/rules/testing.md`.
+9. **Add or update tests:** If not using TDD, add tests in `tests/` after implementation. Follow the structure of `.agents/rules/testing.md`.
 
 ## Post-Implementation (Verify and Close)
 

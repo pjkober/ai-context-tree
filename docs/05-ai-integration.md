@@ -24,25 +24,25 @@ Here is how you configure various popular AI clients to point to the central `AG
 ### 1. Claude Code (`CLAUDE.md` in root)
 ```markdown
 Refer to AGENTS.md for coding guidelines, architecture, and workflows.
-Do not deviate from the workflows defined in ai/workflows/.
+Do not deviate from the workflows defined in .agents/workflows/.
 ```
 
 ### 2. Cursor (`.cursorrules` in root)
 ```markdown
 Always read AGENTS.md first to understand the project structure and rules.
-Follow the guidelines in ai/rules/coding.md for all code modifications.
+Follow the guidelines in .agents/rules/coding.md for all code modifications.
 ```
 
 ### 3. Cline / Roo Code (`.clinerules` in root)
 ```markdown
 Read AGENTS.md to understand the repository structure and context.
-Adhere strictly to the active guidelines in ai/rules/.
+Adhere strictly to the active guidelines in .agents/rules/.
 ```
 
 ### 4. Windsurf (`.windsurfrules` in root)
 ```markdown
 Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
-Follow the guidelines in ai/rules/coding.md for code modifications.
+Follow the guidelines in .agents/rules/coding.md for code modifications.
 ```
 
 ### 5. GitHub Copilot (`.github/copilot-instructions.md`)
@@ -85,7 +85,7 @@ Antigravity and OpenCode automatically discover and parse [AGENTS.md](../AGENTS.
 
 ## Linking Tool-Specific Rules to Universal Skills
 
-To preserve the **Single Source of Truth (SSOT)**, when an AI client allows defining workspace-scoped rules or skills (such as Cursor's `.cursor/rules/` or Antigravity's `.agents/skills/`), they should not contain duplicate descriptions. Instead, they should act as pointers directing the AI to the universal skill in `ai/skills/`.
+To preserve the **Single Source of Truth (SSOT)**, when an AI client allows defining workspace-scoped rules or skills (such as Cursor's `.cursor/rules/` or Antigravity's `.agents/skills/`), they should not contain duplicate descriptions. Instead, they should act as pointers directing the AI to the universal skill in `.agents/skills/`.
 
 ### Example: Cursor Rule (.cursor/rules/deploy-skill.mdc)
 ```markdown
@@ -94,7 +94,7 @@ globs: scripts/deploy.sh
 description: Guidance on executing the production release script
 ---
 Always refer to the custom deployment skill defined in:
-- [ai/skills/deployment/SKILL.md](../../ai/skills/deployment/SKILL.md)
+- [.agents/skills/deployment/SKILL.md](../../.agents/skills/deployment/SKILL.md)
 Do not duplicate the deployment steps or guidelines here.
 ```
 
@@ -105,7 +105,7 @@ name: Deploy Skill
 description: Production release instructions pointer
 ---
 Refer to the universal deployment procedure defined in:
-- [ai/skills/deployment/SKILL.md](../../../ai/skills/deployment/SKILL.md)
+- [.agents/skills/deployment/SKILL.md](../../../.agents/skills/deployment/SKILL.md)
 ```
 
 ---
@@ -118,7 +118,7 @@ The flow of information in an AI-First project goes from the tool configuration 
 flowchart TD
     CONFIG["AI Client Configuration File<br/>(CLAUDE.md / .cursor / .clinerules / ...)"]
     AGENTS["AGENTS.md<br/>(Central Hub / Entry Point)"]
-    CONTEXT["ai/context/<br/>(High-level Project Context)"]
+    CONTEXT[".agents/context/<br/>(High-level Project Context)"]
     SPECS["specs/<br/>(Business Requirements)"]
     DOCS["docs/<br/>(Technical Documentation)"]
 

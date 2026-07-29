@@ -2,37 +2,37 @@
 
 ---
 
-# ai/ — AI Agents Directory
+# .agents/ — AI Agents Directory
 
-The `ai/` directory contains guidelines, rules, deterministic workflows, templates, and prompts that govern AI client behavior. This directory is shared: humans can read it to learn project rules, and AI agents consult it to understand how to operate.
+The `.agents/` directory contains guidelines, rules, deterministic workflows, templates, and prompts that govern AI client behavior. This directory is shared: humans can read it to learn project rules, and AI agents consult it to understand how to operate.
 
 ---
 
-## ai/context/
+## .agents/context/
 
 Project description and stack entry points.
 
 - **Role:** High-level project context files, including `project.md`, `stack.md`, `modules.md`, `glossary.md`, and `structure-map.md`.
 - **Rule:** These files are entry points and must contain *only* high-level descriptions and links to actual detailed guides in `docs/`, `config/`, or `decisions/`. No duplication of technical details is allowed.
-- **Template (project.md):** [templates/ai/context/project.md](../../templates/ai/context/project.md)
-- **Template (bugfix.md):** [templates/ai/workflows/bugfix.md](../../templates/ai/workflows/bugfix.md)
-- **Template (release.md):** [templates/ai/workflows/release.md](../../templates/ai/workflows/release.md)
-- **Template (rollback.md):** [templates/ai/workflows/rollback.md](../../templates/ai/workflows/rollback.md)
+- **Template (project.md):** [templates/.agents/context/project.md](../../templates/.agents/context/project.md)
+- **Template (bugfix.md):** [templates/.agents/workflows/bugfix.md](../../templates/.agents/workflows/bugfix.md)
+- **Template (release.md):** [templates/.agents/workflows/release.md](../../templates/.agents/workflows/release.md)
+- **Template (rollback.md):** [templates/.agents/workflows/rollback.md](../../templates/.agents/workflows/rollback.md)
 
 ---
 
-## ai/prompts/
+## .agents/prompts/
 
 Ready-to-use prompts for manual triggering.
 
 - **Role:** Generic prompts (like `create-api.md`, `review.md`) that developers can feed to their AI assistant.
 - **Rule:** Must not contain rules (e.g. "always", "never"). Rules belong in `rules/`.
-- **Template (create-api.md):** [templates/ai/prompts/create-api.md](../../templates/ai/prompts/create-api.md)
-- **Template (service/typescript.md):** [templates/ai/templates/service/typescript.md](../../templates/ai/templates/service/typescript.md)
+- **Template (create-api.md):** [templates/.agents/prompts/create-api.md](../../templates/.agents/prompts/create-api.md)
+- **Template (service/typescript.md):** [templates/.agents/templates/service/typescript.md](../../templates/.agents/templates/service/typescript.md)
 
 ---
 
-## ai/lessons/
+## .agents/lessons/
 
 Role: Extracted knowledge -- what was learned from past mistakes or decisions.
 
@@ -40,22 +40,22 @@ Role: Extracted knowledge -- what was learned from past mistakes or decisions.
 - **Rule:** Must only be used for historical knowledge. Active items and backlogs belong in `tasks.md`.
 - **Question it answers:** "What should future agents know to avoid this mistake?"
 - **Example:** `lesson-001-never-use-orm-transactions-with-queue.md` (e.g. detailed lesson learned from a webhook parsing issue).
-- **Template:** [templates/ai/lessons/lesson-001-example.md](../../templates/ai/lessons/lesson-001-example.md)
+- **Template:** [templates/.agents/lessons/lesson-001-example.md](../../templates/.agents/lessons/lesson-001-example.md)
 
 ---
 
-## ai/skills/
+## .agents/skills/
 
 Project-specific local agent skills.
 
 - **Role:** Houses custom modular capabilities and tools built to extend the power of AI agents for this specific repository (e.g. specialized data scrapers, custom code analysis hooks, or interactive testing workflows).
-- **Format:** Each skill should reside in its own folder or file (e.g. `ai/skills/my-skill/SKILL.md` or `ai/skills/my-skill.md`).
-- **Rule:** Universal skills belong here so they are version-controlled and shared across the team. IDE-specific rules (like `.cursor/` or `.agents/`) must simply link back to files in `ai/skills/` to prevent duplication (SSOT).
-- **Template:** [templates/ai/skills/example-skill.md](../../templates/ai/skills/example-skill.md)
+- **Format:** Each skill should reside in its own folder or file (e.g. `.agents/skills/my-skill/SKILL.md` or `.agents/skills/my-skill.md`).
+- **Rule:** Universal skills belong here so they are version-controlled and shared across the team. IDE-specific rules (like `.cursor/` or `.agents/`) must simply link back to files in `.agents/skills/` to prevent duplication (SSOT).
+- **Template:** [templates/.agents/skills/example-skill.md](../../templates/.agents/skills/example-skill.md)
 
 ---
 
-## ai/history/
+## .agents/history/
 
 Role: Raw session logs -- what was said between the developer and the AI agent.
 
@@ -66,11 +66,11 @@ Role: Raw session logs -- what was said between the developer and the AI agent.
   - **Descriptive Naming:** Files must be sequentially numbered and descriptively named (e.g. `conver-001-setup-payments-api.md`).
   - **Cleanliness (No Secrets Rule):** Absolutely zero hardcoded API keys, passwords, or secrets.
   - **Purpose:** Helps future agents understand the conversational context and "mental model" behind complex architectural decisions, preventing repetition of past errors.
-- **Template:** [templates/ai/history/conver-001-example-transcript.md](../../templates/ai/history/conver-001-example-transcript.md)
+- **Template:** [templates/.agents/history/conver-001-example-transcript.md](../../templates/.agents/history/conver-001-example-transcript.md)
 
 ---
 
-## ai/runs/
+## .agents/runs/
 
 Reusable agent execution scripts.
 
@@ -79,7 +79,7 @@ Reusable agent execution scripts.
   - **Descriptive Naming:** Files must be sequentially numbered and descriptively named (e.g. `run-001-seed-test-users.sh`).
   - **Cleanliness (No Secrets Rule):** Absolutely zero hardcoded API keys, passwords, or secrets. Must load environment variables from `.env`.
   - **Only Reusable Scripts:** Only store reusable scripts with automation value. Do not save logs of one-off throwaway commands.
-- **Template:** [templates/ai/runs/run-001-example-automation.sh](../../templates/ai/runs/run-001-example-automation.sh)
+- **Template:** [templates/.agents/runs/run-001-example-automation.sh](../../templates/.agents/runs/run-001-example-automation.sh)
 
 ### Script Header Convention
 
@@ -99,11 +99,8 @@ Every run script must begin with a metadata comment block immediately after the 
 ```
 
 **Lifecycle rules based on `reusable` field:**
-- `reusable: true` -- Keep the script in `ai/runs/`. Update `last-run` date after each execution.
-- `reusable: false` -- After successful execution, move the script to `archive/` or delete it. Do not leave one-time scripts accumulating in `ai/runs/`.
+- `reusable: true` -- Keep the script in `.agents/runs/`. Update `last-run` date after each execution.
+- `reusable: false` -- After successful execution, move the script to `archive/` or delete it. Do not leave one-time scripts accumulating in `.agents/runs/`.
 
 ---
 [Previous: Root Files](root-files.md) | [Home (README)](../../README.md) | [Next: Business Specifications and Contracts ->](business-knowledge.md)
-
-
-

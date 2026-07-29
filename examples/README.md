@@ -11,7 +11,7 @@ This directory contains real-world application structures and skeletons illustra
 To understand how an AI agent interacts with a project structured under this standard, follow this reading sequence:
 
 1. **Read [AGENTS.md](minimal-nodejs-api/AGENTS.md) first:** This is the entry point that guides the agent.
-2. **Examine context and rules:** Check `ai/context/project.md` and `ai/rules/coding.md` to see how the stack and styling are defined.
+2. **Examine context and rules:** Check `.agents/context/project.md` and `.agents/rules/coding.md` to see how the stack and styling are defined.
 3. **Follow the task flow:**
    - Look at the active task in `tasks/task-001-implement-login-endpoint.md`.
    - Read the spec file it references in `specs/user-login/requirements.md`.

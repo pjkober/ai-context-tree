@@ -45,12 +45,12 @@ $Required = @(
     "MANIFEST.md",
     "SECURITY.md",
     "VERSION",
-    "ai/context/project.md",
-    "ai/context/structure-map.md",
-    "ai/rules/coding.md",
-    "ai/rules/security.md",
-    "ai/rules/testing.md",
-    "ai/workflows/new-feature.md",
+    ".agents/context/project.md",
+    ".agents/context/structure-map.md",
+    ".agents/rules/coding.md",
+    ".agents/rules/security.md",
+    ".agents/rules/testing.md",
+    ".agents/workflows/new-feature.md",
     "tasks.md",
     "tmp/.gitkeep"
 )

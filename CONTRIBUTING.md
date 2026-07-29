@@ -28,7 +28,7 @@ Follow the convention in `tasks.md`:
 
 ### Step 2: Implement the change
 
-- Follow all rules in the project's own `templates/ai/rules/coding.md`.
+- Follow all rules in the project's own `templates/.agents/rules/coding.md`.
 - Keep files under 300 lines (see Core Principle 3).
 - Do not duplicate information that already exists elsewhere (SSOT rule).
 

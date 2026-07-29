@@ -33,9 +33,9 @@ Please include:
 
 When running the bootstrap scripts in your project:
 
-1. **Never commit secrets:** The `ai/rules/security.md` template explicitly prohibits committing API keys, passwords, or tokens. Use environment variables and a secrets manager instead.
+1. **Never commit secrets:** The `.agents/rules/security.md` template explicitly prohibits committing API keys, passwords, or tokens. Use environment variables and a secrets manager instead.
 
-2. **Review generated files:** Before committing the generated project structure to a repository, review the generated `ai/rules/security.md` and confirm the placeholder values match your actual security policy.
+2. **Review generated files:** Before committing the generated project structure to a repository, review the generated `.agents/rules/security.md` and confirm the placeholder values match your actual security policy.
 
 3. **Autonomy Mode users:** If you configure your AI agent in full autonomy mode, ensure your `.gitignore` correctly excludes all credential files before granting write access to the repository.
 

@@ -7,17 +7,17 @@ Read first (Project Scope & Core Docs):
 
 Structure Specification:
 ├── MANIFEST.md                        # Living index map of all files in this project
-└── ai/context/
+└── .agents/context/
     ├── project.md                     # High-level goals of this authentication service
     ├── stack.md                       # Tech stack definitions and constraints
     └── structure-map.md               # Folder creation policy and directory mapping
 
 Guidelines & Terminology:
-├── ai/rules/
+├── .agents/rules/
     ├── coding.md                      # Coding standards and line limit rules
     ├── security.md                    # Core security policies and scanning commands
     └── testing.md                     # Coverage targets and unit testing instructions
-└── ai/workflows/
+└── .agents/workflows/
     ├── new-feature.md                 # Workflow for implementing features
     └── bugfix.md                      # Workflow for diagnosing and fixing bugs
 

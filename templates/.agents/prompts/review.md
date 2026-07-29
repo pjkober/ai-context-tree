@@ -6,7 +6,7 @@ Use this prompt to ask your AI assistant to perform a structured code review of 
 
 Review the following files that were changed in this task: [list file paths].
 
-Apply all rules from `ai/rules/coding.md` and `ai/rules/security.md`.
+Apply all rules from `.agents/rules/coding.md` and `.agents/rules/security.md`.
 
 For each file, report:
 1. Any violations of the coding standards.

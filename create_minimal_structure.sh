@@ -116,7 +116,7 @@ copy_template_file() {
 
   if [ ! -f "$dest_file" ]; then
     if [ -f "$src_file" ]; then
-      if [ "$rel_path" = "README.md" ] || [ "$rel_path" = "ai/context/project.md" ]; then
+      if [ "$rel_path" = "README.md" ] || [ "$rel_path" = ".agents/context/project.md" ]; then
         # Replace '# Project Name' with '# $PROJECT_NAME'
         sed "s/# Project Name/# $PROJECT_NAME/g" "$src_file" > "$dest_file"
         echo "Generated custom $rel_path for project: $PROJECT_NAME"
@@ -595,7 +595,7 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   echo "WARNING: Select ONLY the technologies you will actually use. Adding unnecessary"
   echo "technologies clutters the AI's memory, leading to inefficient token usage and costs."
   echo "Since a project grows over time, adding new technologies or rules incrementally"
-  echo "(by editing 'ai/rules/coding.md') is the recommended approach."
+  echo "(by editing '.agents/rules/coding.md') is the recommended approach."
   echo ""
   echo "4.1) Select Tech Stack / Framework option:"
   echo "  [1] Decide later / General [Default]"
@@ -909,24 +909,24 @@ if [ "$GEN_SECURITY_MD" = true ]; then
   copy_template_file "SECURITY.md"
 fi
 
-copy_template_file "ai/context/project.md"
-copy_template_file "ai/context/structure-map.md"
-copy_template_file "ai/workflows/new-feature.md"
-copy_template_file "ai/skills/example-skill.md"
-copy_template_file "ai/history/conver-001-example-transcript.md"
-copy_template_file "ai/lessons/lesson-001-example.md"
-copy_template_file "ai/runs/run-001-example-automation.sh"
+copy_template_file ".agents/context/project.md"
+copy_template_file ".agents/context/structure-map.md"
+copy_template_file ".agents/workflows/new-feature.md"
+copy_template_file ".agents/skills/example-skill.md"
+copy_template_file ".agents/history/conver-001-example-transcript.md"
+copy_template_file ".agents/lessons/lesson-001-example.md"
+copy_template_file ".agents/runs/run-001-example-automation.sh"
 
 # Generate dynamically configured rules
-generate_rules_file "ai/rules/coding.md"
-generate_rules_file "ai/rules/security.md"
-generate_rules_file "ai/rules/testing.md"
+generate_rules_file ".agents/rules/coding.md"
+generate_rules_file ".agents/rules/security.md"
+generate_rules_file ".agents/rules/testing.md"
 
 # Generate AI IDE pointer files if requested
 if [ "$GEN_CLAUDE" = true ]; then
   cat << 'EOF' > "$BASE_DIR/CLAUDE.md"
 Refer to AGENTS.md for coding guidelines, architecture, and workflows.
-Do not deviate from the workflows defined in ai/workflows/.
+Do not deviate from the workflows defined in .agents/workflows/.
 EOF
   echo "Generated Claude Code pointer: CLAUDE.md"
 fi
@@ -934,7 +934,7 @@ fi
 if [ "$GEN_CURSOR" = true ]; then
   cat << 'EOF' > "$BASE_DIR/.cursorrules"
 Always read AGENTS.md first to understand the project structure and rules.
-Follow the guidelines in ai/rules/coding.md for all code modifications.
+Follow the guidelines in .agents/rules/coding.md for all code modifications.
 EOF
   echo "Generated Cursor pointer: .cursorrules"
 fi
@@ -942,7 +942,7 @@ fi
 if [ "$GEN_CLINE" = true ]; then
   cat << 'EOF' > "$BASE_DIR/.clinerules"
 Read AGENTS.md to understand the repository structure and context.
-Adhere strictly to the active guidelines in ai/rules/.
+Adhere strictly to the active guidelines in .agents/rules/.
 EOF
   echo "Generated Cline/Roo Code pointer: .clinerules"
 fi
@@ -950,7 +950,7 @@ fi
 if [ "$GEN_WINDSURF" = true ]; then
   cat << 'EOF' > "$BASE_DIR/.windsurfrules"
 Always read AGENTS.md first to understand the project rules, coding standards, and workflows.
-Follow the guidelines in ai/rules/coding.md for code modifications.
+Follow the guidelines in .agents/rules/coding.md for code modifications.
 EOF
   echo "Generated Windsurf pointer: .windsurfrules"
 fi
@@ -1056,7 +1056,7 @@ case "$CLEANUP_OPTION" in
     # Remove one-time template files
     rm -f "$TEMPLATES_DIR/README.md" "$TEMPLATES_DIR/AGENTS.md" "$TEMPLATES_DIR/MANIFEST.md" "$TEMPLATES_DIR/.gitignore"
     # Remove one-time template folder
-    rm -rf "$TEMPLATES_DIR/ai"
+    rm -rf "$TEMPLATES_DIR/.agents"
     # Remove sibling setup script
     rm -f "$BASE_DIR/create_minimal_structure.ps1"
     ;;

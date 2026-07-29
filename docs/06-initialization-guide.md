@@ -57,7 +57,7 @@ The wizard guides you through:
 - **Section 3 – Testing Strategy:** Coverage goals, TDD vs. Post-implementation, and test execution scope.
 - **Section 4 – Tech Stack:** Multi-select language/framework-specific rules (Node.js/TypeScript, Python, Go, React/Next.js, Rust, Java/Spring Boot, C#/.NET, PHP/Laravel, or General).
   > [!TIP]
-  > Select **only** the technologies you will actually use. Adding unused tech rules clutters the AI's memory and wastes tokens. Since a project is a living entity, adding new technologies or rules incrementally (by editing `ai/rules/coding.md`) is the recommended approach.
+  > Select **only** the technologies you will actually use. Adding unused tech rules clutters the AI's memory and wastes tokens. Since a project is a living entity, adding new technologies or rules incrementally (by editing `.agents/rules/coding.md`) is the recommended approach.
 - **Section 5 – AI IDE Pointer Files:** Optionally generate thin pointer files for Claude Code, Cursor, Cline/Roo Code, Windsurf, GitHub Copilot, JetBrains AI Assistant, Aider, Tabnine, and Cody.
 - **Section 6 – Git Version Control:** Optionally initialize a Git repository (`git init`), copy the `knowledge/git.md` reference guide, and stage all initial project files (`git add .`). Default: skip (no Git).
 
@@ -71,7 +71,7 @@ If you want to skip the wizard and immediately generate the structure with defau
 Once the files are successfully created and configured in your project, the generator script and `templates/` directory are no longer needed.
 
 If running interactively, the script will prompt you at the very end with a post-setup cleanup menu:
-* **Clean up one-time templates, but KEEP remaining future-growth templates in `templates/` (Default & Recommended):** Deletes the setup scripts (`create_minimal_structure.sh` / `.ps1`) and cleans up templates that are only needed once at startup (like `README.md`, `AGENTS.md`, and the `ai/` context folder). It keeps the optional templates for future repository scaffolding in `templates/` so you can use them as your project scales.
+* **Clean up one-time templates, but KEEP remaining future-growth templates in `templates/` (Default & Recommended):** Deletes the setup scripts (`create_minimal_structure.sh` / `.ps1`) and cleans up templates that are only needed once at startup (like `README.md`, `AGENTS.md`, and the `.agents/` context folder). It keeps the optional templates for future repository scaffolding in `templates/` so you can use them as your project scales.
 * **Delete permanently:** Deletes all template files and setup scripts immediately to keep the root directory completely minimal.
 * **Keep everything:** Leaves all setup scripts and templates untouched in the root.
 
@@ -91,7 +91,7 @@ The `templates/` directory contains two types of templates:
 
 | Type | Description | Lifecycle |
 |---|---|---|
-| **One-time templates** | Files initialized directly into your project by the script (e.g., `README.md`, `AGENTS.md`, `ai/rules/`, `.gitignore`). | **Deleted after setup** (cleanup option 1). No longer needed once initialized. |
+| **One-time templates** | Files initialized directly into your project by the script (e.g., `README.md`, `AGENTS.md`, `.agents/rules/`, `.gitignore`). | **Deleted after setup** (cleanup option 1). No longer needed once initialized. |
 | **Reusable scaffolding templates** | Optional templates for directories you may create as your project grows (e.g., `specs/`, `contracts/`, `plans/`, `decisions/`). | **Kept after setup.** Use them whenever you need to scaffold a new directory. |
 
 You can:
@@ -112,7 +112,7 @@ You can:
 The script generates a minimal set of files that act as pointers and standard guidelines for your AI assistant:
 * [AGENTS.md](../AGENTS.md) — The central hub for AI instruction.
 * [MANIFEST.md](../MANIFEST.md) — A living map of the files in your project.
-* `ai/` — Guidelines, workflows, scripts, and logs.
+* `.agents/` — Guidelines, workflows, scripts, and logs.
 
 ---
 [Previous: AI Client Integration](05-ai-integration.md) | [Home (README)](../README.md)
