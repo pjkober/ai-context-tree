@@ -21,8 +21,3 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
-# Local agent operational files
-tasks.md
-tasks/
-.agents/
