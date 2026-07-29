@@ -17,9 +17,9 @@ IDE-specific config files (`.cursorrules`, `CLAUDE.md`, etc.) contain only 2-3 l
 ## What to Read First (Recommended Order)
 
 1. `AGENTS.md` -- Project rules and entry points (5 minutes)
-2. `ai/context/project.md` -- What this project does and its tech stack (5 minutes)
-3. `ai/context/structure-map.md` -- Official directory catalog (2 minutes)
-4. `ai/rules/coding.md` -- Coding conventions your AI agent will follow (5 minutes)
+2. `.agents/context/project.md` -- What this project does and its tech stack (5 minutes)
+3. `.agents/context/structure-map.md` -- Official directory catalog (2 minutes)
+4. `.agents/rules/coding.md` -- Coding conventions your AI agent will follow (5 minutes)
 5. `tasks.md` -- Active task queue and conventions (5 minutes)
 
 ---
@@ -39,9 +39,9 @@ All work is tracked via task files in `tasks/`. Before starting any code change:
 ## How to Work with AI Agents
 
 - Always start a session by telling the agent to read `AGENTS.md`.
-- If the agent suggests creating a new directory, ask it to check `ai/context/structure-map.md` first.
-- Conversation summaries and key decisions can be saved in `ai/history/`.
-- Reusable automation scripts generated during a session can be saved in `ai/runs/`.
+- If the agent suggests creating a new directory, ask it to check `.agents/context/structure-map.md` first.
+- Conversation summaries and key decisions can be saved in `.agents/history/`.
+- Reusable automation scripts generated during a session can be saved in `.agents/runs/`.
 
 ---
 

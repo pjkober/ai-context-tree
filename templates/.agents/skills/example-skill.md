@@ -1,6 +1,6 @@
 # Custom Agent Skill: Example Skill Name
 
-This is an example template for a project-specific custom skill. Storing this file under `ai/skills/` ensures that any AI agent working on the codebase can discover and use it.
+This is an example template for a project-specific custom skill. Storing this file under `.agents/skills/` ensures that any AI agent working on the codebase can discover and use it.
 
 ## Description
 A 1-2 sentence description of what this skill accomplishes and its target scope.

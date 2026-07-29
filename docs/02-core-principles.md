@@ -19,7 +19,7 @@ Each piece of information exists in only one place. Duplicating architecture des
 
 ## 2. AI Should Not Guess
 
-If a project has naming conventions, architectural design patterns, specific coding style requirements, or workflows, they must be explicitly documented in the `ai/` directory. If a rule is not written down, the AI will make assumptions based on its training data, which often results in inconsistencies and bugs.
+If a project has naming conventions, architectural design patterns, specific coding style requirements, or workflows, they must be explicitly documented in the `.agents/` directory. If a rule is not written down, the AI will make assumptions based on its training data, which often results in inconsistencies and bugs.
 
 ---
 

@@ -27,7 +27,7 @@
   - [Replicated Structure Templates](templates/) — Standard code/doc templates for every directory.
 - **Directory Guidelines:**
   - [Root Files](docs/structure/root-files.md) — `AGENTS.md`, `MANIFEST.md`, `.gitignore`, etc.
-  - [AI Agent Rules & Workflows (`ai/`)](docs/structure/ai-agents.md) — Coding conventions, step-by-step procedures, prompts.
+  - [AI Agent Rules & Workflows (`.agents/`)](docs/structure/ai-agents.md) — Coding conventions, step-by-step procedures, prompts.
   - [Business specifications & contracts](docs/structure/business-knowledge.md) — `specs/`, `contracts/`, `knowledge/`, `decisions/`.
   - [Implementation files](docs/structure/implementation.md) — `src/`, `tests/`, `config/`, `scripts/`, `tools/`.
   - [Supporting directories](docs/structure/supporting.md) — `examples/`, `plans/`, `prototypes/`, `archive/`.
@@ -55,11 +55,11 @@ project/
 ├── MANIFEST.md         # Index map of all currently existing files (refer to templates/MANIFEST.md)
 ├── README.md           # Human-focused overview (refer to templates/README.md)
 ├── .gitignore          # Ignores build artifacts and tmp/ (refer to templates/.gitignore)
-├── ai/
+├── .agents/
 │   ├── context/        # Project goals, stack, and structure map
 │   ├── rules/          # Coding conventions and syntax standards
-│   ├── workflows/      # Step-by-step procedures (refer to templates/ai/workflows/new-feature.md)
-│   ├── skills/         # Local agent skills (refer to templates/ai/skills/example-skill.md)
+│   ├── workflows/      # Step-by-step procedures (refer to templates/.agents/workflows/new-feature.md)
+│   ├── skills/         # Local agent skills (refer to templates/.agents/skills/example-skill.md)
 │   ├── history/        # Conversation memory logs
 │   └── runs/           # Reusable execution scripts
 ├── docs/               # System and technical documentation
@@ -72,7 +72,7 @@ project/
 
 As the project grows, new directories and files are created dynamically to match your requirements. The repository structure is designed to be organic and should expand strictly on demand, which is why there is no single "ideal" complete structure for every project.
 
-If you follow the guidelines in [ai-agents structure guide](docs/structure/ai-agents.md) and `ai/context/structure-map.md`, your mature project structure might look like this:
+If you follow the guidelines in [ai-agents structure guide](docs/structure/ai-agents.md) and `.agents/context/structure-map.md`, your mature project structure might look like this:
 
 ```txt
 project/
@@ -83,7 +83,7 @@ project/
 ├── ROADMAP.md          # Future plans
 ├── TODO.md             # Active task backlog
 ├── LICENSE             # Project license
-├── ai/
+├── .agents/
 │   ├── context/        # High-level context & project stack
 │   ├── rules/          # Coding, testing, and git conventions
 │   ├── workflows/      # Step-by-step procedures (e.g. release, bugfix)

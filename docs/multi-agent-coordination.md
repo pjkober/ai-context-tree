@@ -39,7 +39,7 @@ Process:
 
 Assign one agent as a "reviewer" whose sole responsibility is:
 1. Reading output from implementation agents.
-2. Applying rules from `ai/rules/coding.md` and `ai/rules/security.md`.
+2. Applying rules from `.agents/rules/coding.md` and `.agents/rules/security.md`.
 3. Flagging issues as new tasks.
 
 ---
@@ -53,7 +53,7 @@ These files are high-risk for concurrent modification. Coordinate carefully:
 | `MANIFEST.md` | High | Update only during merge by the human or integration agent. |
 | `tasks.md` | High | Each agent adds its task entry at the end; rebase to combine. |
 | `CHANGELOG.md` | Medium | Each agent adds to `[Unreleased]`; combine during merge. |
-| `ai/context/structure-map.md` | Medium | Architectural file -- require human approval before changes. |
+| `.agents/context/structure-map.md` | Medium | Architectural file -- require human approval before changes. |
 
 ---
 
@@ -61,7 +61,7 @@ These files are high-risk for concurrent modification. Coordinate carefully:
 
 When one agent completes a task that feeds into another agent's work:
 1. Mark the task `status: done` and write the verification walkthrough.
-2. Create a brief summary file in `ai/history/` describing what was built and any important decisions made.
+2. Create a brief summary file in `.agents/history/` describing what was built and any important decisions made.
 3. The next agent reads this history file before starting its dependent task.
 
 ---

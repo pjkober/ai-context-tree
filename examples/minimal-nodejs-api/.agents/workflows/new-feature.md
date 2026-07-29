@@ -2,7 +2,7 @@
 
 Follow these steps sequentially:
 
-1. **Read Context:** Open `ai/context/project.md` and `ai/context/stack.md` to review objectives and constraints.
+1. **Read Context:** Open `.agents/context/project.md` and `.agents/context/stack.md` to review objectives and constraints.
 2. **Review task:** Open `tasks/task-NNN-description.md` to understand requirements and DoD.
 3. **Read spec:** Read `specs/<feature>/requirements.md` and `specs/<feature>/acceptance.md`.
 4. **Implement:** Write unit tests first in `tests/`, then write production code in `src/`.
