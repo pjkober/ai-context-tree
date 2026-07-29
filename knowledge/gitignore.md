@@ -4,25 +4,7 @@ aliases:
   - gitignore policy
 tags:
   - knowledge
-<<<<<<< HEAD
-=======
-  - git
-  - configuration
-  - version-control
->>>>>>> dev
-type: docs
----
-
-
-
-
-# Git and .gitignore Policy
-
-<<<<<<< HEAD
-This document defines the project's policy for [git.md|Git] version control and the configuration of `.gitignore` files.
-=======
 This document defines the project's policy for [Git](git.md) version control and the configuration of `.gitignore` files.
->>>>>>> dev
 
 ## Core Principles
 

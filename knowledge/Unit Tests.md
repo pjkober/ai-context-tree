@@ -4,12 +4,9 @@ aliases:
   - testy jednostkowe
 tags:
   - knowledge
-<<<<<<< HEAD
-=======
   - testing
   - unit-tests
   - strategy
->>>>>>> dev
 type: docs
 ---
 

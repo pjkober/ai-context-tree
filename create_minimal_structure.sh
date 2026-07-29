@@ -7,8 +7,6 @@ set -e
 # Determine the directory where this script lives – treat it as the project root
 BASE_DIR="."
 TEMPLATES_DIR="$BASE_DIR/templates"
-<<<<<<< HEAD
-=======
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Read version from VERSION file, fallback if missing
@@ -17,7 +15,6 @@ if [ -f "$SCRIPT_DIR/VERSION" ]; then
 else
   VERSION="0.6.0"
 fi
->>>>>>> dev
 
 # Check if templates directory is present
 if [ ! -d "$TEMPLATES_DIR" ]; then
@@ -109,14 +106,11 @@ copy_template_file() {
   local src_file="$TEMPLATES_DIR/$rel_path"
   local dest_file="$BASE_DIR/$rel_path"
 
-<<<<<<< HEAD
-=======
   # Special case for VERSION which is in the same folder as the script
   if [ "$rel_path" = "VERSION" ]; then
     src_file="$SCRIPT_DIR/VERSION"
   fi
 
->>>>>>> dev
   # Ensure destination directory exists
   mkdir_if_not_exists "$(dirname "$dest_file")"
 
@@ -126,13 +120,10 @@ copy_template_file() {
         # Replace '# Project Name' with '# $PROJECT_NAME'
         sed "s/# Project Name/# $PROJECT_NAME/g" "$src_file" > "$dest_file"
         echo "Generated custom $rel_path for project: $PROJECT_NAME"
-<<<<<<< HEAD
-=======
       elif [ "$rel_path" = "AGENTS.md" ]; then
         # Substitute __VERSION__ with the version number
         sed "s/__VERSION__/$VERSION/g" "$src_file" > "$dest_file"
         echo "Copied template to: $dest_file (with version $VERSION)"
->>>>>>> dev
       else
         cp "$src_file" "$dest_file"
         echo "Copied template to: $dest_file"
@@ -176,10 +167,7 @@ GEN_JETBRAINS=false
 GEN_AIDER=false
 GEN_TABNINE=false
 GEN_CODY=false
-<<<<<<< HEAD
-=======
 GEN_SECURITY_MD=true
->>>>>>> dev
 INIT_GIT=false
 
 
@@ -432,8 +420,6 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   esac
   echo ""
 
-<<<<<<< HEAD
-=======
   echo "1.9) Generate SECURITY.md (vulnerability reporting policy)?"
   echo "  [1] Yes — generate SECURITY.md from template [Default]"
   echo "      - Pros: GitHub-standard security policy, ready for open-source."
@@ -449,7 +435,6 @@ if [ "$NON_INTERACTIVE" = false ] && [ -t 0 ] && [ -t 1 ]; then
   esac
   echo ""
 
->>>>>>> dev
   # --- SECTION 2: Coding & Refactoring ---
   echo "--- SECTION 2: Coding & Refactoring ---"
   echo "2.1) Choose Refactoring Policy:"
@@ -916,8 +901,6 @@ copy_template_file "AGENTS.md"
 copy_template_file "README.md"
 copy_template_file ".gitignore"
 copy_template_file "MANIFEST.md"
-<<<<<<< HEAD
-=======
 copy_template_file "VERSION"
 copy_template_file "tasks.md"
 copy_template_file "tasks/task-001-example.md"
@@ -926,16 +909,12 @@ if [ "$GEN_SECURITY_MD" = true ]; then
   copy_template_file "SECURITY.md"
 fi
 
->>>>>>> dev
 copy_template_file "ai/context/project.md"
 copy_template_file "ai/context/structure-map.md"
 copy_template_file "ai/workflows/new-feature.md"
 copy_template_file "ai/skills/example-skill.md"
 copy_template_file "ai/history/conver-001-example-transcript.md"
-<<<<<<< HEAD
-=======
 copy_template_file "ai/lessons/lesson-001-example.md"
->>>>>>> dev
 copy_template_file "ai/runs/run-001-example-automation.sh"
 
 # Generate dynamically configured rules
@@ -1026,8 +1005,6 @@ fi
 if [ "$INIT_GIT" = true ]; then
   mkdir_if_not_exists "$BASE_DIR/knowledge"
   copy_template_file "knowledge/git.md"
-<<<<<<< HEAD
-=======
 
   # Option to copy pre-commit hooks configuration template
   COPY_PRECOMMIT="n"
@@ -1038,7 +1015,6 @@ if [ "$INIT_GIT" = true ]; then
   if [ "$COPY_PRECOMMIT" = "y" ]; then
     copy_template_file ".pre-commit-config.yaml"
   fi
->>>>>>> dev
 fi
 
 echo "Minimal project structure created successfully."
