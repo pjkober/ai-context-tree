@@ -1,5 +1,6 @@
 tasks/** merge=ours
 ai/** merge=ours
+.agents/** merge=ours
 scripts/** merge=ours
 tmp/** merge=ours
 CHANGELOG.md merge=ours
